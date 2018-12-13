@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>edu.mondragon</groupId>
-  <artifactId>MUBA</artifactId>
+  <artifactId>Jenkinstest</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>MUBA</name>
+  <name>JenkinsTest</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -17,6 +17,12 @@
 
   <dependencies>
   
+    <dependency>
+    <groupId>org.easymock</groupId>
+    <artifactId>easymock</artifactId>
+    <version>4.0.2</version>
+    <scope>test</scope>
+</dependency>
     <dependency>
 	  <groupId>org.sonarsource.sonarqube</groupId>
 	  <artifactId>sonar-xoo-plugin</artifactId>
@@ -135,7 +141,7 @@
 				    <limit implementation="org.jacoco.report.check.Limit">
 				      <counter>INSTRUCTION</counter>
 				      <value>COVEREDRATIO</value>
-				      <minimum>0.80</minimum>
+				      <minimum>0.99</minimum>
 				    </limit>
 				  </limits>
 			    </rule>
