@@ -32,8 +32,8 @@
         <c:otherwise>
           <div class="login">
             <form action="login.html" method="post">
-		      <input id="usernameTxt" type="text" name="username" required value="<c:out value="${requestScope.username}" default=""/>" placeholder="Username"/></label>
-		      <input id="passwordTxt" type="password" name="password" required value="<c:out value="${requestScope.password}" default=""/>" placeholder="Password"/></label>
+		      <input id="usernameTxt" type="text" name="username" required value="<c:out value="${requestScope.username}" default=""/>" placeholder="Username"/>
+		      <input id="passwordTxt" type="password" name="password" required value="<c:out value="${requestScope.password}" default=""/>" placeholder="Password"/>
 		      <button id="loginBut" type="submit" name="action" value="login"><fmt:message key="action.login"/></button>
 	        </form>
 	        <form action="Register" method="get">
