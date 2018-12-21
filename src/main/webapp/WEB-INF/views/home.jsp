@@ -7,5 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
+<p> HOME PAGE </p>
 </body>
 </html>

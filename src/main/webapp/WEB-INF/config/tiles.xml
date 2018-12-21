@@ -11,9 +11,14 @@
         <put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
     </definition>
  
-    <definition name="login" extends="base.definition">
-        <put-attribute name="title" value="Login"></put-attribute>
-        <put-attribute name="body" value="/WEB-INF/views/login.jsp"></put-attribute>
+    <definition name="home" extends="base.definition">
+        <put-attribute name="title" value="Home"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="match" extends="base.definition">
+        <put-attribute name="title" value="Match"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/match.jsp"></put-attribute>
     </definition>
  
 </tiles-definitions>

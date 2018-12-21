@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="static/css/style.css"/>
 <fmt:bundle basename="resources.View">
 <title><fmt:message key="header.appName"/></title>
 </fmt:bundle>
@@ -16,7 +15,7 @@
 
   <div class="banner">
     <img class="logo"
-      src="resources/logo.png"
+      src="/MUBA/resources/logo.png"
       alt="MUBA"/>
     
     <div class="loginForm">
@@ -24,14 +23,14 @@
         <c:when test="${not empty sessUser}">
 		  <div class="logout">
 		    <h3>Welcome "${sessUser.username}"</h3>
-		    <form action="logout.html" method="get">
+		    <form action="/MUBA/login/logout.html" method="get">
 			  <button type="submit" name="action" value="logout"><fmt:message key="action.logout"/></button>
 			</form>
 		  </div>
         </c:when>
         <c:otherwise>
           <div class="login">
-            <form action="login.html" method="post">
+            <form action="/MUBA/login/login.html" method="post">
 		      <input id="usernameTxt" type="text" name="username" required value="<c:out value="${requestScope.username}" default=""/>" placeholder="Username"/>
 		      <input id="passwordTxt" type="password" name="password" required value="<c:out value="${requestScope.password}" default=""/>" placeholder="Password"/>
 		      <button id="loginBut" type="submit" name="action" value="login"><fmt:message key="action.login"/></button>
@@ -57,10 +56,10 @@
   </div>
   
 	<nav id="options">
-		<a href="home"><fmt:message key="header.home"/></a><!--  
+		<a href="/MUBA/login/home.html"><fmt:message key="header.home"/></a><!--  
 		--><a href="team"><fmt:message key="header.team"/></a><!--
 		--><a href="league"><fmt:message key="header.league"/></a><!--
-		--><a href="play"><fmt:message key="header.play"/></a><!--
+		--><a href="/MUBA/match/goToMatch.html"><fmt:message key="header.match"/></a><!--
 		--><a href="account"><fmt:message key="header.account"/></a>
 	</nav>
 </header>

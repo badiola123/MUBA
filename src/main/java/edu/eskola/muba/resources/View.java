@@ -14,7 +14,7 @@ public class View extends ListResourceBundle {
 			{"header.home", "Home"},
 			{"header.team", "Team"},
 			{"header.league", "League"},
-			{"header.play", "Play"},
+			{"header.match", "Match"},
 			{"header.account", "Account"},
 			// Languages
 			{"language.en", "English"},

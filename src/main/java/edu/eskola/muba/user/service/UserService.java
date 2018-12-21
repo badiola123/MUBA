@@ -6,5 +6,5 @@ import edu.eskola.muba.user.entity.User;
 public interface UserService {
     void add(User user);
     List<User> listUsers();
-    boolean checkUser(String username, String password);
+    User checkUser(String username, String password);
 }
