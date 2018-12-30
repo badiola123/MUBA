@@ -10,7 +10,6 @@ pipeline {
   -Dsonar.login=b159cf49da251b0f93b797dfebbd619d168077ae'
               sh 'mvn jacoco:prepare-agent test jacoco:report'
               sh 'sudo service tomcat restart'
-              sh 'mvn site'
             }
         }
     }
