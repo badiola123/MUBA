@@ -60,12 +60,6 @@ public class MatchController {
 		}
 		return direct;
 	}
-	
-	@Scheduled(cron = "0/20 * * * * ?")
-	public void schedule(HttpServletRequest request) {
-		System.out.println("HUUUJ");
-		play(request);	
-	}
 
 	@RequestMapping(value = "/play", method = RequestMethod.GET)
 	public String play(HttpServletRequest request) {
