@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,6 @@ public class MatchController {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
-			System.out.println(user.getUserId());
 			yourTeam = teamService.getTeamByUserId(user.getUserId());
 			enemyTeam = teamService.getTeamByUserId(3);
 			yourPlayers = playerService.getInitialTeamPlayers(yourTeam.getTeamId());
@@ -59,6 +59,12 @@ public class MatchController {
 			direct = "match";
 		}
 		return direct;
+	}
+	
+	@Scheduled(cron = "0/20 * * * * ?")
+	public void schedule(HttpServletRequest request) {
+		System.out.println("HUUUJ");
+		play(request);	
 	}
 
 	@RequestMapping(value = "/play", method = RequestMethod.GET)
@@ -73,6 +79,7 @@ public class MatchController {
 		Match match = new Match(yourTeamGame, enemyTeamGame);
 		match.startMatch();
 		request.setAttribute("score", +match.getTeamApoints() + " : " + match.getTeamBpoints());
+		request.setAttribute("matchLogs", match.getMatchLogs());
 		return "match";
 	}
 	

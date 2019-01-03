@@ -7,6 +7,7 @@ public class Match {
 	private int teamBpoints = 0;
 	private int roundsAmount;
 	private int currentRound = 0;
+	private String matchLogs = "";
 
 	public Match(TeamGame teamA, TeamGame teamB) {
 		this.teamA = teamA;
@@ -16,20 +17,30 @@ public class Match {
 
 	public TeamGame startMatch() {
 		Calculations calculations = new Calculations(new OurRandom());
+		matchLogs += "The match between "+teamA.getName()+" and "+teamB.getName()+" is going to start! \n";
 		do {
 			currentRound++;
 			Round round;
 			if(currentRound%2==1) {
-				round = new Round(teamA, teamB, calculations);
+				round = new Round(teamA, teamB, calculations, matchLogs);
 				teamApoints+=round.playRound();
+				matchLogs = round.getMatchLogs();
 			}
 			else {
-				round = new Round(teamB, teamA, calculations);
+				round = new Round(teamB, teamA, calculations, matchLogs);
 				teamBpoints+=round.playRound();
+				matchLogs = round.getMatchLogs();
 			}
 		} while(currentRound<roundsAmount || teamApoints==teamBpoints);
-		if(teamApoints>teamBpoints) return teamA;
-		return teamB; 
+		TeamGame winnerTeam;
+		if(teamApoints>teamBpoints) winnerTeam = teamA;
+		else winnerTeam = teamB;
+		matchLogs += winnerTeam.getName() + " wins the match!";
+		return winnerTeam; 
+	}
+	
+	public String getMatchLogs() {
+		return matchLogs;
 	}
 	
 	public int getTeamApoints() {

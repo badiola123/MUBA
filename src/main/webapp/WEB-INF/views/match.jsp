@@ -57,7 +57,7 @@
 					<p>${enemyPlayers[4].name} ${enemyPlayers[4].surname}</p>
 				</div>
 			</div>
-			<div class="dataLog"></div>
+			<div class="dataLog">${matchLogs}</div>
 			<form action="/MUBA/match/play.html" method="get">
 			  <button id="playButton" type="submit" name="action" value="start">PLAY</button>
 			</form>
