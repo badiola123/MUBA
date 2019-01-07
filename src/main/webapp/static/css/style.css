@@ -4,7 +4,6 @@ body {
 	font-family: Verdana, Geneva, sans-serif;
 	background-color: #ffffff;
 	overflow-y: overlay;
-	
 }
 
 header {
@@ -163,7 +162,7 @@ aside>div {
 }
 
 aside>div>h3 {
-	box-sizing: border-box;
+	-sizing: border-box;
 	text-align: center;
 	position: absolute;
 	top: 0;
@@ -216,8 +215,8 @@ img {
 	margin-bottom: 2vw;
 }
 
-#match>.main{
-	display:grid;
+#match>.main {
+	display: grid;
 	grid-gap: 20px;
 	grid-template-columns: 3fr 2fr;
 }
@@ -236,7 +235,7 @@ img {
 	position: relative;
 }
 
-#match>.main>.pitch>img{
+#match>.main>.pitch>img {
 	height: 40vw;
 }
 
@@ -335,6 +334,58 @@ img {
 	border: thin solid black;
 	font-size: 0.8vw;
 	text-align: center;
+}
+
+#team {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#team>h2 {
+	text-align: center;
+	margin-top: 2vw;
+	margin-bottom: 2vw;
+}
+
+#initial {
+	position: relative;
+	width: 60vw;
+	margin-bottom: 2vw;
+}
+
+#initial>img {
+	width: 100%;
+	border: 3px solid black;
+}
+
+.playerPosition {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	justify-content: space-around;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.singlePosition>label {
+	display: block;
+	text-align: center;
+	background: white;
+	border: thin solid black;
+}
+
+.singlePosition>select {
+	border: thin solid black;
+}
+
+#saveButton {
+	position: absolute;
+	bottom: 20%;
+	right: 15%;
+	padding: 1vw;
 }
 
 @media ( min-width : 700px) {

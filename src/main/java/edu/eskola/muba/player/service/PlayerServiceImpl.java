@@ -45,4 +45,10 @@ public class PlayerServiceImpl implements PlayerService{
 		return playerDao.getInitialTeamPlayers(teamId);
 	}
 
+	@Transactional
+	@Override
+	public void updateInitialPosition(int position, int playerId) {
+		playerDao.updateInitialPosition(position, playerId);
+	}
+
 }
