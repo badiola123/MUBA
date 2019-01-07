@@ -6,9 +6,8 @@
          version="4.0">
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/config/login-servlet.xml</param-value>
+		<param-value>/WEB-INF/config/login-servlet.xml</param-value>
 	</context-param>
-	
 	<servlet>
 		<servlet-name>login</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

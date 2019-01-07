@@ -6,9 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="static/css/style.css"/>
-<script src="../static/js/echarts.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="../static/js/characteristicsChartData.js" type="text/javascript"></script>
 <fmt:bundle basename="resources.View">
 <title><fmt:message key="header.appName"/></title>
 </fmt:bundle>
@@ -61,7 +58,7 @@
   
 	<nav id="options">
 		<a href="home"><fmt:message key="header.home"/></a><!--  
-		--><a href="/MUBA/playerStatistics/playerStatistics.html"><fmt:message key="header.team"/></a><!--
+		--><a href="team"><fmt:message key="header.team"/></a><!--
 		--><a href="league"><fmt:message key="header.league"/></a><!--
 		--><a href="play"><fmt:message key="header.play"/></a><!--
 		--><a href="account"><fmt:message key="header.account"/></a>
