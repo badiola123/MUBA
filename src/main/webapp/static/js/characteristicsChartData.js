@@ -4,7 +4,7 @@ function getDataFromDatabase(){
 	$(document).ready(
 			$.ajax({
 				type : "GET",
-				url : '/MUBA/playerStatistics/chart.html',
+				url : '/MUBA/playerStatistics/chart',
 			    contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
 				success : function(json){
@@ -46,13 +46,11 @@ function getDataFromDatabase(){
 					myChart.setOption(option);
 				},
 				error : function(e){
-					console.log(JSON.stringify(jsonCharacteristics));
-					console.log("Error -> "+ e);
+					console.log("Error");
 				}
 			})
 		)
 }
-
 
 var intervalId = 0;
 intervalId = setInterval(getDataFromDatabase, 1000);
