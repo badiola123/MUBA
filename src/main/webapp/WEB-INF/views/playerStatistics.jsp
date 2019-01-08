@@ -6,5 +6,3 @@
 
 <h2>Player "${requestScope.player.name}"</h2>
 <div id="chart" style="width:600px; height:400px;"></div>
-
-

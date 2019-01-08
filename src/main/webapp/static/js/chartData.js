@@ -4,7 +4,7 @@ function getDataFromDatabase(){
 	$(document).ready(
 			$.ajax({
 				type : "GET",
-				url : '/MUBA/playerStatistics/chart',
+				url : '/MUBA/playerStatistics/chart.html',
 			    contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
 				success : function(json){
@@ -55,3 +55,6 @@ function getDataFromDatabase(){
 var intervalId = 0;
 intervalId = setInterval(getDataFromDatabase, 1000);
 
+/**
+ * 
+ */

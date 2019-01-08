@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="static/css/style.css"/>
 <script src="../static/js/echarts.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="../static/js/characteristicsChartData.js" type="text/javascript"></script>
+<script src="../static/js/chartData.js" type="text/javascript"></script>
 <fmt:bundle basename="resources.View">
 <title><fmt:message key="header.appName"/></title>
 </fmt:bundle>
