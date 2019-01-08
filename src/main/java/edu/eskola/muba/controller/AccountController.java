@@ -26,45 +26,40 @@ public class AccountController {
 	
 	@RequestMapping(value = "/manage", method = RequestMethod.POST)
 	public ModelAndView accountPage(@RequestParam("oldPass")String oldPass, @RequestParam("newPass")String newPass, @RequestParam("reNewPass")String reNewPass, HttpServletRequest request, RedirectAttributes redir) {
-		String retPage = "redirect:/login/home.html";
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/login/home.html");
 		User user = (User) request.getSession().getAttribute("sessUser");
 		
-		if(user!=null) {
-			retPage="account";
-			if(user.getPassword().equals(oldPass)) {
-				if(newPass.equals(reNewPass)) {
-					int result = userService.changePass(newPass, user.getUserId());
-					modelAndView.addObject("success", "password.success");
-				}
-				else {
-					modelAndView.addObject("error", "newPass.error");
-				}
-			}
-			else {
-				modelAndView.addObject("error", "password.error");
-			}
-		}
-		else {
-			redir.addFlashAttribute("warning", "login.warning");
-		}
+		if(user!=null) checkOldPass(modelAndView, user, oldPass, newPass, reNewPass);
+		else redir.addFlashAttribute("warning", "login.warning");
 		
-		modelAndView.setViewName(retPage);
 		return modelAndView;
 	}
-	
+
+	private void checkOldPass(ModelAndView modelAndView, User user, String oldPass, String newPass, String reNewPass) {
+		modelAndView.setViewName("account");
+		if(user.getPassword().equals(oldPass)) checkNewPass(modelAndView, user, newPass, reNewPass);
+		else modelAndView.addObject("error", "password.error");
+	}
+
+	private void checkNewPass(ModelAndView modelAndView, User user, String newPass, String reNewPass) {
+		if(newPass.equals(reNewPass)) changePass(modelAndView, user, newPass);
+		else modelAndView.addObject("error", "newPass.error");
+	}
+
+	private void changePass(ModelAndView modelAndView, User user, String newPass) {
+		if(userService.changePass(newPass, user.getUserId()) == 1) modelAndView.addObject("success", "password.success");
+		else modelAndView.addObject("error", "passDb.error");
+	}
+
 	@RequestMapping(value = "/manage", method = RequestMethod.GET)
 	public ModelAndView accountPage(HttpServletRequest request, RedirectAttributes redir) {
 		String retPage = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
 		ModelAndView modelAndView = new ModelAndView();
 		
-		if(user!=null) {
-			retPage="account";
-		}
-		else {
-			redir.addFlashAttribute("warning", "login.warning");
-		}
+		if(user!=null) retPage="account";
+		else redir.addFlashAttribute("warning", "login.warning");
 		
 		modelAndView.setViewName(retPage);
 		return modelAndView;

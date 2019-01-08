@@ -33,13 +33,10 @@
 	    </c:otherwise>
 	  </c:choose>
       
-	  <div class="options">
-	    <!-- Enable language changing -->
-	    <div class="lang">
-		  <a href="?locale=en"><spring:message code="language.en"/></a>
-		  <a href="?locale=es_ES"><spring:message code="language.es"/></a>
-		  <a href="?locale=eu"><spring:message code="language.eu"/></a>
-		</div>
+	  <div class="lang">
+		<a href="?locale=en"><spring:message code="language.en"/></a>
+		<a href="?locale=es_ES"><spring:message code="language.es"/></a>
+		<a href="?locale=eu"><spring:message code="language.eu"/></a>
 	  </div>
 	</div>
   </div>

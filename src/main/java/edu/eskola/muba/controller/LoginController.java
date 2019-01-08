@@ -39,6 +39,9 @@ public class LoginController {
 			modelAndView.addObject("sessUser", user);
 			modelAndView.addObject("success", "login.success");
 		}
+		else {
+			modelAndView.addObject("error", "login.error");
+		}
 		
 		return modelAndView;
 	}

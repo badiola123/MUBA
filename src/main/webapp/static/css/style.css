@@ -5,6 +5,7 @@ body{
     background-color:#ffffff;
     width: 100vw;
 }
+
 header{
 	top:0;
 	margin:0;
@@ -14,10 +15,7 @@ header{
 	border-bottom:1px solid black;
 	color:white;
 }
-header div.options{
-	float:right;
-	text-align:right;
-}
+
 header div.lang, header div.logout{
 	display:inline-block;
 	margin-left:1em;
@@ -43,13 +41,11 @@ header div.lang button{
 	margin:4px;
     text-decoration: none;
 }
+
 header div.lang button:hover{
 	text-decoration: underline;
 }
-header > h1{
-	padding: 32px;
-	margin: 0;
-}
+
 #options{
 	display:block;
 	margin:0;
@@ -58,6 +54,7 @@ header > h1{
 	clear:both;
 	background-color:#008B96;
 }
+
 #options a{
 	
 	display:inline-block;
@@ -117,82 +114,9 @@ header div.banner img.logo{
 }
 
 .logout{
-	display: inline-block;
+	display: inline;
 }
 
-.error{
-	margin:8px;
-	padding:4px;
-	background-color: rgba(192,0,0,0.2);
-	color: red;;
-	border:1px solid black;
-	border-radius:4px;
-	grid-area: error;
-}
-
-.message{
-	margin:8px;
-	padding:4px;
-	background-color: rgba(0,192,0,0.2);
-	color: green;
-	border: 1px solid black;
-	border-radius: 4px;
-	grid-area: message;
-}
-
-body > header{
-	grid-area: top;
-}
-
-aside{
-	grid-area: left;
-	padding: 1rem;
-	background-color: #000;
-	color: white;
-	border: 1px solid #FF0000;
-	
-	margin-bottom: 2rem;
-}
-
-aside > div {
-	position: relative;
-}
-
-aside > div  > h3 {
-	box-sizing: border-box;
-	text-align: center;
-	position: absolute;
-	top:0;
-	width: 100%;
-	background-color: #000000CC;
-	margin: 0;
-	padding: 1rem;
-	z-index: 1;
-}
-
-aside > div {
-	max-width: 250px;
-}
-
-aside > div > figure {
-	margin: 0;
-	width: 100%;
-	position: relative;
-	
-}
-
-aside > div > figure > figcaption {
-	
-	box-sizing: border-box;
-	text-align: center;
-	position: absolute;
-	bottom:0;
-	width: 100%;
-	background-color: #000000CC;
-	margin: 0;
-	padding: 1rem;
-}
-
-img {
-	width: 100%;
+.alert {
+	margin: 0.25rem;
 }
