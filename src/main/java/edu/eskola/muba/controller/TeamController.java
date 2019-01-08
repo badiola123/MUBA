@@ -55,6 +55,7 @@ public class TeamController {
 			for(Player each: players) {
 				playersNames.put(each.getPlayerId(),each.getName() + " " + each.getSurname());
 			}
+			request.setAttribute("team", team);
 			request.setAttribute("players", playersNames);
 			for(Player each : initialPlayers) {
 				if(each.getPosition()==1) request.setAttribute("position1", each.getPlayerId());
@@ -95,6 +96,26 @@ public class TeamController {
 			}
 		}
 		return result;
+	}
+	
+	@RequestMapping(value = "/player", method = RequestMethod.GET)
+	public String player(@RequestParam("playerId")int playerId, HttpServletRequest request) {
+		String direct = "playerInfo";
+		Player player = playerService.getPlayer(playerId);
+		Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
+		request.setAttribute("player", player);
+		request.setAttribute("chars", chars);
+		return direct;
+	}
+	
+	@RequestMapping(value = "/train", method = RequestMethod.GET)
+	public String train(@RequestParam("playerId")int playerId, HttpServletRequest request) {
+		String direct = "playerTrain";
+		Player player = playerService.getPlayer(playerId);
+		Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
+		request.setAttribute("player", player);
+		request.setAttribute("chars", chars);
+		return direct;
 	}
 
 }

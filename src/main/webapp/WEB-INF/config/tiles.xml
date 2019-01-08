@@ -31,5 +31,17 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/team.jsp"></put-attribute>
 	</definition>
+	
+		<definition name="playerInfo" extends="base.definition">
+		<put-attribute name="title" value="PlayerInfo"></put-attribute>
+		<put-attribute name="body"
+			value="/WEB-INF/views/playerInfo.jsp"></put-attribute>
+	</definition>
+	
+		<definition name="playerTrain" extends="base.definition">
+		<put-attribute name="title" value="PlayerTrain"></put-attribute>
+		<put-attribute name="body"
+			value="/WEB-INF/views/playerTrain.jsp"></put-attribute>
+	</definition>
 
 </tiles-definitions>

@@ -336,6 +336,12 @@ img {
 	text-align: center;
 }
 
+form {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+
 #team {
 	display: flex;
 	flex-direction: column;
@@ -348,15 +354,20 @@ img {
 	margin-bottom: 2vw;
 }
 
+#team>h1 {
+	text-align: center;
+	margin-top: 2vw;
+	margin-bottom: 0vw;
+}
+
 #initial {
 	position: relative;
 	width: 60vw;
-	margin-bottom: 2vw;
+	border: 3px solid black;
 }
 
 #initial>img {
 	width: 100%;
-	border: 3px solid black;
 }
 
 .playerPosition {
@@ -386,6 +397,53 @@ img {
 	bottom: 20%;
 	right: 15%;
 	padding: 1vw;
+}
+
+#playersGrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	margin: 10vw;
+	margin-top: 0vw;
+	margin-bottom: 2vw;
+	grid-gap: 1vw;
+}
+
+.singlePlayer {
+	border: thin solid black;
+	position: relative;
+}
+
+.singlePlayer>p {
+	text-align: center;
+}
+
+.singlePlayer>img {
+	border-bottom: thin solid black;
+}
+
+.trainButton {
+	position: absolute;
+	top: 5%;
+	right: 5%;
+}
+
+
+
+.playerName {
+  border: none;
+  background-color: inherit;
+  padding: 0.5vw;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+
+}
+
+.playerName:hover {
+	background-color: #E2E1E1;
+	text-shadow: 0.5px 0.5px 10px blue;
 }
 
 @media ( min-width : 700px) {

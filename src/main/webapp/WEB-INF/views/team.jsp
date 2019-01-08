@@ -10,10 +10,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Match</title>
+<title>Team</title>
 </head>
 <body>
 	<div id="team">
+		<h1>${team.teamName}</h1>
+		<p>Budget: ${team.budget}$</p>
 		<h2>Initial Five Selection</h2>
 		<div id="initial">
 			<img alt="Half of the basketball pitch"
@@ -119,6 +121,24 @@
 					changes</button>
 			</form>
 
+		</div>
+		
+		<h2>Your players</h2>
+		
+		<div id="playersGrid">
+		<c:forEach items="${players}" var="player" varStatus="status">
+			<div class="singlePlayer">
+			<form action="/MUBA/team/train.html" method="get">
+				<input name="playerId" type="hidden" value="${player.key}">
+				<button class="trainButton" type="submit">TRAIN</button>
+			</form>
+			<img alt="player photo" src="/MUBA/resources/player.png" />
+			<form action="/MUBA/team/player.html" method="get">
+				<input name="playerId" type="hidden" value="${player.key}">
+				<button class="playerName" type="submit">${player.value}</button> 
+			</form>
+			</div>
+		</c:forEach>
 		</div>
 
 	</div>
