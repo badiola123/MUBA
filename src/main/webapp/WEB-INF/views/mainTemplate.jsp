@@ -6,13 +6,11 @@
 <tiles:importAttribute name="stylesheets"/>
 <tiles:importAttribute name="javascripts"/>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><tiles:getAsString name="title" /></title>
-
     <c:forEach var="css" items="${stylesheets}">
       <link rel="stylesheet" type="text/css" href="<c:url value="${css}"/>">
     </c:forEach>

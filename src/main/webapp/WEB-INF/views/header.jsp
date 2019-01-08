@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
 <header>
 
   <div class="banner">
@@ -32,20 +31,21 @@
           </div>
 	    </c:otherwise>
 	  </c:choose>
-      
+	  
 	  <div class="lang">
 		<a href="?locale=en"><spring:message code="language.en"/></a>
 		<a href="?locale=es_ES"><spring:message code="language.es"/></a>
 		<a href="?locale=eu"><spring:message code="language.eu"/></a>
 	  </div>
-	</div>
+	  
+    </div>
   </div>
   
 	<nav id="options">
 		<a href="/MUBA/login/home.html"><spring:message code="header.home"/></a><!--  
-		--><a href="team"><spring:message code="header.team"/></a><!--
+		--><a href="/MUBA/team/goToTeam.html"><spring:message code="header.team"/></a><!--
 		--><a href="league"><spring:message code="header.league"/></a><!--
-		--><a href="play"><spring:message code="header.play"/></a><!--
+		--><a href="/MUBA/match/goToMatch.html"><spring:message code="header.play"/></a><!--
 		--><a href="/MUBA/account/manage.html"><spring:message code="header.account"/></a>
 	</nav>
 </header>

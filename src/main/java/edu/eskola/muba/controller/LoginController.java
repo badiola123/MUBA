@@ -5,9 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,9 +20,10 @@ import edu.eskola.muba.user.entity.User;
 import edu.eskola.muba.user.service.UserService;
 
 @Controller
-@RequestMapping("login")
 @SessionAttributes("sessUser")
+@RequestMapping("login")
 public class LoginController {
+	
 	
 	AnnotationConfigApplicationContext context = 
 			new AnnotationConfigApplicationContext(AppConfig.class);
@@ -58,8 +62,7 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/loggedOut.html");
 		status.setComplete();
-		return modelAndView;
-	}
+		return modelAndView;	}
 	
 	@RequestMapping(value = "/loggedOut", method = RequestMethod.GET)
 	public ModelAndView loggedOut(HttpServletRequest request) {
@@ -68,4 +71,5 @@ public class LoginController {
 		modelAndView.addObject("success", "logout.success");
 		return modelAndView;
 	}
+
 }

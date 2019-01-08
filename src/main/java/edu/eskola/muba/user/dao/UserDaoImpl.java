@@ -28,8 +28,7 @@ public class UserDaoImpl implements UserDao {
       return query.getResultList();
    }
    
-   @Override
-   public User checkUser(String username, String password) {
+    public User checkUser(String username, String password) {
 	   User user;
 	   @SuppressWarnings("unchecked")
 	   TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User U WHERE U.username ='"+username+"' and U.password ="+password);
