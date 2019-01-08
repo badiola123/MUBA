@@ -57,7 +57,7 @@
   
 	<nav id="options">
 		<a href="/MUBA/login/home.html"><fmt:message key="header.home"/></a><!--  
-		--><a href="team"><fmt:message key="header.team"/></a><!--
+		--><a href="/MUBA/team/goToTeam.html"><fmt:message key="header.team"/></a><!--
 		--><a href="league"><fmt:message key="header.league"/></a><!--
 		--><a href="/MUBA/match/goToMatch.html"><fmt:message key="header.match"/></a><!--
 		--><a href="account"><fmt:message key="header.account"/></a>

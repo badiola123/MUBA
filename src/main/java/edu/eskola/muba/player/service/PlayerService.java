@@ -10,4 +10,5 @@ public interface PlayerService {
 	List<Player> getTeamPlayers(int teamId);
 	List<Player> getInitialTeamPlayers(int teamId);
 	boolean checkPlayer(int playerId);
+	void updateInitialPosition(int position, int playerId);
 }

@@ -5,17 +5,18 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.player.entity.Player;
 
 @Repository
-public class PlayerDaoImpl implements PlayerDao{
+public class PlayerDaoImpl implements PlayerDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public void addPlayer(Player player) {
 		sessionFactory.getCurrentSession().save(player);
@@ -24,7 +25,8 @@ public class PlayerDaoImpl implements PlayerDao{
 	@Override
 	public Player getPlayer(int playerId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Player> query = sessionFactory.getCurrentSession().createQuery("from Player P WHERE P.playerId = '" + playerId + "'");
+		TypedQuery<Player> query = sessionFactory.getCurrentSession()
+				.createQuery("from Player P WHERE P.playerId = '" + playerId + "'");
 		Player player = query.getSingleResult();
 		return player;
 	}
@@ -32,22 +34,41 @@ public class PlayerDaoImpl implements PlayerDao{
 	@Override
 	public List<Player> getTeamPlayers(int teamId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Player> query = sessionFactory.getCurrentSession().createQuery("from Player P WHERE P.teamId = '" + teamId + "'");
+		TypedQuery<Player> query = sessionFactory.getCurrentSession()
+				.createQuery("from Player P WHERE P.teamId = '" + teamId + "'");
 		return query.getResultList();
 	}
-	
+
 	@Override
 	public List<Player> getInitialTeamPlayers(int teamId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Player> query = sessionFactory.getCurrentSession().createQuery("from Player P WHERE P.teamId = '" + teamId + "' AND P.initialFive=true");
+		TypedQuery<Player> query = sessionFactory.getCurrentSession()
+				.createQuery("from Player P WHERE P.teamId = '" + teamId + "' AND P.initialFive=true");
 		return query.getResultList();
 	}
 
 	@Override
 	public boolean checkPlayer(int playerId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Player> query=sessionFactory.getCurrentSession().createQuery("from Player P WHERE P.playerId ='"+playerId+"'");
+		TypedQuery<Player> query = sessionFactory.getCurrentSession()
+				.createQuery("from Player P WHERE P.playerId ='" + playerId + "'");
 		Player player = query.getSingleResult();
-		return player!=null ? true : false;
+		return player != null ? true : false;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void updateInitialPosition(int position, int playerId) {
+		@SuppressWarnings("unchecked")
+		Query<Player> query;
+		if (position == 0)
+			query = sessionFactory.getCurrentSession().createQuery(
+					"update Player set INITIALFIVE = FALSE, PLAYING = FALSE, POSITION = NULL where playerId = '"
+							+ playerId + "'");
+		else
+			query = sessionFactory.getCurrentSession()
+					.createQuery("update Player set INITIALFIVE = TRUE, PLAYING = TRUE, POSITION = '" + position
+							+ "' where playerId = '" + playerId + "'");
+		query.executeUpdate();
 	}
 }
