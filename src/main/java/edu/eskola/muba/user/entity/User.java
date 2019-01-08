@@ -12,8 +12,8 @@ import javax.persistence.Table;
 public class User {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int id;
+   @Column(name = "USERID", insertable = false, updatable = false)
+   private int userId;
 
    @Column(name = "USERNAME")
    private String username;
@@ -28,12 +28,12 @@ public class User {
       this.password = password;
    }
 
-	public int getId() {
-		return id;
+	public int getUserId() {
+		return userId;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	public String getUsername() {

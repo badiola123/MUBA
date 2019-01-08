@@ -196,3 +196,16 @@ aside > div > figure > figcaption {
 img {
 	width: 100%;
 }
+
+@media (min-width: 700px){
+	body{
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-template-areas:
+		"top top"
+		"error error"
+		"message message"
+		"left right"
+		"bottom bottom";
+	}
+}

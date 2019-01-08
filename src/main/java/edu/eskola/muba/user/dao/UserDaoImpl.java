@@ -29,10 +29,23 @@ public class UserDaoImpl implements UserDao {
    }
    
    @Override
-   public boolean checkUser(String username, String password) {
+   public User checkUser(String username, String password) {
+	   User user;
 	   @SuppressWarnings("unchecked")
 	   TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User U WHERE U.username ='"+username+"' and U.password ="+password);
-	   User user = query.getSingleResult();
-	   return user!=null ? true : false;
+	   try {
+		   user = query.getSingleResult();
+	   } catch (Exception e) {
+		   user = null;
+	   }
+	   return user;
+   }
+   
+   @Override
+   public int changePass(String newPass, int userId) {
+	   @SuppressWarnings("unchecked")
+	   TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("update User set password = '"+newPass+"' where userId = "+userId);
+	   int result = query.executeUpdate();
+	   return result;
    }
 }

@@ -1,5 +1,7 @@
 package edu.eskola.muba.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import edu.eskola.muba.user.entity.User;
 import edu.eskola.muba.user.service.UserService;
 
 @Controller
+@RequestMapping("login")
 @SessionAttributes("sessUser")
 public class LoginController {
 	
@@ -23,29 +26,43 @@ public class LoginController {
 	UserService userService = context.getBean(UserService.class);
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String helloWorld(Model m) {
-		return "login"; 
+	public String homePage(Model m) {
+		return "home"; 
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView checkUser(@RequestParam("username")String username, @RequestParam("password")String password) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("login");
-		if(userService.checkUser(username, password)) {
-			User user = new User(username, password);
+		modelAndView.setViewName("home");
+		User user = userService.checkUser(username, password);
+		if(user != null) {
 			modelAndView.addObject("sessUser", user);
+			modelAndView.addObject("success", "login.success");
 		}
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView checkUser() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("home");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutUser(Model m, SessionStatus status) {
+	public ModelAndView logoutUser(Model m, SessionStatus status) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/login/loggedOut.html");
 		status.setComplete();
-		return "redirect:/loggedOut.html";
+		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/loggedOut", method = RequestMethod.GET)
-	public String loggedOut() {
-		return "login";
+	public ModelAndView loggedOut(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("home");
+		modelAndView.addObject("success", "logout.success");
+		return modelAndView;
 	}
 }
