@@ -62,7 +62,8 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/loggedOut.html");
 		status.setComplete();
-		return modelAndView;	}
+		return modelAndView;
+		}
 	
 	@RequestMapping(value = "/loggedOut", method = RequestMethod.GET)
 	public ModelAndView loggedOut(HttpServletRequest request) {

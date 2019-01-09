@@ -101,12 +101,3 @@
 	background-color: #E2E1E1;
 	text-shadow: 0.5px 0.5px 10px blue;
 }
-
-@media ( min-width : 700px) {
-	body {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		grid-template-areas: "top top" "error error" "message message"
-			"left right" "bottom bottom";
-	}
-}

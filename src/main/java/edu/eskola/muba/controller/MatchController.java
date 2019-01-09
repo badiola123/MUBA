@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
 import edu.eskola.muba.characteristics.service.CharacteristicsService;
@@ -43,7 +44,7 @@ public class MatchController {
 	List<Player> enemyPlayers;
 
 	@RequestMapping(value = "/goToMatch", method = RequestMethod.GET)
-	public String goToMatch(HttpServletRequest request) {
+	public String goToMatch(HttpServletRequest request, RedirectAttributes redir) {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
@@ -58,12 +59,15 @@ public class MatchController {
 			request.setAttribute("score", "0 : 0");
 			direct = "match";
 		}
+		else {
+			redir.addFlashAttribute("error","redirect.error");
+		}
 		return direct;
 	}
 
 	@RequestMapping(value = "/play", method = RequestMethod.GET)
-	public String play(HttpServletRequest request) {
-		goToMatch(request);
+	public String play(HttpServletRequest request, RedirectAttributes redir) {
+		goToMatch(request,redir);
 		List<Characteristics> yourChars = new ArrayList<>();
 		List<Characteristics> enemyChars = new ArrayList<>();
 		doChars(yourChars, yourPlayers);
