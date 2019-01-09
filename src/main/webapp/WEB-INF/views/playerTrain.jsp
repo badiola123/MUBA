@@ -15,11 +15,66 @@
 <body>
 	<div id="train">
 		<h2>Train ${player.name} ${player.surname}</h2>
+		<p>Budget: ${team.budget}$</p>
+		
 		<div id="skills">
-			<div class="w3-light-grey w3-round">
-				<div class="w3-container w3-round w3-blue" style="width: ${chars}%">25%</div>
+		
+			<p>Resistance:</p>
+			<div class="barContainer">
+				<div class="barContent" style="width: ${chars.resistance}%">${chars.resistance}%</div>
 			</div>
-			<p>Resistance</p>
+			<form action="/MUBA/team/trainResistance.html" method="post">
+				<input name="playerId" type="hidden" value="${player.playerId}">
+				<c:choose>
+				<c:when test="${chars.resistance eq 100}">
+				<button type="submit" disabled>Maximum skill</button>
+				</c:when>
+				<c:otherwise>
+				<button type="submit">Train for <c:set var="result" value="${chars.resistance * 10000}" />${result}$</button>
+				</c:otherwise>
+				</c:choose>
+			</form>
+			
+			<p>Ball control:</p>
+			<div class="barContainer">
+				<div class="barContent" style="width: ${chars.ballControl}%">${chars.ballControl}%</div>
+			</div>
+			<form action="/MUBA/team/trainBallControl.html" method="post">
+				<input name="playerId" type="hidden" value="${player.playerId}">
+				<button type="submit">
+					Train for <c:set var="result" value="${chars.ballControl * 10000}" />${result}$</button>
+			</form>
+			
+			<p>Defense:</p>
+			<div class="barContainer">
+				<div class="barContent" style="width: ${chars.defense}%">${chars.defense}%</div>
+			</div>
+			<form action="/MUBA/team/trainDefense.html" method="post">
+				<input name="playerId" type="hidden" value="${player.playerId}">
+				<button type="submit">
+					Train for <c:set var="result" value="${chars.defense * 10000}" />${result}$</button>
+			</form>
+			
+			<p>Long shoot:</p>
+			<div class="barContainer">
+				<div class="barContent" style="width: ${chars.longShoot}%">${chars.longShoot}%</div>
+			</div>
+			<form action="/MUBA/team/trainLongShoot.html" method="post">
+				<input name="playerId" type="hidden" value="${player.playerId}">
+				<button type="submit">
+					Train for <c:set var="result" value="${chars.longShoot * 10000}" />${result}$</button>
+			</form>
+			
+			<p>Short shoot:</p>
+			<div class="barContainer">
+				<div class="barContent" style="width: ${chars.shortShoot}%">${chars.shortShoot}%</div>
+			</div>
+			<form action="/MUBA/team/trainShortShoot.html" method="post">
+				<input name="playerId" type="hidden" value="${player.playerId}">
+				<button type="submit">
+					Train for <c:set var="result" value="${chars.shortShoot * 10000}" />${result}$</button>
+			</form>			
+			
 		</div>
 
 	</div>

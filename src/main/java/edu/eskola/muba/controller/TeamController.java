@@ -39,7 +39,7 @@ public class TeamController {
 	PlayerService playerService = context.getBean(PlayerService.class);
 	TeamService teamService = context.getBean(TeamService.class);
 	CharacteristicsService characteristicsService = context.getBean(CharacteristicsService.class);
-	
+
 	private List<Player> initialPlayers;
 
 	@RequestMapping(value = "/goToTeam", method = RequestMethod.GET)
@@ -51,25 +51,32 @@ public class TeamController {
 			Team team = teamService.getTeamByUserId(user.getUserId());
 			List<Player> players = playerService.getTeamPlayers(team.getTeamId());
 			initialPlayers = playerService.getInitialTeamPlayers(team.getTeamId());
-			Map<Integer,String> playersNames = new LinkedHashMap<Integer,String>();
-			for(Player each: players) {
-				playersNames.put(each.getPlayerId(),each.getName() + " " + each.getSurname());
+			Map<Integer, String> playersNames = new LinkedHashMap<Integer, String>();
+			for (Player each : players) {
+				playersNames.put(each.getPlayerId(), each.getName() + " " + each.getSurname());
 			}
 			request.setAttribute("team", team);
 			request.setAttribute("players", playersNames);
-			for(Player each : initialPlayers) {
-				if(each.getPosition()==1) request.setAttribute("position1", each.getPlayerId());
-				if(each.getPosition()==2) request.setAttribute("position2", each.getPlayerId());
-				if(each.getPosition()==3) request.setAttribute("position3", each.getPlayerId());
-				if(each.getPosition()==4) request.setAttribute("position4", each.getPlayerId());
-				if(each.getPosition()==5) request.setAttribute("position5", each.getPlayerId());
+			for (Player each : initialPlayers) {
+				if (each.getPosition() == 1)
+					request.setAttribute("position1", each.getPlayerId());
+				if (each.getPosition() == 2)
+					request.setAttribute("position2", each.getPlayerId());
+				if (each.getPosition() == 3)
+					request.setAttribute("position3", each.getPlayerId());
+				if (each.getPosition() == 4)
+					request.setAttribute("position4", each.getPlayerId());
+				if (each.getPosition() == 5)
+					request.setAttribute("position5", each.getPlayerId());
 			}
 		}
 		return direct;
 	}
-	
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@RequestParam("position1")String position1, @RequestParam("position2")String position2, @RequestParam("position3")String position3, @RequestParam("position4")String position4, @RequestParam("position5")String position5) {
+	public String save(@RequestParam("position1") String position1, @RequestParam("position2") String position2,
+			@RequestParam("position3") String position3, @RequestParam("position4") String position4,
+			@RequestParam("position5") String position5) {
 		String direct = "redirect:/team/goToTeam.html";
 		ArrayList<String> positions = new ArrayList<String>();
 		positions.add(position1);
@@ -77,29 +84,31 @@ public class TeamController {
 		positions.add(position3);
 		positions.add(position4);
 		positions.add(position5);
-		if(validatePositions(positions)) {
-			for(Player each : initialPlayers) playerService.updateInitialPosition(0, each.getPlayerId());
-			for(int i=0; i<positions.size(); i++) {
+		if (validatePositions(positions)) {
+			for (Player each : initialPlayers)
+				playerService.updateInitialPosition(0, each.getPlayerId());
+			for (int i = 0; i < positions.size(); i++) {
 				String current = positions.get(i);
 				int playerId = Integer.parseInt(current.substring(0, current.indexOf('=')));
-				playerService.updateInitialPosition(i+1, playerId);
+				playerService.updateInitialPosition(i + 1, playerId);
 			}
 		}
 		return direct;
 	}
-	
+
 	private boolean validatePositions(ArrayList<String> positions) {
 		boolean result = true;
-		for(int i=0; i < positions.size(); i++) {
-			for(int j=i+1; j < positions.size(); j++) {
-				if(positions.get(i).equals(positions.get(j))) result = false;
+		for (int i = 0; i < positions.size(); i++) {
+			for (int j = i + 1; j < positions.size(); j++) {
+				if (positions.get(i).equals(positions.get(j)))
+					result = false;
 			}
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/player", method = RequestMethod.GET)
-	public String player(@RequestParam("playerId")int playerId, HttpServletRequest request) {
+	public String player(@RequestParam("playerId") int playerId, HttpServletRequest request) {
 		String direct = "playerInfo";
 		Player player = playerService.getPlayer(playerId);
 		Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
@@ -107,14 +116,43 @@ public class TeamController {
 		request.setAttribute("chars", chars);
 		return direct;
 	}
-	
+
 	@RequestMapping(value = "/train", method = RequestMethod.GET)
-	public String train(@RequestParam("playerId")int playerId, HttpServletRequest request) {
-		String direct = "playerTrain";
-		Player player = playerService.getPlayer(playerId);
-		Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
-		request.setAttribute("player", player);
-		request.setAttribute("chars", chars);
+	public String train(@RequestParam("playerId") int playerId, HttpServletRequest request) {
+		String direct = "redirect:/login/home.html";
+		User user = (User) request.getSession().getAttribute("sessUser");
+		if (user != null) {
+			direct = "playerTrain";
+			Team team = teamService.getTeamByUserId(user.getUserId());
+			Player player = playerService.getPlayer(playerId);
+			Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
+			request.setAttribute("player", player);
+			request.setAttribute("chars", chars);
+			request.setAttribute("team", team);
+		}
+		return direct;
+	}
+	
+	@RequestMapping(value = "/trainResistance", method = RequestMethod.POST)
+	public String trainResistance(@RequestParam("playerId") int playerId, HttpServletRequest request) {
+		String direct = "redirect:/login/home.html";
+		User user = (User) request.getSession().getAttribute("sessUser");
+		if (user != null) {
+			direct = "playerTrain";
+			Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
+			Team team = teamService.getTeamByUserId(user.getUserId());
+			int currentResistance = chars.getResistance();
+			int price = currentResistance*10000;
+			int budget = team.getBudget();
+			budget -= price;
+			if(budget >= 0 && currentResistance < 100) {
+				teamService.updateBudget(team.getTeamId(), budget);
+				characteristicsService.updateCharacteristic(chars.getId(), "RESISTANCE", currentResistance+1);
+			}
+			
+			train(playerId,request);
+			//else send error no cost or max
+		}
 		return direct;
 	}
 

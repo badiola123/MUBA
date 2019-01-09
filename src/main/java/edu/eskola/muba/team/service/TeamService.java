@@ -6,4 +6,5 @@ public interface TeamService {
 	void addTeam(Team team);
 	Team getTeam(int teamId);
 	Team getTeamByUserId(int userId);
+	void updateBudget(int teamId, int budget);
 }
