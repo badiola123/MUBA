@@ -91,4 +91,5 @@
 			<add-attribute value="/static/css/playerTrain.css" />
 		</put-list-attribute>
 	</definition>
+</tiles-definitions>
 
