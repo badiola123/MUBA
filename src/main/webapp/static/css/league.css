@@ -1,0 +1,182 @@
+*{
+	box-sizing: border-box;
+}
+#leagueDisplay{
+	display: grid;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	grid-template-areas:
+	"head head"
+	"results graph";
+    grid-template-columns: 1fr 3fr;	
+	justify-content: center;
+}
+#leagueHeader{
+	grid-area: head;
+	text-align: center;
+}
+#schedule{
+	grid-area: graph;
+	margin: 3vw;
+	margin-right: 0px;
+	position: relative;
+	text-align: center;
+}
+
+#schedule>img{
+	width: 50vw;
+	object-fit: fill;
+}
+
+#gameResults{
+	padding: 1rem;
+	margin: 0;
+	grid-area: results;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	border: 1px solid cyan;
+	border-radius: 4px;
+	align-items: center;
+}
+
+#gameResults .gameResultCell{
+	margin: 8px;
+	padding: 8px;
+	border: 1px solid black;
+	border-radius: 4px;
+}
+#gameResults>h2{
+	text-size: 3rem;
+}
+.teamCell2stages{
+	position: absolute;
+	width: 26%;
+}
+
+.teamCell3stages{
+	position: absolute;
+	width: 26%;
+}
+#teamCell1.teamCell2stages{
+	top: 2%;
+	left: 12%;
+	
+}
+#teamCell2.teamCell2stages{
+	top: 28%;
+	left: 12%;
+	
+}
+#teamCell3.teamCell2stages{
+	top: 57%;
+	left: 12%;
+
+}
+#teamCell4.teamCell2stages{
+	top: 83%;
+	left: 12%;
+
+}
+#teamCell5.teamCell2stages{
+	top: 15%;
+	left: 37%;
+}
+#teamCell6.teamCell2stages{
+	top: 71%;
+	left: 37%;
+}
+#teamWinner.teamCell2stages{
+	top: 43%;
+	left: 62%;
+}
+
+#teamCell1.teamCell3stages{
+	top: 0.5%;
+	left: 9%;
+
+}
+#teamCell2.teamCell3stages{
+	top: 8%;
+	left: 9%;
+
+}
+#teamCell3.teamCell3stages{
+	top: 15.5%;
+	left: 9%;
+	
+}
+#teamCell4.teamCell3stages{
+	top: 24%;
+	left: 9%;
+	
+}
+#teamCell5.teamCell3stages{
+	top: 31.5%;
+	left: 9%;
+
+}
+#teamCell6.teamCell3stages{
+	top: 39%;
+	left: 9%;
+
+}
+#teamCell7.teamCell3stages{
+	top: 47%;
+	left: 9%;
+	
+}
+#teamCell8.teamCell3stages{
+	top: 55%;
+	left: 9%;
+
+}
+#teamCell9.teamCell3stages{
+	top: 53%;
+	left: 17%;
+	width: 20%;
+}
+#teamCell17.teamCell3stages{
+	top: 76%;
+	left: 17%;
+	width: 20%;
+}
+#teamCell11.teamCell3stages{
+	top: 18%;
+	left: 43%;
+	width: 20%;
+}
+#teamCell12.teamCell3stages{
+	top: 64%;
+	left: 43%;
+	width: 20%;
+}
+#teamCell13.teamCell3stages{
+	top: 18%;
+	left: 43%;
+	width: 20%;
+}
+#teamCell14.teamCell3stages{
+	top: 64%;
+	left: 43%;
+	width: 20%;
+}
+#teamWinner.teamCell3stages{
+	top: 41%;
+	left: 70%;
+	width: 20%;
+}
+.teamCell2stages p{
+	word-wrap: break-word;
+    width: 100%;
+	font-size: 1.5vw;
+}
+.teamCell3stages p{
+	word-wrap: break-word;
+    width: 100%;
+	font-size: 1.3vw;
+}
+
+
+

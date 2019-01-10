@@ -1,5 +1,7 @@
 package edu.eskola.muba.team.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Team")
+@Table(name = "TEAM")
 public class Team {
 
 	@Id
@@ -24,6 +26,16 @@ public class Team {
 	@Column(name = "USERID")
 	private int userId;
 
+	public Team() {}
+	
+	public Team(int teamId, String teamName, int budget, int userId) {
+		super();
+		this.teamId=teamId;
+		this.teamName=teamName;
+		this.budget=budget;
+		this.userId=userId;
+	}
+	
 	public String getTeamName() {
 		return teamName;
 	}

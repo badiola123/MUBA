@@ -44,7 +44,7 @@
 	<nav id="options">
 		<a href="/MUBA/login/home.html"><spring:message code="header.home"/></a><!--  
 		--><a href="/MUBA/team/goToTeam.html"><spring:message code="header.team"/></a><!--
-		--><a href="league"><spring:message code="header.league"/></a><!--
+		--><a href="/MUBA/league/goToLeagueList.html"><spring:message code="header.league"/></a><!--
 		--><a href="/MUBA/match/goToMatch.html"><spring:message code="header.play"/></a><!--
 		--><a href="/MUBA/account/manage.html"><spring:message code="header.account"/></a>
 	</nav>
