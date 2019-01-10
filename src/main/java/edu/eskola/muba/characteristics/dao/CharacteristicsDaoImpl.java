@@ -28,7 +28,8 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao {
 	public Characteristics getCurrentCharacteristics(int playerId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Characteristics> query = sessionFactory.getCurrentSession()
-				.createQuery("from Characteristics c WHERE c.playerId = '" + playerId + "'");
+				.createQuery("from Characteristics c WHERE c.playerId = :playerId ");
+		query.setParameter("playerId", playerId);
 		Characteristics c = query.getSingleResult();
 		return c;
 	}
@@ -37,7 +38,8 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao {
 	public List<Characteristics> getHistoricCharacteristics(int playerId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Characteristics> query = sessionFactory.getCurrentSession()
-				.createQuery("from Characteristics c WHERE c.playerId = '" + playerId + "'");
+				.createQuery("from Characteristics c WHERE c.playerId = :playerId");
+		query.setParameter("playerId", playerId);
 		return query.getResultList();
 	}
 
@@ -45,7 +47,8 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao {
 	public boolean checkCharacteristics(int characteristicsId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Characteristics> query = sessionFactory.getCurrentSession()
-				.createQuery("from Characteristics C WHERE C.characteristicsId ='" + characteristicsId + "'");
+				.createQuery("from Characteristics C WHERE C.characteristicsId =:characteristicsId");
+		query.setParameter("characteristicsId", characteristicsId);
 		Characteristics characteristics = query.getSingleResult();
 		return characteristics != null ? true : false;
 	}
@@ -54,7 +57,8 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao {
 	@Override
 	public void updateCharacteristic(int charId, String name, int value) {
 		Query<Characteristics> query = sessionFactory.getCurrentSession()
-				.createQuery("update Characteristics set "+name+" = '" + value + "' where CHARACTERISTICSID = '" + charId + "'");
+				.createQuery("update Characteristics set "+name+" = :value where CHARACTERISTICSID = '" + charId + "'");
+		query.setParameter("value", value);
 		query.executeUpdate();
 	}
 

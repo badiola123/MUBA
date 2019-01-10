@@ -26,7 +26,8 @@ public class PlayerDaoImpl implements PlayerDao {
 	public Player getPlayer(int playerId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
-				.createQuery("from Player P WHERE P.playerId = '" + playerId + "'");
+				.createQuery("from Player P WHERE P.playerId = :playerId");
+		query.setParameter("playerId", playerId);
 		Player player = query.getSingleResult();
 		return player;
 	}
@@ -35,7 +36,8 @@ public class PlayerDaoImpl implements PlayerDao {
 	public List<Player> getTeamPlayers(int teamId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
-				.createQuery("from Player P WHERE P.teamId = '" + teamId + "'");
+				.createQuery("from Player P WHERE P.teamId =:teamId");
+		query.setParameter("teamId", teamId);
 		return query.getResultList();
 	}
 
@@ -43,7 +45,8 @@ public class PlayerDaoImpl implements PlayerDao {
 	public List<Player> getInitialTeamPlayers(int teamId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
-				.createQuery("from Player P WHERE P.teamId = '" + teamId + "' AND P.initialFive=true");
+				.createQuery("from Player P WHERE P.teamId = :teamId AND P.initialFive=true");
+		query.setParameter("teamId", teamId);
 		return query.getResultList();
 	}
 
@@ -51,7 +54,8 @@ public class PlayerDaoImpl implements PlayerDao {
 	public boolean checkPlayer(int playerId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
-				.createQuery("from Player P WHERE P.playerId ='" + playerId + "'");
+				.createQuery("from Player P WHERE P.playerId =:playerId");
+		query.setParameter("playerId", playerId);
 		Player player = query.getSingleResult();
 		return player != null ? true : false;
 	}
@@ -59,16 +63,16 @@ public class PlayerDaoImpl implements PlayerDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void updateInitialPosition(int position, int playerId) {
-		@SuppressWarnings("unchecked")
 		Query<Player> query;
 		if (position == 0)
 			query = sessionFactory.getCurrentSession().createQuery(
-					"update Player set INITIALFIVE = FALSE, PLAYING = FALSE, POSITION = NULL where playerId = '"
-							+ playerId + "'");
-		else
+					"update Player set INITIALFIVE = FALSE, PLAYING = FALSE, POSITION = NULL where playerId = :playerId");
+		else {
 			query = sessionFactory.getCurrentSession()
-					.createQuery("update Player set INITIALFIVE = TRUE, PLAYING = TRUE, POSITION = '" + position
-							+ "' where playerId = '" + playerId + "'");
+					.createQuery("update Player set INITIALFIVE = TRUE, PLAYING = TRUE, POSITION = :position where playerId = :playerId");
+			query.setParameter("position", position);
+		}
+		query.setParameter("playerId", playerId);
 		query.executeUpdate();
 	}
 }

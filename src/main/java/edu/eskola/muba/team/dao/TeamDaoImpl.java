@@ -26,7 +26,8 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public Team getTeam(int teamId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Team> query = sessionFactory.getCurrentSession().createQuery("from TEAM T WHERE T.TEAMID = '" + teamId + "'");
+		TypedQuery<Team> query = sessionFactory.getCurrentSession().createQuery("from TEAM T WHERE T.TEAMID =:teamId");
+		query.setParameter("teamId", teamId);
 		Team team = query.getSingleResult();
 		return team;
 	}
@@ -34,7 +35,8 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public Team getTeamByUserId(int userId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Team> query = sessionFactory.getCurrentSession().createQuery("from Team T WHERE T.userId = " + userId);
+		TypedQuery<Team> query = sessionFactory.getCurrentSession().createQuery("from Team T WHERE T.userId =:userId");
+		query.setParameter("userId", userId);
 		Team team = query.getSingleResult();
 		return team;
 	}
@@ -42,9 +44,10 @@ public class TeamDaoImpl implements TeamDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void updateBudget(int teamId, int budget) {
-		@SuppressWarnings("unchecked")
 		Query<Team> query = sessionFactory.getCurrentSession()
-					.createQuery("update Team set BUDGET = '"+ budget +"' where TEAMID = '" + teamId + "'");
+					.createQuery("update Team set BUDGET = :budget where TEAMID = :teamId");
+		query.setParameter("teamId", teamId);
+		query.setParameter("budget", budget);
 		query.executeUpdate();
 	}
 
