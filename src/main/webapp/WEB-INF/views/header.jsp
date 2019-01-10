@@ -1,15 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<fmt:bundle basename="resources.View">
-<title><fmt:message key="header.appName"/></title>
-</fmt:bundle>
-</head>
-<body>
+
 <fmt:bundle basename="edu.eskola.muba.resources.View">
 <header>
 
@@ -58,7 +50,7 @@
 	<nav id="options">
 		<a href="/MUBA/login/home.html"><fmt:message key="header.home"/></a><!--  
 		--><a href="team"><fmt:message key="header.team"/></a><!--
-		--><a href="league"><fmt:message key="header.league"/></a><!--
+		--><a href="/MUBA/league/goToLeagueList.html"><fmt:message key="header.league"/></a><!--
 		--><a href="/MUBA/match/goToMatch.html"><fmt:message key="header.match"/></a><!--
 		--><a href="account"><fmt:message key="header.account"/></a>
 	</nav>

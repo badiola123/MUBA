@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC
-       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
-       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
     <definition name="base.definition" template="/WEB-INF/views/mainTemplate.jsp">
@@ -9,6 +9,9 @@
         <put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
         <put-attribute name="body" value=""></put-attribute>
         <put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
+    	<put-list-attribute name="stylesheets">
+          <add-attribute value="/static/css/style.css" />
+        </put-list-attribute>
     </definition>
  
     <definition name="home" extends="base.definition">
@@ -19,6 +22,23 @@
     <definition name="match" extends="base.definition">
         <put-attribute name="title" value="Match"></put-attribute>
         <put-attribute name="body" value="/WEB-INF/views/match.jsp"></put-attribute>
+    </definition>
+
+    
+    <definition name="league" extends="base.definition">
+        <put-attribute name="title" value="League"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/league.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+          <add-attribute value="/static/css/league.css" />
+        </put-list-attribute>
+    </definition>
+    
+    <definition name="leagueList" extends="base.definition">
+        <put-attribute name="title" value="LeagueList"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/leagueList.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+          <add-attribute value="/static/css/leagueList.css" />
+        </put-list-attribute>
     </definition>
  
 </tiles-definitions>

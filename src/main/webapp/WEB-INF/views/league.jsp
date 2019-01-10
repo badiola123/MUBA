@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<div id="leagueDisplay">
+		<div id="leagueHeader">
+			<h2><c:out value="${requestScope.league.leagueName}"/></h2>
+			<form action="/MUBA/league/goToLeagueList.html" method="get">
+     			<button id="toLeagueListButton" type="submit" name="action" value="return">Return to League List</button>
+			</form>
+		</div>
+		<div id="schedule">
+			<c:choose>
+    			<c:when test="${requestScope.league.stages == '2'}">
+       				<img src="/MUBA/resources/4league.png" alt="League Schedule of 2 stages"/>
+       				<c:set var="leagueType" value="2stages" scope="page"/>
+    			</c:when>
+   				<c:otherwise>
+       			 	<img src="/MUBA/resources/8league.png" alt="League Schedule of 3 stages"/>
+       			 	<c:set var="leagueType" value="3stages" scope="page"/>
+    			</c:otherwise>
+			</c:choose>
+			<c:set var="teamCounter" value="1" scope="page" />
+			<c:forEach items="${requestScope.listStageTeamList}" var="stageTeamList">
+				<c:forEach items="${stageTeamList}" var="stageTeam">
+					<div class="teamCell${leagueType}" id="teamCell${teamCounter}">
+						<c:if test="${stageTeam.teamId != '0'}"> 
+							<p><c:out value="${stageTeam.teamName}"/></p>
+						</c:if>
+				   	 <c:set var="teamCounter" value="${teamCounter + 1}" scope="page"/>
+				   	 </div>
+				</c:forEach>
+			</c:forEach>
+			<div class="teamCell${leagueType}" id="teamWinner">
+				<c:if test="${leagueWinner.teamId != '0'}"> 
+					<p><c:out value="${leagueWinner.teamName}"/></p>
+				</c:if>
+			</div>
+		
+		</div>
+		<div id="gameResults">
+			<h2 id="gameResultsTitle"><c:out value="Game Results"/></h2>
+			<c:set var="gameCounter" value="1" scope="page" />
+				<c:forEach items="${gameList}" var="game">					
+					<c:if test="${game.localTeamId != '0' && game.visitorTeamId != '0'}">
+						<form action="/MUBA/match/showGame.html" method="post"> <!--CHANGE MATCH REDIRECTION LINK-->
+			   				<button class="gameResultCell" id="gameResultCell${gameCounter}" type="submit" name="action" value=game.gameId>
+								<c:set var="localKeyString" value="${game.localTeamId}"  scope="page"></c:set>
+								<c:set var="visitorKeyString" value="${game.visitorTeamId}"  scope="page"></c:set>
+								<p><c:out value="${teamMap[localKeyString]}    ${game.localTeamResult} : ${game.visitorTeamResult}    ${teamMap[visitorKeyString]}"/></p>
+					   	 	</button>
+		       			</form>
+				   	</c:if>
+				    <c:set var="gameCounter" value="${gameCounter + 1}" scope="page"/>
+				</c:forEach>
+		</div>
+</div>
+
