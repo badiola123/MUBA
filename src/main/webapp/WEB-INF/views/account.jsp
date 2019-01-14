@@ -5,9 +5,9 @@
 <div class="changePass">
   <h1><spring:message code="manage.editPass"/></h1>
   <form action="/MUBA/account/manage.html" method="post">
-	<input id="oldPass" class="changePassForm" type="text" name="oldPass" required placeholder="<spring:message code="manage.oldPass"/>"/>
-	<input id="newPass" class="changePassForm" type="text" name="newPass" required placeholder="<spring:message code="manage.newPass"/>"/>
-	<input id="reNewPass" class="changePassForm" type="text" name="reNewPass" required placeholder="<spring:message code="manage.reNewPass"/>"/>
+	<input id="oldPass" class="changePassForm" type="password" name="oldPass" required placeholder="<spring:message code="manage.oldPass"/>"/>
+	<input id="newPass" class="changePassForm" type="password" name="newPass" required placeholder="<spring:message code="manage.newPass"/>"/>
+	<input id="reNewPass" class="changePassForm" type="password" name="reNewPass" required placeholder="<spring:message code="manage.reNewPass"/>"/>
 	<button id="changePassBut" class="changePassForm" type="submit" name="action" value="changePass"><spring:message code="action.save"/></button>
   </form>
 </div>

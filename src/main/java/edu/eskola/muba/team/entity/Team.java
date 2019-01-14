@@ -28,6 +28,14 @@ public class Team {
 		return teamName;
 	}
 
+	public Team() {}
+	
+	public Team(String teamName, int budget, int userId) {
+		this.teamName = teamName;
+		this.budget = budget;
+		this.userId = userId;
+	}
+	
 	public int getTeamId() {
 		return teamId;
 	}

@@ -1,5 +1,6 @@
 package edu.eskola.muba.player.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -70,5 +71,14 @@ public class PlayerDaoImpl implements PlayerDao {
 					.createQuery("update Player set INITIALFIVE = TRUE, PLAYING = TRUE, POSITION = '" + position
 							+ "' where playerId = '" + playerId + "'");
 		query.executeUpdate();
+	}
+
+	@Override
+	public int getLastId() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Player> query = sessionFactory.getCurrentSession()
+				.createQuery("from Player order by playerId desc").setMaxResults(1);
+		int id = query.getSingleResult().getPlayerId();
+		return id;
 	}
 }

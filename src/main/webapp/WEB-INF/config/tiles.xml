@@ -18,10 +18,12 @@
           <add-attribute value="/static/js/jquery-3.3.1.slim.min.js" />
           <add-attribute value="/static/js/popper.min.js" />
           <add-attribute value="/static/js/bootstrap.min.js" />
+          <add-attribute value="/static/js/header.js" />
         </put-list-attribute>
     </definition>
  
     <definition name="home" extends="base.definition">
+        <put-attribute name="refId" value="homeRef"></put-attribute>
         <put-attribute name="title" value="Home"></put-attribute>
         <put-attribute name="body" value="/WEB-INF/views/home.jsp"></put-attribute>
         <put-list-attribute name="stylesheets" inherit="true">
@@ -30,13 +32,16 @@
     </definition>
     
     <definition name="account" extends="base.definition">
+        <put-attribute name="refId" value="accountRef"></put-attribute>
         <put-attribute name="title" value="Account"></put-attribute>
         <put-attribute name="body" value="/WEB-INF/views/account.jsp"></put-attribute>
         <put-list-attribute name="stylesheets" inherit="true">
           <add-attribute value="/static/css/account.css" />
         </put-list-attribute>
     </definition>
+    
 	<definition name="match" extends="base.definition">
+	    <put-attribute name="refId" value="matchRef"></put-attribute>
 		<put-attribute name="title" value="Match"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/match.jsp"></put-attribute>
 		<put-list-attribute name="stylesheets" inherit="true">
@@ -45,6 +50,7 @@
 	</definition>
 
 	<definition name="team" extends="base.definition">
+	    <put-attribute name="refId" value="teamRef"></put-attribute>
 		<put-attribute name="title" value="Team"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/team.jsp"></put-attribute>
 		<put-list-attribute name="stylesheets" inherit="true">
@@ -53,13 +59,26 @@
 	</definition>
 	
 	<definition name="playerInfo" extends="base.definition">
+	    <put-attribute name="refId" value="teamRef"></put-attribute>
 		<put-attribute name="title" value="PlayerInfo"></put-attribute>
 		<put-attribute name="body"
 			value="/WEB-INF/views/playerInfo.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="playerTrain" extends="base.definition">
+	    <put-attribute name="refId" value="teamRef"></put-attribute>
 		<put-attribute name="title" value="PlayerTrain"></put-attribute>
 		<put-attribute name="body"
 			value="/WEB-INF/views/playerTrain.jsp"></put-attribute>
-	</definition></tiles-definitions>
+	</definition>
+	
+	<definition name="register" extends="base.definition">
+	    <put-attribute name="refId" value="homeRef"></put-attribute>
+        <put-attribute name="title" value="Register"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/register.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+          <add-attribute value="/static/css/register.css" />
+        </put-list-attribute>
+    </definition>
+	
+</tiles-definitions>

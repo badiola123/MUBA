@@ -42,10 +42,10 @@
   </div>
   
 	<nav id="options">
-		<a href="/MUBA/login/home.html"><spring:message code="header.home"/></a><!--  
-		--><a href="/MUBA/team/goToTeam.html"><spring:message code="header.team"/></a><!--
-		--><a href="league"><spring:message code="header.league"/></a><!--
-		--><a href="/MUBA/match/goToMatch.html"><spring:message code="header.play"/></a><!--
-		--><a href="/MUBA/account/manage.html"><spring:message code="header.account"/></a>
+		<a id="homeRef" class="selected" href="/MUBA/login/home.html"><spring:message code="header.home"/></a><!--  
+		--><a id="teamRef" class="notSelected" href="/MUBA/team/goToTeam.html"><spring:message code="header.team"/></a><!--
+		--><a id="leagueRef" class="notSelected" href="league"><spring:message code="header.league"/></a><!--
+		--><a id="matchRef" class="notSelected" href="/MUBA/match/goToMatch.html"><spring:message code="header.play"/></a><!--
+		--><a id="accountRef" class="notSelected" href="/MUBA/account/manage.html"><spring:message code="header.account"/></a>
 	</nav>
 </header>

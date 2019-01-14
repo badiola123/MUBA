@@ -38,4 +38,10 @@ public class UserServiceImpl implements UserService {
    public int changePass(String newPass, int userId) {
 	   return userDao.changePass(newPass, userId);
    }
+   
+   @Transactional
+   @Override
+   public int checkUsername(String username) {
+	   return userDao.checkUsername(username);
+   }
 }

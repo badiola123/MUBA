@@ -2,6 +2,8 @@ package edu.eskola.muba.team.dao;
 
 
 
+import java.io.Serializable;
+
 import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;

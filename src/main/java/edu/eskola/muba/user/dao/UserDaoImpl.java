@@ -1,5 +1,6 @@
 package edu.eskola.muba.user.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -28,10 +29,11 @@ public class UserDaoImpl implements UserDao {
       return query.getResultList();
    }
    
+   @Override
     public User checkUser(String username, String password) {
 	   User user;
 	   @SuppressWarnings("unchecked")
-	   TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User U WHERE U.username ='"+username+"' and U.password ="+password);
+	   TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User U WHERE U.username ='"+username+"' and U.password ='"+password+"'");
 	   try {
 		   user = query.getSingleResult();
 	   } catch (Exception e) {
@@ -47,4 +49,16 @@ public class UserDaoImpl implements UserDao {
 	   int result = query.executeUpdate();
 	   return result;
    }
+   
+   @Override
+   public int checkUsername(String username) {
+	   @SuppressWarnings("unchecked")
+	   TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User U WHERE U.username ='"+username+"'");
+	   int result = -1;
+	   try {
+		   result = query.getSingleResult().getUserId();
+	   } catch (Exception e) {
+	   }
+	   return result;
+	}
 }
