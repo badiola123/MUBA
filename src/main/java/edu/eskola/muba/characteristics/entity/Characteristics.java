@@ -64,79 +64,39 @@ public class Characteristics {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public int getResistance() {
 		return resistance;
-	}
-
-	public void setResistance(int resistance) {
-		this.resistance = resistance;
 	}
 
 	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
 	public int getBallControl() {
 		return ballControl;
-	}
-
-	public void setBallControl(int ballControl) {
-		this.ballControl = ballControl;
 	}
 
 	public int getDefense() {
 		return defense;
 	}
 
-	public void setDefense(int defense) {
-		this.defense = defense;
-	}
-
 	public int getLongShoot() {
 		return longShoot;
-	}
-
-	public void setLongShoot(int longShoot) {
-		this.longShoot = longShoot;
 	}
 
 	public int getShortShoot() {
 		return shortShoot;
 	}
 
-	public void setShortShoot(int shortShoot) {
-		this.shortShoot = shortShoot;
-	}
-
 	public int getAge() {
 		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 	public Date getcDate() {
 		return cDate;
 	}
 
-	public void setcDate(Date cDate) {
-		this.cDate = cDate;
-	}
-
 	public int getPlayerId() {
 		return playerId;
-	}
-
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
 	}
 }

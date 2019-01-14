@@ -1,5 +1,7 @@
 package edu.eskola.muba.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,7 @@ public class LoginController {
 	UserService userService = context.getBean(UserService.class);
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String helloWorld(Model m) {
+	public String homePage(Model m) {
 		return "home"; 
 	}
 	
@@ -39,19 +41,36 @@ public class LoginController {
 		User user = userService.checkUser(username, password);
 		if(user != null) {
 			modelAndView.addObject("sessUser", user);
+			modelAndView.addObject("success", "login.success");
 		}
+		else {
+			modelAndView.addObject("error", "login.error");
+		}
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView checkUser() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("home");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutUser(Model m, SessionStatus status) {
+	public ModelAndView logoutUser(Model m, SessionStatus status) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/login/loggedOut.html");
 		status.setComplete();
-		return "redirect:/login/loggedOut.html";
-	}
+		return modelAndView;
+		}
 	
 	@RequestMapping(value = "/loggedOut", method = RequestMethod.GET)
-	public String loggedOut() {
-		return "home";
+	public ModelAndView loggedOut(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("home");
+		modelAndView.addObject("success", "logout.success");
+		return modelAndView;
 	}
 
 }

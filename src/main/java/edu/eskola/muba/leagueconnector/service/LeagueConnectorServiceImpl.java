@@ -34,5 +34,17 @@ public class LeagueConnectorServiceImpl implements LeagueConnectorService{
 	public List<LeagueConnector> getLeagueTeams(int leagueId) {
 		return leagueConnectorDao.getLeagueTeams(leagueId);
 	}
+	
+	@Transactional
+	@Override
+	public int getRegisteredTeams(int leagueId) {
+		return leagueConnectorDao.getRegisteredTeams(leagueId);
+	}
+
+	@Transactional
+	@Override
+	public void leaveLeague(int leagueId, int userTeamId) {
+		leagueConnectorDao.leaveLeague(leagueId, userTeamId);	
+	}
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
 import edu.eskola.muba.characteristics.service.CharacteristicsService;
@@ -42,11 +44,10 @@ public class MatchController {
 	List<Player> enemyPlayers;
 
 	@RequestMapping(value = "/goToMatch", method = RequestMethod.GET)
-	public String goToMatch(HttpServletRequest request) {
+	public String goToMatch(HttpServletRequest request, RedirectAttributes redir) {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
-			System.out.println(user.getUserId());
 			yourTeam = teamService.getTeamByUserId(user.getUserId());
 			enemyTeam = teamService.getTeamByUserId(3);
 			yourPlayers = playerService.getInitialTeamPlayers(yourTeam.getTeamId());
@@ -58,12 +59,15 @@ public class MatchController {
 			request.setAttribute("score", "0 : 0");
 			direct = "match";
 		}
+		else {
+			redir.addFlashAttribute("error","redirect.error");
+		}
 		return direct;
 	}
 
 	@RequestMapping(value = "/play", method = RequestMethod.GET)
-	public String play(HttpServletRequest request) {
-		goToMatch(request);
+	public String play(HttpServletRequest request, RedirectAttributes redir) {
+		goToMatch(request,redir);
 		List<Characteristics> yourChars = new ArrayList<>();
 		List<Characteristics> enemyChars = new ArrayList<>();
 		doChars(yourChars, yourPlayers);
@@ -73,6 +77,7 @@ public class MatchController {
 		Match match = new Match(yourTeamGame, enemyTeamGame);
 		match.startMatch();
 		request.setAttribute("score", +match.getTeamApoints() + " : " + match.getTeamBpoints());
+		request.setAttribute("matchLogs", match.getMatchLogs());
 		return "match";
 	}
 	

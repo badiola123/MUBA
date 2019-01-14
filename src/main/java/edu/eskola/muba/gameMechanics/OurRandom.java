@@ -4,20 +4,23 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class OurRandom {
+	private Random random;
+	
+	public OurRandom() {
+		random = new Random();
+	}
 	
 	public int randomBetween(int from, int to) {
-		Random rand = new Random();
-		return rand.nextInt(to-from+1) + from;
+		return random.nextInt(to-from+1) + from;
 	}
 	
 	public PlayerGame ruletteWheelSelection(ArrayList<PlayerGame> players) {
 		int totalSum = 0;
-		Random r = new Random();
 		for(int i = 0; i< players.size(); i++) {
 			totalSum+= players.get(i).getNeededStatValue();
 		}
 		
-		int rand = r.nextInt(totalSum);
+		int rand = random.nextInt(totalSum);
 		int partialSum = 0;
 		for(int i = 0; i < players.size(); i++) {
 			partialSum += players.get(i).getNeededStatValue();
