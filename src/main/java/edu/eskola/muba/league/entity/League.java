@@ -14,6 +14,12 @@ public class League {
 	@Id
 	@Column(name= "LEAGUEID", insertable = false, updatable = false)
 	private int leagueId;
+	
+	@Column(name= "HOSTTEAM")
+	private int hostTeam;
+	
+	@Column(name= "STARTED")
+	private boolean started;
 
 	@Column(name = "STARTDATE")
 	private Date startDate;
@@ -35,9 +41,11 @@ public class League {
 	
 	public League() {}
 	
-	public League(int leagueId, Date startDate, Date endDate, String leagueName, String leagueDesc, int stages, int winnerTeam) {
+	public League(int leagueId, int hostTeam, boolean started, Date startDate, Date endDate, String leagueName, String leagueDesc, int stages, int winnerTeam) {
 		super();
 		this.leagueId=leagueId;
+		this.hostTeam=hostTeam;
+		this.started=started;
 		this.startDate=startDate;
 		this.endDate=endDate;
 		this.leagueName=leagueName;
@@ -52,6 +60,22 @@ public class League {
 
 	public void setLeagueId(int leagueId) {
 		this.leagueId = leagueId;
+	}
+	
+	public int getHostTeam() {
+		return hostTeam;
+	}
+
+	public void setHostTeam(int hostTeam) {
+		this.hostTeam = hostTeam;
+	}
+	
+	public boolean isStarted() {
+		return started;
+	}
+
+	public void setStarted(boolean started) {
+		this.started = started;
 	}
 
 	public Date getStartDate() {

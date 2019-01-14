@@ -1,6 +1,10 @@
 package edu.eskola.muba.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -24,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import org.apache.commons.lang3.time.DateUtils;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
 import edu.eskola.muba.characteristics.service.CharacteristicsService;
@@ -61,13 +68,152 @@ public class LeagueController {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
-			leagues=leagueService.getActiveLeagues();
+			Team userTeam= teamService.getTeamByUserId(user.getUserId());
+			String category = request.getParameter("category");
+			leagues=leagueService.getActiveLeagues(userTeam.getTeamId());
+			HashMap<Integer, Integer> joinedTeamsMap;
+			if(category==null) category="running";
+			switch (category) {
+				case "available":
+					List<Integer>leagueIdList;
+					leagueIdList=leagueService.getAvailableLeagues(userTeam.getTeamId());
+					leagues=getLeaguesFromIdList(leagueIdList);
+					joinedTeamsMap=getLeagueJoinedTeams(leagues);
+					request.setAttribute("joinedTeamsMap", joinedTeamsMap);
+					break;
+				case "finished":
+					leagues=leagueService.getFinishedLeagues(userTeam.getTeamId());
+					break;
+				case "notStarted":
+					leagues=leagueService.getNotStartedLeagues(userTeam.getTeamId());
+					joinedTeamsMap=getLeagueJoinedTeams(leagues);
+					request.setAttribute("joinedTeamsMap", joinedTeamsMap);
+					break;
+				case "running":
+				default:
+					leagues=leagueService.getActiveLeagues(userTeam.getTeamId());
+					break;
+			}	
+			request.setAttribute("category", category);
 			request.setAttribute("leagues", leagues);
 			direct = "leagueList";
 		}
 		return direct;
 	}
 	
+	
+	public List<League> getLeaguesFromIdList(List<Integer> leagueIdList) {
+		List<League>leagueList=new ArrayList<League>();
+		Iterator<Integer> it= leagueIdList.iterator();
+		while(it.hasNext()) {
+			leagueList.add(leagueService.getLeague(it.next()));
+		}
+		return leagueList;
+	}
+
+
+
+	@RequestMapping(value = "/leagueActions", method = RequestMethod.GET)
+	public String manageLeagueActions(HttpServletRequest request) {
+		String direct = "redirect:/login/home.html";
+		User user = (User) request.getSession().getAttribute("sessUser");
+		if (user != null) {
+			Team userTeam= teamService.getTeamByUserId(user.getUserId());
+			int userTeamId=userTeam.getTeamId();
+			String action = request.getParameter("action");
+			String redirectionCategory="";
+			if(action!=null) {
+				int leagueId=Integer.parseInt(request.getParameter("leagueId"));
+				if(action.equals("leave")) {
+					boolean host=leagueService.checkIfHost(leagueId, userTeamId);
+					leagueConnectorService.leaveLeague(leagueId, userTeamId);
+					if(host == true) {
+						leagueService.deleteLeague(leagueId);
+						//infoMessage league deleted
+						System.out.println("League Deleted");
+					}
+					redirectionCategory="notStarted";
+				}
+				if(action.equals("join")) {
+					int members=leagueConnectorService.getRegisteredTeams(leagueId);
+					int neededTeams=leagueService.getNeededTeams(leagueId);
+					if(members<neededTeams) {
+						LeagueConnector lc= new LeagueConnector(leagueId, userTeamId);
+						leagueConnectorService.addLeagueConnector(lc);
+						members=leagueConnectorService.getRegisteredTeams(leagueId);
+						if(members==neededTeams) {
+							startLeague(leagueId);
+						}
+					}else {
+						//show error "already not possible to join"
+					}
+					redirectionCategory="available";
+				}
+			}
+			direct = "leagueList";
+			request.setAttribute("category", redirectionCategory);
+		}
+		return direct;
+	}
+
+	public void startLeague(int leagueId) {
+		DateUtils du=new DateUtils();
+		Date leagueStartDate = new Date(); //League start date
+		Date leagueEndDate;
+		Date gamesDate=DateUtils.addMinutes(leagueStartDate, 30);
+		League league=leagueService.getLeague(leagueId);
+		int stages=league.getStages();
+		int daysToChange;
+		int teamsAtStage;
+		Game game;
+		if(stages==2) {
+			daysToChange=3;
+			teamsAtStage=4;
+		}
+		else {
+			daysToChange=7;
+			teamsAtStage=8;
+		}
+		leagueEndDate=DateUtils.addDays(leagueStartDate, daysToChange);
+		leagueEndDate=DateUtils.addMinutes(leagueEndDate, 90); //League end date
+		leagueService.changeLeagueDates(leagueId, leagueStartDate, leagueEndDate);
+		leagueService.startLeague(leagueId);
+		int localTeamId;
+		int visitorTeamId;
+		List<LeagueConnector> leagueConnectorList = leagueConnectorService.getLeagueTeams(leagueId);
+		Iterator<LeagueConnector> it=leagueConnectorList.iterator();
+		for(int stage=1;stage<=stages;stage++) {
+			
+			for(int gameNumber=1;gameNumber<=(teamsAtStage/2);gameNumber++) {
+				if(stage==1) {
+					localTeamId=it.next().getTeamId();
+					visitorTeamId=it.next().getTeamId();
+				}else {
+					localTeamId=0;
+					visitorTeamId=0;
+				}
+				game=new Game(0,gamesDate,localTeamId,visitorTeamId,leagueId,0,0,stage,"","","");
+				gameService.addGame(game);
+				DateUtils.addDays(gamesDate, 1);
+			}
+			teamsAtStage/=2;
+		}
+	}
+
+	public HashMap<Integer, Integer> getLeagueJoinedTeams(List<League> leagues) {
+		HashMap<Integer, Integer> map 
+	    = new HashMap<Integer,Integer>();
+		Iterator<League> it= leagues.iterator();
+		League l;
+		int numTeams;
+		while(it.hasNext()) {
+			l=it.next();
+			numTeams=leagueConnectorService.getRegisteredTeams(l.getLeagueId());
+			map.put(l.getLeagueId(), numTeams);
+		}
+		return map;
+	}
+
 	@RequestMapping(value = "/goToLeague", method = RequestMethod.GET)
 	public String goToLeague(HttpServletRequest request) {
 		String direct = "redirect:/login/home.html";
@@ -94,13 +240,42 @@ public class LeagueController {
 			request.setAttribute("league", league);
 			request.setAttribute("leagueWinner", leagueWinner);
 			request.setAttribute("listStageTeamList", listStageTeamList);
-
-			
-			
 			direct = "league";
 		}
 		return direct;
 	}
+	
+	
+
+	@RequestMapping(value = "/newLeague", method = RequestMethod.POST)
+	public ModelAndView newLeague(HttpServletRequest request, RedirectAttributes redir) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/login/home.html");
+		User user = (User) request.getSession().getAttribute("sessUser");
+		if(user!=null) 	modelAndView.setViewName("newLeague");
+		else redir.addFlashAttribute("warning", "login.warning");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/confirmLeague", method = RequestMethod.POST)
+	public ModelAndView confirmLeague(HttpServletRequest request, @RequestParam("leagueName")String leagueName, @RequestParam("leagueDesc")String leagueDesc, @RequestParam("teamAmount")int teamAmount,  RedirectAttributes redir) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/login/home.html");
+		User user = (User) request.getSession().getAttribute("sessUser");
+		if(user!=null) {
+			Team userTeam= teamService.getTeamByUserId(user.getUserId());
+			int stages = (teamAmount==8) ? 3 : 2;
+			Date date = new Date();
+			League league= new League(0,userTeam.getTeamId(), false, date,date, leagueName, leagueDesc, stages, 0 );
+			leagueService.addLeague(league);
+			int teamId = teamService.getTeamByUserId(user.getUserId()).getTeamId();
+			leagueConnectorService.addLeagueConnector(new LeagueConnector(leagueService.getLastLeagueId(),teamId));
+			modelAndView.setViewName("redirect:/league/goToLeagueList.html");
+		}else redir.addFlashAttribute("warning", "login.warning");
+		return modelAndView;
+	}
+	
+
 	
 	public List<Team> getStageTeamsOrdered(int leagueId, int stage){
 		List<Team> stageTeams=new ArrayList<Team>();
@@ -164,27 +339,5 @@ public class LeagueController {
 		}
 		return teamMap;
 	}
-/*
-	@RequestMapping(value = "/play", method = RequestMethod.GET)
-	public String play(HttpServletRequest request) {
-		goToMatch(request);
-		List<Characteristics> yourChars = new ArrayList<>();
-		List<Characteristics> enemyChars = new ArrayList<>();
-		doChars(yourChars, yourPlayers);
-		doChars(enemyChars, enemyPlayers);
-		TeamGame yourTeamGame = new TeamGame(yourTeam.getTeamName(), yourChars);
-		TeamGame enemyTeamGame = new TeamGame(enemyTeam.getTeamName(), enemyChars);
-		Match match = new Match(yourTeamGame, enemyTeamGame);
-		match.startMatch();
-		request.setAttribute("score", +match.getTeamApoints() + " : " + match.getTeamBpoints());
-		return "match";
-	}
-	
-	private void doChars(List<Characteristics> chars, List<Player> players) {
-		for(int i=0; i<players.size(); i++) {
-			chars.add( characteristicsService.getCurrentCharacteristics(players.get(i).getPlayerId()) );
-		}
-	}
-	*/
 
 }

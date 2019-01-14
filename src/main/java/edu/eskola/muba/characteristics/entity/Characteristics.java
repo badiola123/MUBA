@@ -64,39 +64,49 @@ public class Characteristics {
 		return id;
 	}
 
+
 	public int getResistance() {
 		return resistance;
 	}
+
 
 	public int getHeight() {
 		return height;
 	}
 
+
 	public int getBallControl() {
 		return ballControl;
 	}
+
 
 	public int getDefense() {
 		return defense;
 	}
 
+
 	public int getLongShoot() {
 		return longShoot;
 	}
+
 
 	public int getShortShoot() {
 		return shortShoot;
 	}
 
+
 	public int getAge() {
 		return age;
 	}
+
 
 	public Date getcDate() {
 		return cDate;
 	}
 
+	
 	public int getPlayerId() {
 		return playerId;
 	}
+
 }

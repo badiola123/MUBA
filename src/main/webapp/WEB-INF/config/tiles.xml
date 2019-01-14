@@ -34,6 +34,7 @@
         </put-list-attribute>
     </definition>
     
+
     <definition name="account" extends="base.definition">
         <put-attribute name="title" value="Account"></put-attribute>
         <put-attribute name="body" value="/WEB-INF/views/account.jsp"></put-attribute>
@@ -41,6 +42,7 @@
           <add-attribute value="/static/css/account.css" />
         </put-list-attribute>
     </definition>
+
 	<definition name="league" extends="base.definition">
         <put-attribute name="title" value="League"></put-attribute>
         <put-attribute name="body" value="/WEB-INF/views/league.jsp"></put-attribute>
@@ -55,7 +57,15 @@
         <put-list-attribute name="stylesheets" inherit="true">
           <add-attribute value="/static/css/leagueList.css" />
         </put-list-attribute>
-    </definition> 	<definition name="match" extends="base.definition">
+	<definition name="newLeague" extends="base.definition">
+        <put-attribute name="title" value="newLeague"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/newLeague.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+          <add-attribute value="/static/css/newLeague.css" />
+        </put-list-attribute>
+    </definition> 
+    
+    <definition name="match" extends="base.definition">
 		<put-attribute name="title" value="Match"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/match.jsp"></put-attribute>
 		<put-list-attribute name="stylesheets" inherit="true">
@@ -92,4 +102,3 @@
 		</put-list-attribute>
 	</definition>
 </tiles-definitions>
-

@@ -10,11 +10,11 @@ import edu.eskola.muba.characteristics.dao.CharacteristicsDao;
 import edu.eskola.muba.characteristics.entity.Characteristics;
 
 @Service
-public class CharacteristicsServiceImpl implements CharacteristicsService {
+
 
 	@Autowired
 	CharacteristicsDao characteristicsDao;
-
+	
 	@Transactional
 	@Override
 	public void addCharacteristics(Characteristics characteristics) {
@@ -38,6 +38,7 @@ public class CharacteristicsServiceImpl implements CharacteristicsService {
 	public boolean checkCharacteristics(int characteristicsId) {
 		return characteristicsDao.checkCharacteristics(characteristicsId);
 	}
+
 
 	@Transactional
 	@Override

@@ -44,10 +44,12 @@ public class MatchController {
 	List<Player> enemyPlayers;
 
 	@RequestMapping(value = "/goToMatch", method = RequestMethod.GET)
+
 	public String goToMatch(HttpServletRequest request, RedirectAttributes redir) {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
+
 			yourTeam = teamService.getTeamByUserId(user.getUserId());
 			enemyTeam = teamService.getTeamByUserId(3);
 			yourPlayers = playerService.getInitialTeamPlayers(yourTeam.getTeamId());
@@ -66,6 +68,7 @@ public class MatchController {
 	}
 
 	@RequestMapping(value = "/play", method = RequestMethod.GET)
+
 	public String play(HttpServletRequest request, RedirectAttributes redir) {
 		goToMatch(request,redir);
 		List<Characteristics> yourChars = new ArrayList<>();

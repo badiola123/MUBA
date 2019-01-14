@@ -13,13 +13,16 @@ import edu.eskola.muba.user.entity.User;
 @Repository
 public class UserDaoImpl implements UserDao {
 
+
 	@Autowired
 	private SessionFactory sessionFactory;
+
 
 	@Override
 	public void add(User user) {
 		sessionFactory.getCurrentSession().save(user);
 	}
+
 
 	@Override
 	public List<User> listUsers() {
