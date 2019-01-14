@@ -57,6 +57,8 @@
         <put-list-attribute name="stylesheets" inherit="true">
           <add-attribute value="/static/css/leagueList.css" />
         </put-list-attribute>
+    </definition>
+    
 	<definition name="newLeague" extends="base.definition">
         <put-attribute name="title" value="newLeague"></put-attribute>
         <put-attribute name="body" value="/WEB-INF/views/newLeague.jsp"></put-attribute>

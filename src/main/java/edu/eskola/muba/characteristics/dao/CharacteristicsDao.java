@@ -10,3 +10,4 @@ public interface CharacteristicsDao {
 	Characteristics getCurrentCharacteristics(int playerId);
 	List<Characteristics> getHistoricCharacteristics(int playerId);
 	boolean checkCharacteristics(int characteristicsId);
+}

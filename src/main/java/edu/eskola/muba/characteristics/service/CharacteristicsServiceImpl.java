@@ -10,7 +10,7 @@ import edu.eskola.muba.characteristics.dao.CharacteristicsDao;
 import edu.eskola.muba.characteristics.entity.Characteristics;
 
 @Service
-
+public class CharacteristicsServiceImpl implements CharacteristicsService{
 
 	@Autowired
 	CharacteristicsDao characteristicsDao;

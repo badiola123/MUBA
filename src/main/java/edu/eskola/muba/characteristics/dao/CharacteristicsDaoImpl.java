@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
-import edu.eskola.muba.team.entity.Team;
+
 
 @Repository
-
+public class CharacteristicsDaoImpl implements CharacteristicsDao{
 	@Autowired
 	private SessionFactory sessionFactory;
 	

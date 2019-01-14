@@ -10,3 +10,4 @@ public interface CharacteristicsService {
 	Characteristics getCurrentCharacteristics(int playerId);
 	List<Characteristics> getHistoricCharacteristics(int playerId);
 	boolean checkCharacteristics(int characteristicsId);
+}
