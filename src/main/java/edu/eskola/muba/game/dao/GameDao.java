@@ -3,7 +3,6 @@ package edu.eskola.muba.game.dao;
 import java.util.List;
 
 import edu.eskola.muba.game.entity.Game;
-import edu.eskola.muba.league.entity.League;
 
 public interface GameDao {
 	void addGame(Game game);
@@ -13,5 +12,4 @@ public interface GameDao {
 	Game getLastPlayedGame(int teamId);
 	Game nextGame(int teamId);
 	void updateGame(int gameId, String key, String value);
-	void moveTeamUp(int teamId, int leagueId);
-}
+	void moveTeamUp(int teamId, int leagueId);}

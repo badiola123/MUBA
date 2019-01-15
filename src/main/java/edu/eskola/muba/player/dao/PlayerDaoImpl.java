@@ -12,10 +12,12 @@ import org.springframework.stereotype.Repository;
 import edu.eskola.muba.player.entity.Player;
 
 @Repository
+
 public class PlayerDaoImpl implements PlayerDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
 
 	@Override
 	public void addPlayer(Player player) {
@@ -25,6 +27,7 @@ public class PlayerDaoImpl implements PlayerDao {
 	@Override
 	public Player getPlayer(int playerId) {
 		@SuppressWarnings("unchecked")
+
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.playerId = :playerId");
 		query.setParameter("playerId", playerId);
@@ -35,15 +38,18 @@ public class PlayerDaoImpl implements PlayerDao {
 	@Override
 	public List<Player> getTeamPlayers(int teamId) {
 		@SuppressWarnings("unchecked")
+
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.teamId =:teamId");
 		query.setParameter("teamId", teamId);
 		return query.getResultList();
 	}
 
+
 	@Override
 	public List<Player> getInitialTeamPlayers(int teamId) {
 		@SuppressWarnings("unchecked")
+
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.teamId = :teamId AND P.initialFive=true");
 		query.setParameter("teamId", teamId);
@@ -53,10 +59,12 @@ public class PlayerDaoImpl implements PlayerDao {
 	@Override
 	public boolean checkPlayer(int playerId) {
 		@SuppressWarnings("unchecked")
+
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.playerId =:playerId");
 		query.setParameter("playerId", playerId);
 		Player player = query.getSingleResult();
+
 		return player != null ? true : false;
 	}
 
@@ -74,5 +82,14 @@ public class PlayerDaoImpl implements PlayerDao {
 		}
 		query.setParameter("playerId", playerId);
 		query.executeUpdate();
+	}
+
+	@Override
+	public int getLastId() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Player> query = sessionFactory.getCurrentSession()
+				.createQuery("from Player order by playerId desc").setMaxResults(1);
+		int id = query.getSingleResult().getPlayerId();
+		return id;
 	}
 }

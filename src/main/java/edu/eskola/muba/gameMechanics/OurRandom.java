@@ -11,15 +11,18 @@ public class OurRandom {
 	}
 	
 	public int randomBetween(int from, int to) {
+	
 		return random.nextInt(to-from+1) + from;
 	}
 	
 	public PlayerGame ruletteWheelSelection(ArrayList<PlayerGame> players) {
 		int totalSum = 0;
+
 		for(int i = 0; i< players.size(); i++) {
 			totalSum+= players.get(i).getNeededStatValue();
 		}
 		
+	
 		int rand = random.nextInt(totalSum);
 		int partialSum = 0;
 		for(int i = 0; i < players.size(); i++) {

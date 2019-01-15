@@ -1,11 +1,7 @@
 package edu.eskola.muba.team.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -28,6 +24,12 @@ public class Team {
 
 	public Team() {}
 	
+	public Team(String teamName, int budget, int userId) {
+		this.teamName = teamName;
+		this.budget = budget;
+		this.userId = userId;
+	}
+	
 	public Team(int teamId, String teamName, int budget, int userId) {
 		super();
 		this.teamId=teamId;
@@ -40,6 +42,7 @@ public class Team {
 		return teamName;
 	}
 
+	
 	public int getTeamId() {
 		return teamId;
 	}

@@ -44,6 +44,7 @@
 				<c:forEach items="${gameList}" var="game">					
 					<c:if test="${game.localTeamId != '0' && game.visitorTeamId != '0'}">
 						<form action="/MUBA/match/showGame.html" method="post"> <!--CHANGE MATCH REDIRECTION LINK-->
+							<input name="gameId" type="hidden" value="${game.gameId}">
 			   				<button class="gameResultCell" id="gameResultCell${gameCounter}" type="submit" name="action" value=game.gameId>
 								<c:set var="localKeyString" value="${game.localTeamId}"  scope="page"></c:set>
 								<c:set var="visitorKeyString" value="${game.visitorTeamId}"  scope="page"></c:set>

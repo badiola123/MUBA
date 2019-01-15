@@ -1,5 +1,6 @@
 package edu.eskola.muba.league.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,57 @@ public class LeagueServiceImpl implements LeagueService{
 
 	@Transactional
 	@Override
-	public List<League> getActiveLeagues() {
-		return leagueDao.getActiveLeagues();
+	public List<League> getActiveLeagues(int teamId) {
+		return leagueDao.getActiveLeagues(teamId);
+	}
+	
+	@Transactional
+	@Override
+	public List<Integer> getAvailableLeagues(int teamId) {
+		return leagueDao.getAvailableLeagues(teamId);
+	}
+	
+	@Transactional
+	@Override
+	public List<League> getNotStartedLeagues(int teamId) {
+		return leagueDao.getNotStartedLeagues(teamId);
+	}
+	
+	@Transactional
+	@Override
+	public List<League> getFinishedLeagues(int teamId) {
+		return leagueDao.getFinishedLeagues(teamId);
+	}
+	@Transactional
+	@Override
+	public int getLastLeagueId() {
+		return leagueDao.getLastLeagueId();
+	}
+
+	@Transactional
+	@Override
+	public boolean checkIfHost(int leagueId, int userTeamId) {
+		return leagueDao.checkIfHost(leagueId, userTeamId);
+	}
+	@Transactional
+	@Override
+	public int getNeededTeams(int leagueId) {
+		return leagueDao.getNeededTeams(leagueId);
+	}
+	@Transactional
+	@Override
+	public void startLeague(int leagueId) {
+		leagueDao.startLeague(leagueId);
+	}
+	@Transactional
+	@Override
+	public void changeLeagueDates(int leagueId, Date startDate, Date endDate) {
+		leagueDao.changeLeagueDates(leagueId, startDate, endDate);
+	}
+	@Transactional
+	@Override
+	public void deleteLeague(int leagueId) {
+		leagueDao.deleteLeague(leagueId);
 	}
 
 }

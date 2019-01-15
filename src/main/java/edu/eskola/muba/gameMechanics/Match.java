@@ -22,16 +22,19 @@ public class Match {
 			currentRound++;
 			Round round;
 			if(currentRound%2==1) {
+
 				round = new Round(teamA, teamB, calculations, matchLogs);
 				teamApoints+=round.playRound();
 				matchLogs = round.getMatchLogs();
 			}
 			else {
+
 				round = new Round(teamB, teamA, calculations, matchLogs);
 				teamBpoints+=round.playRound();
 				matchLogs = round.getMatchLogs();
 			}
 		} while(currentRound<roundsAmount || teamApoints==teamBpoints);
+	
 		TeamGame winnerTeam;
 		if(teamApoints>teamBpoints) winnerTeam = teamA;
 		else winnerTeam = teamB;

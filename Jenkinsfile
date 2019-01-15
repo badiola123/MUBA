@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage ('Build') {
             steps {
+
               sh 'mvn clean compile install'
               sh 'mvn sonar:sonar \
   -Dsonar.host.url=http://ec2-34-195-236-81.compute-1.amazonaws.com:9000 \

@@ -10,14 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
-import edu.eskola.muba.team.entity.Team;
+
 
 @Repository
-public class CharacteristicsDaoImpl implements CharacteristicsDao {
-
+public class CharacteristicsDaoImpl implements CharacteristicsDao{
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	
 	@Override
 	public void addCharacteristics(Characteristics characteristics) {
 		sessionFactory.getCurrentSession().save(characteristics);
@@ -37,6 +36,7 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao {
 	@Override
 	public List<Characteristics> getHistoricCharacteristics(int playerId) {
 		@SuppressWarnings("unchecked")
+
 		TypedQuery<Characteristics> query = sessionFactory.getCurrentSession()
 				.createQuery("from Characteristics c WHERE c.playerId = :playerId");
 		query.setParameter("playerId", playerId);
@@ -46,12 +46,15 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao {
 	@Override
 	public boolean checkCharacteristics(int characteristicsId) {
 		@SuppressWarnings("unchecked")
+
 		TypedQuery<Characteristics> query = sessionFactory.getCurrentSession()
 				.createQuery("from Characteristics C WHERE C.characteristicsId =:characteristicsId");
 		query.setParameter("characteristicsId", characteristicsId);
 		Characteristics characteristics = query.getSingleResult();
 		return characteristics != null ? true : false;
 	}
+
+
 
 	@SuppressWarnings("unchecked")
 	@Override

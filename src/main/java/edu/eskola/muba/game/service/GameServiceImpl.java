@@ -8,9 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.eskola.muba.game.dao.GameDao;
 import edu.eskola.muba.game.entity.Game;
-import edu.eskola.muba.leagueconnector.dao.LeagueConnectorDao;
-import edu.eskola.muba.leagueconnector.entity.LeagueConnector;
-import edu.eskola.muba.leagueconnector.service.LeagueConnectorService;
 
 @Service
 public class GameServiceImpl implements GameService {
