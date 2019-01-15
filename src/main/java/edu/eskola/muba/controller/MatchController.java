@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import edu.eskola.muba.gameMechanics.Match;
 import edu.eskola.muba.gameMechanics.TeamGame;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +24,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.eskola.muba.characteristics.entity.Characteristics;
 import edu.eskola.muba.characteristics.service.CharacteristicsService;
 import edu.eskola.muba.config.AppConfig;
+import edu.eskola.muba.game.entity.Game;
+import edu.eskola.muba.game.service.GameService;
 import edu.eskola.muba.player.entity.Player;
 import edu.eskola.muba.player.service.PlayerService;
 import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
 import edu.eskola.muba.team.service.TeamServiceImpl;
 import edu.eskola.muba.user.entity.User;
+import schedule.TimeComponent;
 
 @Controller
 @RequestMapping("match")
@@ -37,53 +42,86 @@ public class MatchController {
 	TeamService teamService = context.getBean(TeamService.class);
 	PlayerService playerService = context.getBean(PlayerService.class);
 	CharacteristicsService characteristicsService = context.getBean(CharacteristicsService.class);
+	GameService gameService = context.getBean(GameService.class);
 
-	private Team yourTeam;
-	private Team enemyTeam;
-	List<Player> yourPlayers;
-	List<Player> enemyPlayers;
+	private Team localTeam;
+	private Team visitorTeam;
+	List<Player> localPlayers;
+	List<Player> visitorPlayers;
 
 	@RequestMapping(value = "/goToMatch", method = RequestMethod.GET)
-	public String goToMatch(HttpServletRequest request, RedirectAttributes redir) {
+	public String goToMatch(HttpServletRequest request, RedirectAttributes redir, Locale locale) {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
-			yourTeam = teamService.getTeamByUserId(user.getUserId());
-			enemyTeam = teamService.getTeamByUserId(3);
-			yourPlayers = playerService.getInitialTeamPlayers(yourTeam.getTeamId());
-			enemyPlayers = playerService.getInitialTeamPlayers(enemyTeam.getTeamId());
-			request.setAttribute("yourTeam", yourTeam);
-			request.setAttribute("enemyTeam", enemyTeam);
-			request.setAttribute("yourPlayers", yourPlayers);
-			request.setAttribute("enemyPlayers", enemyPlayers);
-			request.setAttribute("score", "0 : 0");
+			Team yourTeam = teamService.getTeamByUserId(user.getUserId());
+			Game game = gameService.getLastPlayedGame(yourTeam.getTeamId());
+			localTeam = teamService.getTeam(game.getLocalTeamId());
+			visitorTeam = teamService.getTeam(game.getVisitorTeamId());
+
+			localPlayers = playerService.getInitialTeamPlayers(localTeam.getTeamId());
+			visitorPlayers = playerService.getInitialTeamPlayers(visitorTeam.getTeamId());
+			request.setAttribute("localTeam", localTeam);
+			request.setAttribute("visitorTeam", visitorTeam);
+			request.setAttribute("localPlayers", localPlayers);
+			request.setAttribute("visitorPlayers", visitorPlayers);
+			request.setAttribute("score", game.getLocalTeamResult() + " : " + game.getVisitorTeamResult());
+
+			if (locale.getLanguage().equals("es"))
+				request.setAttribute("matchLogs", game.getEsLogs());
+			if (locale.getLanguage().equals("en"))
+				request.setAttribute("matchLogs", game.getEnLogs());
+			if (locale.getLanguage().equals("eu"))
+				request.setAttribute("matchLogs", game.getBqLogs());
+
+			Game nextGame = gameService.nextGame(yourTeam.getTeamId());
+			if (nextGame != null)
+				request.setAttribute("nextMatch", nextGame.getGameDate().toString());
+
 			direct = "match";
-		}
-		else {
-			redir.addFlashAttribute("error","redirect.error");
+		} else {
+			redir.addFlashAttribute("error", "redirect.error");
 		}
 		return direct;
 	}
 
 	@RequestMapping(value = "/play", method = RequestMethod.GET)
-	public String play(HttpServletRequest request, RedirectAttributes redir) {
-		goToMatch(request,redir);
-		List<Characteristics> yourChars = new ArrayList<>();
-		List<Characteristics> enemyChars = new ArrayList<>();
-		doChars(yourChars, yourPlayers);
-		doChars(enemyChars, enemyPlayers);
-		TeamGame yourTeamGame = new TeamGame(yourTeam.getTeamName(), yourChars);
-		TeamGame enemyTeamGame = new TeamGame(enemyTeam.getTeamName(), enemyChars);
-		Match match = new Match(yourTeamGame, enemyTeamGame);
-		match.startMatch();
-		request.setAttribute("score", +match.getTeamApoints() + " : " + match.getTeamBpoints());
-		request.setAttribute("matchLogs", match.getMatchLogs());
+	public String play(HttpServletRequest request, RedirectAttributes redir, Locale locale) {
+		goToMatch(request, redir, locale);
+		Runnable task = () -> {
+			System.out.println("XDDD");
+		};
+		TimeComponent tc = new TimeComponent();
+		tc.scheduling(task);
 		return "match";
 	}
-	
+
+	public void scheduleGame(Game game) {
+		List<Characteristics> localChars = new ArrayList<>();
+		List<Characteristics> visitorChars = new ArrayList<>();
+		Team localTeam = teamService.getTeam(game.getLocalTeamId());
+		Team visitorTeam = teamService.getTeam(game.getVisitorTeamId());
+		List<Player> localPlayers = playerService.getInitialTeamPlayers(localTeam.getTeamId());
+		List<Player> visitorPlayers = playerService.getInitialTeamPlayers(visitorTeam.getTeamId());
+		doChars(localChars, localPlayers);
+		doChars(visitorChars, visitorPlayers);
+		TeamGame localTeamGame = new TeamGame(localTeam.getTeamName(), localChars);
+		TeamGame visitorTeamGame = new TeamGame(visitorTeam.getTeamName(), visitorChars);
+		Match match = new Match(localTeamGame, visitorTeamGame);
+		match.startMatch();
+		gameService.updateGame(game.getGameId(), "localTeamResult", Integer.toString(match.getTeamApoints()));
+		gameService.updateGame(game.getGameId(), "visitorTeamResult", Integer.toString(match.getTeamBpoints()));
+		gameService.updateGame(game.getGameId(), "enLogs", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "esLogs", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "bqLogs", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "played", Integer.toString(1));
+
+
+	}
+
 	private void doChars(List<Characteristics> chars, List<Player> players) {
-		for(int i=0; i<players.size(); i++) {
-			chars.add( characteristicsService.getCurrentCharacteristics(players.get(i).getPlayerId()) );
+		for (int i = 0; i < players.size(); i++) {
+			chars.add(characteristicsService.getCurrentCharacteristics(players.get(i).getPlayerId()));
 		}
 	}
 

@@ -13,11 +13,11 @@ import edu.eskola.muba.leagueconnector.entity.LeagueConnector;
 import edu.eskola.muba.leagueconnector.service.LeagueConnectorService;
 
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
 	@Autowired
 	GameDao gameDao;
-	
+
 	@Transactional
 	@Override
 	public void addGame(Game game) {
@@ -35,12 +35,29 @@ public class GameServiceImpl implements GameService{
 	public List<Game> getLeagueGamesByStage(int leagueId, int stage) {
 		return gameDao.getLeagueGamesByStage(leagueId, stage);
 	}
-	
+
 	@Transactional
 	@Override
 	public List<Game> getLeagueGames(int leagueId) {
 		return gameDao.getLeagueGames(leagueId);
 	}
 
-}
+	@Transactional
+	@Override
+	public Game getLastPlayedGame(int teamId) {
+		return gameDao.getLastPlayedGame(teamId);
+	}
 
+	@Transactional
+	@Override
+	public Game nextGame(int teamId) {
+		return gameDao.nextGame(teamId);
+	}
+
+	@Transactional
+	@Override
+	public void updateGame(int gameId, String key, String value) {
+		gameDao.updateGame(gameId, key, value);	
+	}
+
+}
