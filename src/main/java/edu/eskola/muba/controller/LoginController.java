@@ -142,7 +142,7 @@ public class LoginController {
 	}
 
 	private void validData(ModelAndView modelAndView, RedirectAttributes redir, String[] regUserInfo, String regTeamName, List<String[]> list) {
-		if((checkUsername(modelAndView, regUserInfo) == -1) & (checkTeam(modelAndView, regTeamName) == 1)) {
+		if((checkUsername(modelAndView, regUserInfo) == -1) & (checkTeam(modelAndView, regTeamName) == 1) & (checkPlayer(modelAndView, list) == 1)) {
 			createWithData(regUserInfo, regTeamName, list);
 			redir.addFlashAttribute("info", "register.success");
 		}
@@ -201,6 +201,19 @@ public class LoginController {
 		userService.add(user);
 	}
 
+	private int checkPlayer(ModelAndView modelAndView, List<String[]> list) {
+		int result = 1;
+		for(int i = 0; i < list.size(); i++) {
+			String[] playerData = list.get(i);
+			if((playerData[0].length() >=15) || (playerData[1].length() >=15)) {
+				result = 0;
+				modelAndView.addObject("warning", "register.playerLengthError");
+			}
+		}
+		
+		return result;
+	}
+	
 	private int checkUsername(ModelAndView modelAndView, String[] regUserInfo) {
 		int result = userService.checkUsername(regUserInfo[0]);
 		if(result != -1) modelAndView.addObject("error", "register.usernameError");

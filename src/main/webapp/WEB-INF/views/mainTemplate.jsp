@@ -6,7 +6,8 @@
 <tiles:importAttribute name="stylesheets"/>
 <tiles:importAttribute name="javascripts"/>
 
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html>
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
