@@ -21,6 +21,14 @@ public class TeamGame {
 		this.name = name; 
 	}
 	
+	public PlayerGame getPlayerById(int playerId) {
+		PlayerGame player = null;
+		for(PlayerGame each : players) {
+			if(each.getPlayerId() == playerId) player = each;
+		}
+		return player;
+	}
+	
 	public void staminaLoss() {
 		for(PlayerGame player : players) {
 			player.staminaLoss();

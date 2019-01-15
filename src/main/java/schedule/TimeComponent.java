@@ -19,10 +19,9 @@ public class TimeComponent {
     	taskScheduler = cg.taskScheduler();
     }
 
-    public void scheduling(final Runnable task) {
+    public void scheduling(final Runnable task, Date date) {
         // Schedule a task to run once at the given date (here in 1minute)
-    	taskScheduler.schedule(task, Date.from(LocalDateTime.now().plusMinutes(1)
-            .atZone(ZoneId.systemDefault()).toInstant()));
+    	taskScheduler.schedule(task, date);
 
     }
 }

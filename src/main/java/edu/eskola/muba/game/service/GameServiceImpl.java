@@ -60,4 +60,10 @@ public class GameServiceImpl implements GameService {
 		gameDao.updateGame(gameId, key, value);	
 	}
 
+	@Transactional
+	@Override
+	public void moveTeamUp(int teamId, int leagueId) {
+		gameDao.moveTeamUp(teamId, leagueId);
+	}
+
 }

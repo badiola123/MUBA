@@ -2,6 +2,7 @@ package edu.eskola.muba.controller;
 
 import java.util.ArrayList;
 import edu.eskola.muba.gameMechanics.Match;
+import edu.eskola.muba.gameMechanics.PlayerGame;
 import edu.eskola.muba.gameMechanics.TeamGame;
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +29,9 @@ import edu.eskola.muba.game.entity.Game;
 import edu.eskola.muba.game.service.GameService;
 import edu.eskola.muba.player.entity.Player;
 import edu.eskola.muba.player.service.PlayerService;
+import edu.eskola.muba.stats.entity.Stats;
+import edu.eskola.muba.stats.entity.StatsId;
+import edu.eskola.muba.stats.service.StatsService;
 import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
 import edu.eskola.muba.team.service.TeamServiceImpl;
@@ -43,6 +47,7 @@ public class MatchController {
 	PlayerService playerService = context.getBean(PlayerService.class);
 	CharacteristicsService characteristicsService = context.getBean(CharacteristicsService.class);
 	GameService gameService = context.getBean(GameService.class);
+	StatsService statsService = context.getBean(StatsService.class);
 
 	private Team localTeam;
 	private Team visitorTeam;
@@ -88,15 +93,18 @@ public class MatchController {
 	@RequestMapping(value = "/play", method = RequestMethod.GET)
 	public String play(HttpServletRequest request, RedirectAttributes redir, Locale locale) {
 		goToMatch(request, redir, locale);
+
+		Game game = gameService.getGame(8);
 		Runnable task = () -> {
-			System.out.println("XDDD");
+			System.out.println("ODPALAMYYYYYYYYYY");
+			playGame(game);
 		};
 		TimeComponent tc = new TimeComponent();
-		tc.scheduling(task);
+		tc.scheduling(task, game.getGameDate());
 		return "match";
 	}
 
-	public void scheduleGame(Game game) {
+	public void playGame(Game game) {
 		List<Characteristics> localChars = new ArrayList<>();
 		List<Characteristics> visitorChars = new ArrayList<>();
 		Team localTeam = teamService.getTeam(game.getLocalTeamId());
@@ -108,15 +116,38 @@ public class MatchController {
 		TeamGame localTeamGame = new TeamGame(localTeam.getTeamName(), localChars);
 		TeamGame visitorTeamGame = new TeamGame(visitorTeam.getTeamName(), visitorChars);
 		Match match = new Match(localTeamGame, visitorTeamGame);
+
 		match.startMatch();
-		gameService.updateGame(game.getGameId(), "localTeamResult", Integer.toString(match.getTeamApoints()));
-		gameService.updateGame(game.getGameId(), "visitorTeamResult", Integer.toString(match.getTeamBpoints()));
-		gameService.updateGame(game.getGameId(), "enLogs", match.getMatchLogs());
-		gameService.updateGame(game.getGameId(), "esLogs", match.getMatchLogs());
-		gameService.updateGame(game.getGameId(), "bqLogs", match.getMatchLogs());
-		gameService.updateGame(game.getGameId(), "played", Integer.toString(1));
 
+		gameService.updateGame(game.getGameId(), "LOCALTEAMRESULT", Integer.toString(match.getTeamApoints()));
+		gameService.updateGame(game.getGameId(), "VISITORTEAMRESULT", Integer.toString(match.getTeamBpoints()));
+		gameService.updateGame(game.getGameId(), "ENLOGS", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "ESLOGS", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "BQLOGS", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "PLAYED", Integer.toString(1));
 
+		for (Player each : localPlayers) {
+			PlayerGame playerGame = localTeamGame.getPlayerById(each.getPlayerId());
+			StatsId statsId = new StatsId(each.getPlayerId(), game.getGameId());
+			Stats stats = new Stats(statsId, playerGame.getTwoPointsScored(), playerGame.getTwoPointsShot(),
+					playerGame.getThreePointsScored(), playerGame.getThreePointsShot(), playerGame.getOffRebound(),
+					playerGame.getDeffRebound(), playerGame.getSteals(), playerGame.getBlocks());
+			statsService.addStats(stats);
+		}
+		
+		for (Player each : visitorPlayers) {
+			PlayerGame playerGame = visitorTeamGame.getPlayerById(each.getPlayerId());
+			StatsId statsId = new StatsId(each.getPlayerId(), game.getGameId());
+			Stats stats = new Stats(statsId, playerGame.getTwoPointsScored(), playerGame.getTwoPointsShot(),
+					playerGame.getThreePointsScored(), playerGame.getThreePointsShot(), playerGame.getOffRebound(),
+					playerGame.getDeffRebound(), playerGame.getSteals(), playerGame.getBlocks());
+			statsService.addStats(stats);
+		}
+
+		if (game.getLocalTeamResult() > game.getVisitorTeamResult())
+			gameService.moveTeamUp(game.getLocalTeamId(), game.getLeagueId());
+		else
+			gameService.moveTeamUp(game.getVisitorTeamId(), game.getLeagueId());
 	}
 
 	private void doChars(List<Characteristics> chars, List<Player> players) {
