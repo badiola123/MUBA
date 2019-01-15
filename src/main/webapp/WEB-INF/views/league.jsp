@@ -4,10 +4,10 @@
 
 <div id="leagueDisplay">
 		<div id="leagueHeader">
-			<h2><c:out value="${requestScope.league.leagueName}"/></h2>
 			<form action="/MUBA/league/goToLeagueList.html" method="get">
      			<button id="toLeagueListButton" type="submit" name="action" value="return">Return to League List</button>
 			</form>
+			<h2><c:out value="${requestScope.league.leagueName}"/></h2>
 		</div>
 		<div id="schedule">
 			<c:choose>
@@ -39,7 +39,7 @@
 		
 		</div>
 		<div id="gameResults">
-			<h2 id="gameResultsTitle"><c:out value="Game Results"/></h2>
+			<h3 id="gameResultsTitle"><c:out value="Game Results"/></h3>
 			<c:set var="gameCounter" value="1" scope="page" />
 				<c:forEach items="${gameList}" var="game">					
 					<c:if test="${game.localTeamId != '0' && game.visitorTeamId != '0'}">
@@ -48,7 +48,7 @@
 			   				<button class="gameResultCell" id="gameResultCell${gameCounter}" type="submit" name="action" value=game.gameId>
 								<c:set var="localKeyString" value="${game.localTeamId}"  scope="page"></c:set>
 								<c:set var="visitorKeyString" value="${game.visitorTeamId}"  scope="page"></c:set>
-								<p><c:out value="${teamMap[localKeyString]}    ${game.localTeamResult} : ${game.visitorTeamResult}    ${teamMap[visitorKeyString]}"/></p>
+								<p><c:out value="${teamMap[localKeyString]}"/></p> <p class="points"><c:out value="${game.localTeamResult}"/> : <c:out value="${game.visitorTeamResult}"/> </p><p> <c:out value="${teamMap[visitorKeyString]}"/></p>
 					   	 	</button>
 		       			</form>
 				   	</c:if>
