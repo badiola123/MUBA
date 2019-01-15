@@ -88,8 +88,20 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView register(HttpServletRequest request, RedirectAttributes redir) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/login/home.html");
+		User user = (User) request.getSession().getAttribute("sessUser");
+		
+		if(user==null) modelAndView.setViewName("register");
+		else redir.addFlashAttribute("warning", "logout.warning");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView registerChangeLang(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
 		User user = (User) request.getSession().getAttribute("sessUser");

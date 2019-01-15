@@ -16,12 +16,12 @@ header {
 	color: white;
 }
 
-header div.options {
+header div.lang {
 	float: right;
 	text-align: right;
 }
 
-header div.lang, header div.logout {
+header div.lang {
 	display: inline-block;
 	margin-left: 1em;
 }
@@ -111,61 +111,23 @@ header div.banner img.logo {
 	height: calc(( 15vw)* 0.5625);
 }
 
+.block {
+	width: 100%;
+	margin: 0.3rem;
+}
+
+
 .login {
-	display: grid;
-	grid-template-areas: "username password login" ". . register";
-	grid-template-rows: auto auto;
-	grid-template-columns: auto auto auto;
+	display: flex;
 }
 
-#usernameTxt {
-	grid-area: username;
-}
-
-#passwordTxt {
-	grid-area: password;
-}
-
-#loginBut {
-	grid-area: login;
-}
-
-#registerBut {
-	grid-area: register;
+#loginFields {
+	display: flex;
 }
 
 .logout {
-	display: inline-block;
+	display: flex;
 }
-
-.error {
-	margin: 8px;
-	padding: 4px;
-	background-color: rgba(192, 0, 0, 0.2);
-	color: red;;
-	border: 1px solid black;
-	border-radius: 4px;
-	grid-area: error;
-}
-
-.message {
-	margin: 8px;
-	padding: 4px;
-	background-color: rgba(0, 192, 0, 0.2);
-	color: green;
-	border: 1px solid black;
-	border-radius: 4px;
-	grid-area: message;
-}
-
-body>header {
-	grid-area: top;
-}
-
-img {
-	width: 100%;
-}
-
 
 form {
 	margin: 0px;
@@ -175,4 +137,9 @@ form {
 
 .alert {
 	margin: 0.25rem;
+}
+
+.flag {
+	width: 4vw;
+	height: calc(( 4vw)* 0.5625);
 }

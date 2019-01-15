@@ -12,30 +12,30 @@
       <c:choose>
         <c:when test="${not empty sessUser}">
 		  <div class="logout">
-		    <h3><spring:message code="header.welcome"/> "${sessUser.username}"</h3>
-		    <form action="/MUBA/login/logout.html" method="get">
-			  <button type="submit" name="action" value="logout"><spring:message code="action.logout"/></button>
+		    <div id="welcomeMess"><h3 class="block"><spring:message code="header.welcome"/> "${sessUser.username}"</h3></div>
+		    <form id="logoutFields" action="/MUBA/login/logout.html" method="get">
+			  <button class="block" type="submit" name="action" value="logout"><spring:message code="action.logout"/></button>
 			</form>
 		  </div>
         </c:when>
         <c:otherwise>
           <div class="login">
-            <form action="/MUBA/login/login.html" method="post">
-		      <input id="usernameTxt" type="text" name="username" required placeholder="<spring:message code="header.username"/>"/>
-		      <input id="passwordTxt" type="password" name="password" required placeholder="<spring:message code="header.password"/>"/>
-		      <button id="loginBut" type="submit" name="action" value="login"><spring:message code="action.login"/></button>
+            <form id="loginFields" action="/MUBA/login/login.html" method="post">
+		      <input id="usernameTxt" class="block" type="text" name="username" required placeholder="<spring:message code="header.username"/>"/>
+		      <input id="passwordTxt" class="block" type="password" name="password" required placeholder="<spring:message code="header.password"/>"/>
+		      <button id="loginBut" class="block" type="submit" name="action" value="login"><spring:message code="action.login"/></button>
 	        </form>
-	        <form action="/MUBA/login/register.html" method="get">
-	  	      <button id="registerBut" type="submit" name="action" value="new"><spring:message code="action.register"/></button>
+	        <form id="registerFields" action="/MUBA/login/register.html" method="post">
+	  	      <button id="registerBut" class="block" type="submit" name="action" value="new"><spring:message code="action.register"/></button>
 	        </form>
           </div>
 	    </c:otherwise>
 	  </c:choose>
 	  
 	  <div class="lang">
-		<a href="?locale=en"><spring:message code="language.en"/></a>
-		<a href="?locale=es_ES"><spring:message code="language.es"/></a>
-		<a href="?locale=eu"><spring:message code="language.eu"/></a>
+		<a href="?locale=en"><img class="flag" border="0" alt="<spring:message code="language.en"/>" src="/MUBA/resources/english.jpg"></a>
+		<a href="?locale=es_ES"><img class="flag" border="0" alt="<spring:message code="language.es"/>" src="/MUBA/resources/hispania.png"></a>
+		<a href="?locale=eu"><img class="flag" border="0" alt="<spring:message code="language.eu"/>" src="/MUBA/resources/euskera.png"></a>
 	  </div>
 	  
     </div>
