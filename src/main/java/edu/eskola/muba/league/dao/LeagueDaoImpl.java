@@ -99,26 +99,26 @@ public class LeagueDaoImpl implements LeagueDao{
 
 	@Override
 	public void startLeague(int leagueId) {
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings("rawtypes")
 		Query query=sessionFactory.getCurrentSession().createQuery("UPDATE League set started = true where leagueId = '"+leagueId+"'");
 		query.executeUpdate();
 	}
 
 	@Override
 	public void changeLeagueDates(int leagueId, Date startDate, Date endDate) {
-		@SuppressWarnings("unchecked")
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String start=dateFormat.format(startDate);
 		String end=dateFormat.format(endDate);
+		@SuppressWarnings("rawtypes")
 		Query query=sessionFactory.getCurrentSession().createQuery("UPDATE League set startDate = '"+start+"', endDate = '"+end+"' where leagueId = '"+leagueId+"'");
 		query.executeUpdate();
 	}
 
 	@Override
 	public void deleteLeague(int leagueId) {
-		@SuppressWarnings("unchecked") 
+		@SuppressWarnings("rawtypes")
 		Query query = sessionFactory.getCurrentSession().createQuery("delete from League where leagueId = '" + leagueId + "'");
-		int result = query.executeUpdate();
+		query.executeUpdate();
 	}
 
 }

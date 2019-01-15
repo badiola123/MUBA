@@ -83,4 +83,13 @@ public class PlayerDaoImpl implements PlayerDao {
 		query.setParameter("playerId", playerId);
 		query.executeUpdate();
 	}
+
+	@Override
+	public int getLastId() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Player> query = sessionFactory.getCurrentSession()
+				.createQuery("from Player order by playerId desc").setMaxResults(1);
+		int id = query.getSingleResult().getPlayerId();
+		return id;
+	}
 }

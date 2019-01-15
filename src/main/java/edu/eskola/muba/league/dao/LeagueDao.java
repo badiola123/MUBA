@@ -3,8 +3,6 @@ package edu.eskola.muba.league.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import edu.eskola.muba.league.entity.League;
 
 public interface LeagueDao {

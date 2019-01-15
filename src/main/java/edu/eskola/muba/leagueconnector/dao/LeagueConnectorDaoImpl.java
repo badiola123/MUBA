@@ -4,23 +4,18 @@ import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.TransactionManager;
 
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import edu.eskola.muba.league.entity.League;
 import edu.eskola.muba.leagueconnector.entity.LeagueConnector;
-import edu.eskola.muba.team.entity.Team;
-
 @Repository
 public class LeagueConnectorDaoImpl implements LeagueConnectorDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	private TransactionManager transactionManager;
 	
 	@Override
 	public void addLeagueConnector(LeagueConnector leagueConnector) {
@@ -50,8 +45,7 @@ public class LeagueConnectorDaoImpl implements LeagueConnectorDao {
 
 	@Override
 	public void leaveLeague(int leagueId, int userTeamId) {	
-		@SuppressWarnings("unchecked") 
-		 Query query = sessionFactory.getCurrentSession().createQuery("delete from LeagueConnector where leagueId = '" + leagueId + "' AND teamId = '"+ userTeamId+"'");
-		 int result = query.executeUpdate();
+		Query query = sessionFactory.getCurrentSession().createQuery("delete from LeagueConnector where leagueId = '" + leagueId + "' AND teamId = '"+ userTeamId+"'");
+		 query.executeUpdate();
 	}
 }

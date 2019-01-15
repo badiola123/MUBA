@@ -8,15 +8,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
@@ -26,7 +20,6 @@ import edu.eskola.muba.player.entity.Player;
 import edu.eskola.muba.player.service.PlayerService;
 import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
-import edu.eskola.muba.team.service.TeamServiceImpl;
 import edu.eskola.muba.user.entity.User;
 
 @Controller
@@ -62,7 +55,7 @@ public class MatchController {
 			direct = "match";
 		}
 		else {
-			redir.addFlashAttribute("error","redirect.error");
+			redir.addFlashAttribute("warning", "login.warning");
 		}
 		return direct;
 	}

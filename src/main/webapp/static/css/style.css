@@ -65,7 +65,7 @@ header>h1 {
 	background-color: #008B96;
 }
 
-#options a {
+#options a.notSelected {
 	display: inline-block;
 	margin: 8px;
 	padding: 8px;
@@ -75,6 +75,20 @@ header>h1 {
 	text-align: center;
 	color: white;
 	text-decoration: none;
+}
+
+#options a.selected {
+	display: inline-block;
+	margin: 8px;
+	padding: 8px;
+	border: 3px solid white;
+	width: calc(20% - 16px);
+	border-radius: 4px;
+	text-align: center;
+	background-color: #00bece;
+	color: #eaeaea;
+	text-decoration: none;
+	font-weight: bold;
 }
 
 #options a:hover, #options a:current {

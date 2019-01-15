@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
-import edu.eskola.muba.player.entity.Player;
-import edu.eskola.muba.team.entity.Team;
 
 public class TeamGame {
 	private ArrayList<PlayerGame> players;

@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.eskola.muba.league.entity.League;
 import edu.eskola.muba.leagueconnector.dao.LeagueConnectorDao;
 import edu.eskola.muba.leagueconnector.entity.LeagueConnector;
-import edu.eskola.muba.team.entity.Team;
 
 @Service
 public class LeagueConnectorServiceImpl implements LeagueConnectorService{

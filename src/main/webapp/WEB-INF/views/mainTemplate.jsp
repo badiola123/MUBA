@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -7,10 +6,8 @@
 <tiles:importAttribute name="stylesheets"/>
 <tiles:importAttribute name="javascripts"/>
 
-
 <!DOCTYPE html>
 <html>
-
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,7 +15,6 @@
     <c:forEach var="css" items="${stylesheets}">
       <link rel="stylesheet" type="text/css" href="<c:url value="${css}"/>">
     </c:forEach>
-
 
     <c:forEach var="script" items="${javascripts}">
       <script src="<c:url value="${script}"/>"></script>
@@ -30,4 +26,7 @@
     <tiles:insertAttribute name="alerts" />
     <tiles:insertAttribute name="body" />
   </body>
+  
+  <script>setButton("<tiles:insertAttribute name="refId" />");</script>
+  
 </html>

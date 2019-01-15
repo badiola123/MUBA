@@ -51,4 +51,10 @@ public class PlayerServiceImpl implements PlayerService{
 		playerDao.updateInitialPosition(position, playerId);
 	}
 
+	@Transactional
+	@Override
+	public int getLastId() {
+		return playerDao.getLastId();
+	}
+
 }

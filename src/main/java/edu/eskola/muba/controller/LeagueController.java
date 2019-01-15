@@ -1,15 +1,10 @@
 package edu.eskola.muba.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import edu.eskola.muba.gameMechanics.Match;
-import edu.eskola.muba.gameMechanics.TeamGame;
 import edu.eskola.muba.league.entity.League;
 import edu.eskola.muba.league.service.LeagueService;
 import edu.eskola.muba.leagueconnector.entity.LeagueConnector;
@@ -21,27 +16,21 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.apache.commons.lang3.time.DateUtils;
 
-import edu.eskola.muba.characteristics.entity.Characteristics;
 import edu.eskola.muba.characteristics.service.CharacteristicsService;
 import edu.eskola.muba.config.AppConfig;
 import edu.eskola.muba.game.entity.Game;
 import edu.eskola.muba.game.service.GameService;
-import edu.eskola.muba.player.entity.Player;
 import edu.eskola.muba.player.service.PlayerService;
 import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
-import edu.eskola.muba.team.service.TeamServiceImpl;
 import edu.eskola.muba.user.entity.User;
 
 @Controller
@@ -64,7 +53,7 @@ public class LeagueController {
 	
 
 	@RequestMapping(value = "/goToLeagueList", method = RequestMethod.GET)
-	public String goToLeagueList(HttpServletRequest request) {
+	public String goToLeagueList(HttpServletRequest request, RedirectAttributes redir) {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
@@ -97,6 +86,9 @@ public class LeagueController {
 			request.setAttribute("category", category);
 			request.setAttribute("leagues", leagues);
 			direct = "leagueList";
+		}
+		else {
+			redir.addFlashAttribute("warning", "login.warning");
 		}
 		return direct;
 	}
@@ -157,7 +149,6 @@ public class LeagueController {
 	}
 
 	public void startLeague(int leagueId) {
-		DateUtils du=new DateUtils();
 		Date leagueStartDate = new Date(); //League start date
 		Date leagueEndDate;
 		Date gamesDate=DateUtils.addMinutes(leagueStartDate, 30);
@@ -324,7 +315,7 @@ public class LeagueController {
 	}
 	
 	public Team getImaginaryTeam() {
-		Team t=new Team(0,"NoTeam",0,0);
+		Team t=new Team(-1,"NoTeam",0,0);
 		return t;
 	}
 	

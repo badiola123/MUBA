@@ -1,12 +1,6 @@
 package edu.eskola.muba.gameMechanics;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import edu.eskola.muba.characteristics.entity.Characteristics;
-import edu.eskola.muba.characteristics.service.CharacteristicsService;
-import edu.eskola.muba.config.AppConfig;
-import edu.eskola.muba.player.entity.Player;
-import edu.eskola.muba.player.service.PlayerService;
 
 public class PlayerGame {
 	private float stamina=100.0f;

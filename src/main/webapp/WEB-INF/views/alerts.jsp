@@ -20,6 +20,7 @@
   </div>
 </c:if>
 
+
 <c:if test="${not empty warning}">
   <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <spring:message code="${warning}"/>
