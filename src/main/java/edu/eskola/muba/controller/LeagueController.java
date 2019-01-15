@@ -191,10 +191,10 @@ public class LeagueController {
 					localTeamId=it.next().getTeamId();
 					visitorTeamId=it.next().getTeamId();
 				}else {
-					localTeamId=0;
-					visitorTeamId=0;
+					localTeamId=-1;
+					visitorTeamId=-1;
 				}
-				game=new Game(0,gamesDate,localTeamId,visitorTeamId,leagueId,0,0,stage,"","","");
+				game=new Game(0,gamesDate,localTeamId,visitorTeamId,leagueId,0,0,stage,"","","",false);
 				gameService.addGame(game);
 				DateUtils.addDays(gamesDate, 1);
 			}
@@ -224,7 +224,7 @@ public class LeagueController {
 			String leagueIdStr = request.getParameter("leagueId");
 			int leagueId=Integer.parseInt(leagueIdStr);
 			league=leagueService.getLeague(leagueId);
-			if(league.getWinnerTeam()!=0) {
+			if(league.getWinnerTeam()!=-1) {
 				leagueWinner=teamService.getTeam(league.getWinnerTeam());
 			}else {
 				leagueWinner=getImaginaryTeam();
@@ -260,19 +260,22 @@ public class LeagueController {
 	}
 	
 	@RequestMapping(value = "/confirmLeague", method = RequestMethod.POST)
-	public ModelAndView confirmLeague(HttpServletRequest request, @RequestParam("leagueName")String leagueName, @RequestParam("leagueDesc")String leagueDesc, @RequestParam("teamAmount")int teamAmount,  RedirectAttributes redir) {
+	public ModelAndView confirmLeague(HttpServletRequest request, @RequestParam("leagueName")String leagueName, @RequestParam("leagueDesc")String leagueDesc, @RequestParam("teamAmount")int teamAmount,@RequestParam("action")String action,  RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if(user!=null) {
-			Team userTeam= teamService.getTeamByUserId(user.getUserId());
-			int stages = (teamAmount==8) ? 3 : 2;
-			Date date = new Date();
-			League league= new League(0,userTeam.getTeamId(), false, date,date, leagueName, leagueDesc, stages, 0 );
-			leagueService.addLeague(league);
-			int teamId = teamService.getTeamByUserId(user.getUserId()).getTeamId();
-			leagueConnectorService.addLeagueConnector(new LeagueConnector(leagueService.getLastLeagueId(),teamId));
+			if(action.equals("confirmLeague")) {
+				Team userTeam= teamService.getTeamByUserId(user.getUserId());
+				int stages = (teamAmount==8) ? 3 : 2;
+				Date date = new Date();
+				League league= new League(0,userTeam.getTeamId(), false, date,date, leagueName, leagueDesc, stages, -1 );
+				leagueService.addLeague(league);
+				int teamId = teamService.getTeamByUserId(user.getUserId()).getTeamId();
+				leagueConnectorService.addLeagueConnector(new LeagueConnector(leagueService.getLastLeagueId(),teamId));
+			}
 			modelAndView.setViewName("redirect:/league/goToLeagueList.html");
+			
 		}else redir.addFlashAttribute("warning", "login.warning");
 		return modelAndView;
 	}
@@ -287,12 +290,12 @@ public class LeagueController {
 		Iterator<Game> itr = leagueGames.iterator();
 		while(itr.hasNext()) {
 			 game = itr.next();
-			 if(game.getLocalTeamId()!=0) {
+			 if(game.getLocalTeamId()!=-1) {
 				 stageTeams.add(teamService.getTeam(game.getLocalTeamId()));
 			 }else {
 				 stageTeams.add(getImaginaryTeam());
 			 }
-			 if(game.getVisitorTeamId()!=0) {
+			 if(game.getVisitorTeamId()!=-1) {
 				 stageTeams.add(teamService.getTeam(game.getVisitorTeamId()));
 			 }else {
 				 stageTeams.add(getImaginaryTeam());
@@ -310,12 +313,12 @@ public class LeagueController {
 		Iterator<Game> itr = leagueGames.iterator();
 		while(itr.hasNext()) {
 			 game = itr.next();
-			 if(game.getLocalTeamId()!=0) {
+			 if(game.getLocalTeamId()!=-1) {
 				 stageTeams.add(teamService.getTeam(game.getLocalTeamId()));
 			 }else {
 				 stageTeams.add(getImaginaryTeam());
 			 }
-			 if(game.getVisitorTeamId()!=0) {
+			 if(game.getVisitorTeamId()!=-1) {
 				 stageTeams.add(teamService.getTeam(game.getVisitorTeamId()));
 			 }else {
 				 stageTeams.add(getImaginaryTeam());

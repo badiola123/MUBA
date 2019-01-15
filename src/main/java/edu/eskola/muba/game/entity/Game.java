@@ -52,7 +52,7 @@ public class Game {
 	
 	public Game() {}
 	
-	public Game(int gameId, Date gameDate, int localTeamId, int visitorTeamId, int leagueId, int localTeamResult, int visitorTeamResult, int stage, String enLogs, String esLogs, String bqLogs) {
+	public Game(int gameId, Date gameDate, int localTeamId, int visitorTeamId, int leagueId, int localTeamResult, int visitorTeamResult, int stage, String enLogs, String esLogs, String bqLogs, boolean played) {
 		super();
 		this.gameId=gameId;
 		this.gameDate=gameDate;
@@ -65,6 +65,7 @@ public class Game {
 		this.enLogs=enLogs;
 		this.esLogs=esLogs;
 		this.bqLogs=bqLogs;
+		this.played=played;
 	}
 	
 	public boolean getPlayed() {
