@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title><spring:message code="match.title"/></title>
+<title><spring:message code="match.title" /></title>
 </head>
 <body>
 	<div id="match">
@@ -18,14 +18,21 @@
 			<div class="teamName">${visitorTeam.teamName}</div>
 		</header>
 		<c:choose>
-		<c:when test="${not empty nextMatch}">
-		<p id="nextMatch"><spring:message code="match.next"/> ${nextMatch}</p>
-		</c:when>
-		<c:otherwise>
-		<p id="nextMatch"><spring:message code="match.noNext"/> ${nextMatch}</p>
-		</c:otherwise>
+			<c:when test="${nextMatch eq 'noGame'}">
+				<p id="nextMatch">
+					<spring:message code="match.noNext" />
+				</p>
+			</c:when>
+			<c:otherwise>
+				<c:if test="${not empty nextMatch}">
+					<p id="nextMatch">
+						<spring:message code="match.next" />
+						${nextMatch}
+					</p>
+				</c:if>
+			</c:otherwise>
 		</c:choose>
-		
+
 		<div class="main">
 			<div class="pitch">
 				<img alt="basketball pitch" src="/MUBA/resources/pitch.png" />
@@ -71,9 +78,6 @@
 				</div>
 			</div>
 			<div class="dataLog">${matchLogs}</div>
-			<form action="/MUBA/match/play.html" method="get">
-				<button id="playButton" type="submit" name="action" value="start">PLAY</button>
-			</form>
 		</div>
 	</div>
 </body>

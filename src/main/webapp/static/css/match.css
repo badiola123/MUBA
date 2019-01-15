@@ -40,15 +40,6 @@
 	height: 40vw;
 }
 
-#playButton {
-	width: 50vw;
-	height: 10vw;
-	color: black;
-	font-size: 4vw;
-	margin: 3vw;
-	margin-top: 0px;
-}
-
 #player0 {
 	position: absolute;
 	top: 18%;

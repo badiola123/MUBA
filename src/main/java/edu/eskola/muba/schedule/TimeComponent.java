@@ -1,4 +1,4 @@
-package schedule;
+package edu.eskola.muba.schedule;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

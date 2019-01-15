@@ -1,4 +1,4 @@
-package schedule;
+package edu.eskola.muba.schedule;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
