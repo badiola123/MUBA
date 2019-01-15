@@ -85,7 +85,7 @@ public class MatchController {
 
 			direct = "match";
 		} else {
-			redir.addFlashAttribute("error", "redirect.error");
+			redir.addFlashAttribute("warning", "login.warning");
 		}
 		return direct;
 	}

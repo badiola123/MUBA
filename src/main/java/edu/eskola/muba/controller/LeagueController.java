@@ -106,8 +106,9 @@ public class LeagueController {
 
 
 	@RequestMapping(value = "/leagueActions", method = RequestMethod.GET)
-	public String manageLeagueActions(HttpServletRequest request) {
-		String direct = "redirect:/login/home.html";
+	public ModelAndView manageLeagueActions(HttpServletRequest request, RedirectAttributes redir) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/login/home.html");
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
 			Team userTeam= teamService.getTeamByUserId(user.getUserId());
@@ -118,12 +119,19 @@ public class LeagueController {
 				int leagueId=Integer.parseInt(request.getParameter("leagueId"));
 				if(action.equals("leave")) {
 					boolean host=leagueService.checkIfHost(leagueId, userTeamId);
-					leagueConnectorService.leaveLeague(leagueId, userTeamId);
-					if(host == true) {
+					List<LeagueConnector> leagueTeams=leagueConnectorService.getLeagueTeams(leagueId);
+					int nTeams=leagueTeams.size();
+					if(host == true && nTeams==1) {
+						leagueConnectorService.leaveLeague(leagueId, userTeamId);
 						leagueService.deleteLeague(leagueId);
-						//infoMessage league deleted
-						System.out.println("League Deleted");
+						modelAndView.addObject("info", "league.deleted");
+					}else if(host==true) {
+						modelAndView.addObject("info", "league.cantLeave");
+					}else {
+						leagueConnectorService.leaveLeague(leagueId, userTeamId);
+						modelAndView.addObject("info", "league.left");
 					}
+					
 					redirectionCategory="notStarted";
 				}
 				if(action.equals("join")) {
@@ -137,15 +145,18 @@ public class LeagueController {
 							startLeague(leagueId);
 						}
 					}else {
-						//show error "already not possible to join"
+						modelAndView.addObject("error", "league.full");
 					}
 					redirectionCategory="available";
 				}
 			}
-			direct = "leagueList";
-			request.setAttribute("category", redirectionCategory);
+			modelAndView.setViewName("leagueList");
+			modelAndView.addObject("category", redirectionCategory);
+		}else {
+			redir.addFlashAttribute("warning", "login.warning");
 		}
-		return direct;
+		
+		return modelAndView;
 	}
 
 	public void startLeague(int leagueId) {

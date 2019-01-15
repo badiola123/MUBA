@@ -24,7 +24,7 @@
 			<c:forEach items="${requestScope.listStageTeamList}" var="stageTeamList">
 				<c:forEach items="${stageTeamList}" var="stageTeam">
 					<div class="teamCell${leagueType}" id="teamCell${teamCounter}">
-						<c:if test="${stageTeam.teamId != '0'}"> 
+						<c:if test="${stageTeam.teamId != '-1'}"> 
 							<p><c:out value="${stageTeam.teamName}"/></p>
 						</c:if>
 				   	 <c:set var="teamCounter" value="${teamCounter + 1}" scope="page"/>
@@ -32,7 +32,7 @@
 				</c:forEach>
 			</c:forEach>
 			<div class="teamCell${leagueType}" id="teamWinner">
-				<c:if test="${leagueWinner.teamId != '0'}"> 
+				<c:if test="${leagueWinner.teamId != '-1'}"> 
 					<p><c:out value="${leagueWinner.teamName}"/></p>
 				</c:if>
 			</div>
@@ -42,7 +42,7 @@
 			<h2 id="gameResultsTitle"><c:out value="Game Results"/></h2>
 			<c:set var="gameCounter" value="1" scope="page" />
 				<c:forEach items="${gameList}" var="game">					
-					<c:if test="${game.localTeamId != '0' && game.visitorTeamId != '0'}">
+					<c:if test="${game.localTeamId != '-1' && game.visitorTeamId != '-1'}">
 						<form action="/MUBA/match/showGame.html" method="post"> <!--CHANGE MATCH REDIRECTION LINK-->
 							<input name="gameId" type="hidden" value="${game.gameId}">
 			   				<button class="gameResultCell" id="gameResultCell${gameCounter}" type="submit" name="action" value=game.gameId>
