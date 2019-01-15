@@ -45,6 +45,9 @@ public class Game {
 	@Column(name = "BQLOGS")
 	private String bqLogs;
 	
+	@Column(name = "PLAYED")
+	private boolean played;
+	
 	
 	
 	public Game() {}
@@ -63,70 +66,62 @@ public class Game {
 		this.esLogs=esLogs;
 		this.bqLogs=bqLogs;
 	}
+	
+	public boolean getPlayed() {
+		return played;
+	}
 
 	public int getGameId() {
 		return gameId;
 	}
 
-	public void setGameId(int gameId) {
-		this.gameId = gameId;
-	}
 
 	public Date getGameDate() {
 		return gameDate;
 	}
 
-	public void setGameDate(Date gameDate) {
-		this.gameDate = gameDate;
-	}
 
 	public int getLocalTeamId() {
 		return localTeamId;
 	}
 
-	public void setLocalTeamId(int localTeamId) {
-		this.localTeamId = localTeamId;
-	}
 
 	public int getVisitorTeamId() {
 		return visitorTeamId;
 	}
 
-	public void setVisitorTeamId(int visitorTeamId) {
-		this.visitorTeamId = visitorTeamId;
-	}
 
 	public int getLeagueId() {
 		return leagueId;
 	}
 
-	public void setLeagueId(int leagueId) {
-		this.leagueId = leagueId;
-	}
 
 	public int getLocalTeamResult() {
 		return localTeamResult;
 	}
 
-	public void setLocalTeamResult(int localTeamResult) {
-		this.localTeamResult = localTeamResult;
-	}
 
 	public int getVisitorTeamResult() {
 		return visitorTeamResult;
 	}
 
-	public void setVisitorTeamResult(int visitorTeamResult) {
-		this.visitorTeamResult = visitorTeamResult;
-	}
 	
 	public int getStage() {
 		return stage;
 	}
 
-	public void setStage(int stage) {
-		this.stage = stage;
+	public String getEnLogs() {
+		return enLogs;
 	}
+
+	public String getEsLogs() {
+		return esLogs;
+	}
+
+	public String getBqLogs() {
+		return bqLogs;
+	}
+
 	
 }
 

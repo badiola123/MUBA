@@ -31,7 +31,8 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public Team getTeamByUserId(int userId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Team> query = sessionFactory.getCurrentSession().createQuery("from Team T WHERE T.userId = " + userId);		Team team = query.getSingleResult();
+		TypedQuery<Team> query = sessionFactory.getCurrentSession().createQuery("from Team T WHERE T.userId = " + userId);		
+		Team team = query.getSingleResult();
 		return team;
 	}
 
