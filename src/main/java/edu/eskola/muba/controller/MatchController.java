@@ -16,6 +16,7 @@ import edu.eskola.muba.characteristics.service.CharacteristicsService;
 import edu.eskola.muba.config.AppConfig;
 import edu.eskola.muba.game.entity.Game;
 import edu.eskola.muba.game.service.GameService;
+import edu.eskola.muba.league.service.LeagueService;
 import edu.eskola.muba.player.entity.Player;
 import edu.eskola.muba.player.service.PlayerService;
 import edu.eskola.muba.stats.service.StatsService;
@@ -33,6 +34,8 @@ public class MatchController {
 	CharacteristicsService characteristicsService = context.getBean(CharacteristicsService.class);
 	GameService gameService = context.getBean(GameService.class);
 	StatsService statsService = context.getBean(StatsService.class);
+	LeagueService leagueService = context.getBean(LeagueService.class);
+
 
 	@RequestMapping(value = "/goToMatch", method = RequestMethod.GET)
 	public String goToMatch(HttpServletRequest request, RedirectAttributes redir, Locale locale) {
@@ -89,6 +92,13 @@ public class MatchController {
 			request.setAttribute("matchLogs", game.getEnLogs());
 		if (locale.getLanguage().equals("eu"))
 			request.setAttribute("matchLogs", game.getBqLogs());
+	}
+	
+	@RequestMapping(value ="/league", method = RequestMethod.POST)
+	public String league(HttpServletRequest request) {
+		String direct = "redirect:/login/home.html";
+		leagueService.updateLeague(1, "winnerTeam", Integer.toString(2));
+		return direct;
 	}
 
 }

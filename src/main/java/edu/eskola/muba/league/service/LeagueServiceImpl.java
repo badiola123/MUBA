@@ -88,6 +88,7 @@ public class LeagueServiceImpl implements LeagueService{
 		return leagueDao.getAllLeagues();
 	}
 
+	@Transactional
 	@Override
 	public void updateLeague(int leagueId, String key, String value) {
 		leagueDao.updateLeague(leagueId, key, value);

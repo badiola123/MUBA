@@ -71,4 +71,7 @@
 			</div>
 			<div class="dataLog">${matchLogs}</div>
 		</div>
+		<form action="/MUBA/match/league.html" method="post">
+		<button id="saveButton" type="submit"><spring:message code="team.save"/></button>
+		</form>
 	</div>

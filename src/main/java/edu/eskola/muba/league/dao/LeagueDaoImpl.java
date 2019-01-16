@@ -133,8 +133,7 @@ public class LeagueDaoImpl implements LeagueDao {
 	public void updateLeague(int leagueId, String key, String value) {
 		@SuppressWarnings("unchecked")
 		Query<League> query = sessionFactory.getCurrentSession()
-				.createQuery("update League set winnerTeam = 4 where leagueId = 1");
-		//THIS SHIT IS NOT WORKING NO IDEA WHY
+				.createQuery("update League set "+key+" = :value where LEAGUEID = :leagueId");
 		query.setParameter("leagueId", leagueId);
 		query.setParameter("value", value);
 		query.executeUpdate();
