@@ -12,4 +12,6 @@ public interface GameDao {
 	Game getLastPlayedGame(int teamId);
 	Game nextGame(int teamId);
 	void updateGame(int gameId, String key, String value);
-	void moveTeamUp(int teamId, int leagueId);}
+	void moveTeamUp(int teamId, int leagueId);
+	List<Game> getAllGames();
+}

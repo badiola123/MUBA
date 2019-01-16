@@ -17,12 +17,13 @@
           <add-attribute value="/static/css/datatables.min.css" />
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-          <add-attribute value ="https://code.jquery.com/jquery-1.11.1.js"></add-attribute>
+          <add-attribute value ="https://code.jquery.com/jquery-1.11.1.js"/>
           <add-attribute value="/static/js/popper.min.js" />
           <add-attribute value="/static/js/bootstrap.min.js" />
           <add-attribute value="/static/js/header.js" />
           <add-attribute value="/static/js/echarts.min.js" />
-          <add-attribute value="/static/js/datatables.min.js" />        </put-list-attribute>
+          <add-attribute value="/static/js/datatables.min.js" />
+        </put-list-attribute>
 
     </definition>
  
@@ -32,6 +33,9 @@
         <put-attribute name="body" value="/WEB-INF/views/home.jsp"></put-attribute>
         <put-list-attribute name="stylesheets" inherit="true">
           <add-attribute value="/static/css/home.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/static/js/homePage_charts.js" />
         </put-list-attribute>
     </definition>
     

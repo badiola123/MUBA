@@ -1,5 +1,7 @@
 package edu.eskola.muba.team.dao;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
@@ -36,14 +38,22 @@ public class TeamDaoImpl implements TeamDao {
 		return team;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void updateBudget(int teamId, int budget) {
+		@SuppressWarnings("unchecked")
 		Query<Team> query = sessionFactory.getCurrentSession()
 					.createQuery("update Team set BUDGET = :budget where TEAMID = :teamId");
 		query.setParameter("teamId", teamId);
 		query.setParameter("budget", budget);
 		query.executeUpdate();
+	}
+
+	@Override
+	public List<Team> getAllTeams() {
+		@SuppressWarnings("unchecked")
+		Query<Team> query = sessionFactory.getCurrentSession()
+				.createQuery("from Team");
+		return query.getResultList();
 	}
 
 }

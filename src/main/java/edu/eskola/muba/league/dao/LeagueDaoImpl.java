@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import edu.eskola.muba.league.entity.League;
 
 
@@ -119,6 +120,14 @@ public class LeagueDaoImpl implements LeagueDao{
 		@SuppressWarnings("rawtypes")
 		Query query = sessionFactory.getCurrentSession().createQuery("delete from League where leagueId = '" + leagueId + "'");
 		query.executeUpdate();
+	}
+
+	@Override
+	public List<League> getAllLeagues() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<League> query = sessionFactory.getCurrentSession()
+				.createQuery("from League L");
+		return query.getResultList();
 	}
 
 }

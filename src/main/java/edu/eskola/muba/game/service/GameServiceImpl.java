@@ -62,5 +62,11 @@ public class GameServiceImpl implements GameService {
 	public void moveTeamUp(int teamId, int leagueId) {
 		gameDao.moveTeamUp(teamId, leagueId);
 	}
+	
+	@Transactional
+	@Override
+	public List<Game> getAllGames() {
+		return gameDao.getAllGames();
+	}
 
 }

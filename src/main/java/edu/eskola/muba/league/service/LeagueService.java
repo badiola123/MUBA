@@ -18,4 +18,5 @@ public interface LeagueService {
 	void startLeague(int leagueId);
 	void changeLeagueDates(int leagueId, Date startDate, Date endDate);
 	void deleteLeague(int leagueId);
+	public List<League> getAllLeagues();
 }

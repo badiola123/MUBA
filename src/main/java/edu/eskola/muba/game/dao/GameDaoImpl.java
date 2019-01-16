@@ -112,4 +112,12 @@ public class GameDaoImpl implements GameDao{
 		}
 	}
 
+	@Override
+	public List<Game> getAllGames() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Game> query = sessionFactory.getCurrentSession()
+				.createQuery("from Game");
+		return query.getResultList();
+	}
+
 }
