@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
-<div id="main" class="container-fluid row">
+<div class="container-fluid">
+<div id="main" class="row">
 	<div class="jumbotron col-sm">
 	  <h1 class="display-4"><spring:message code="home.title"/></h1>
 	  <p class="lead"><spring:message code="home.subtitle"/></p>
@@ -16,5 +16,6 @@
 	    </form>
 	  </div>
 	</div>
-	<div id="usersChart" class="col-sm"></div>
+	<div id="usersChart" class="container col-sm"></div>
+</div>
 </div>

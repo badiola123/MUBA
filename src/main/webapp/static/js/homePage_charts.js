@@ -1,10 +1,10 @@
 var intervalId = 0;
 var myChart = null;
-getDataFromDatabase();
-intervalId = setInterval(getDataFromDatabase, 20000);
+
+intervalId = setInterval(getDataFromDatabase, 2000);
 
 function getDataFromDatabase(){
-	var jsonCharacteristics = "{ data : [54, 53, 67, 89, 76] }"
+	var jsonCharacteristics = "{ data : [54, 53, 67, 89] }"
 	var playerId
 	$(document).ready(
 			$.ajax({
