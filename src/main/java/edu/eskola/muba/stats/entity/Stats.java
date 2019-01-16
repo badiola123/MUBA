@@ -1,27 +1,31 @@
 package edu.eskola.muba.stats.entity;
 
-
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "STATS")
-public class Stats {
+public class Stats implements Serializable{
+	private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    private StatsId statsId;
-    
-    public Stats(StatsId statsId) {
-    	this.statsId = statsId;
-    }
-    
-	
-	public Stats(StatsId statsId, int twoPointsScored, int twoPointsShot, int threePointsScored, int threePointsShot,
-			int offRebound, int deffRebound, int steals, int blocks) {
-		this.statsId = statsId;
+
+	@Id
+	@Column(name = "PLAYERID", insertable = false, updatable = false)
+	private int playerId;
+
+	@Id
+	@Column(name = "GAMEID", insertable = false, updatable = false)
+	private int gameId;
+
+	public Stats(int playerId, int gameId, int twoPointsScored, int twoPointsShot, int threePointsScored,
+			int threePointsShot, int offRebound, int deffRebound, int steals, int blocks) {
+		this.playerId = playerId;
+		this.gameId = gameId;
 		this.twoPointsScored = twoPointsScored;
 		this.twoPointsShot = twoPointsShot;
 		this.threePointsScored = threePointsScored;
@@ -32,33 +36,36 @@ public class Stats {
 		this.blocks = blocks;
 	}
 
-
 	@Column(name = "TWOPOINTSCORED")
 	private int twoPointsScored;
-	
+
 	@Column(name = "TWOPOINTSHOT")
 	private int twoPointsShot;
-	
+
 	@Column(name = "THREEPOINTSCORED")
 	private int threePointsScored;
-	
+
 	@Column(name = "THREEPOINTSHOT")
 	private int threePointsShot;
-	
+
 	@Column(name = "OFFREBOUND")
 	private int offRebound;
-	
+
 	@Column(name = "DEFFREBOUND")
 	private int deffRebound;
-	
+
 	@Column(name = "STEALS")
 	private int steals;
-	
+
 	@Column(name = "BLOCKS")
 	private int blocks;
- 
-	public StatsId getStatsId() {
-		return statsId;
+
+	public int getPlayerId() {
+		return playerId;
+	}
+
+	public int getGameId() {
+		return gameId;
 	}
 
 	public int getTwoPointsScored() {
@@ -94,4 +101,3 @@ public class Stats {
 	}
 
 }
-

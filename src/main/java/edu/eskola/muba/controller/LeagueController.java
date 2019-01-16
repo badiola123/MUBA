@@ -36,7 +36,6 @@ import edu.eskola.muba.player.entity.Player;
 import edu.eskola.muba.player.service.PlayerService;
 import edu.eskola.muba.schedule.TimeComponent;
 import edu.eskola.muba.stats.entity.Stats;
-import edu.eskola.muba.stats.entity.StatsId;
 import edu.eskola.muba.stats.service.StatsService;
 import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
@@ -172,7 +171,7 @@ public class LeagueController {
 	public void startLeague(int leagueId) {
 		Date leagueStartDate = new Date(); //League start date
 		Date leagueEndDate;
-		Date gamesDate=DateUtils.addMinutes(leagueStartDate, 30);
+		Date gamesDate=DateUtils.addSeconds(leagueStartDate, 30);
 		League league=leagueService.getLeague(leagueId);
 		int stages=league.getStages();
 		int daysToChange;
@@ -204,15 +203,18 @@ public class LeagueController {
 					visitorTeamId=-1;
 				}
 				
-				final Game game = new Game(0,gamesDate,localTeamId,visitorTeamId,leagueId,0,0,stage,"","","",false);
+				Game game = new Game(0,gamesDate,localTeamId,visitorTeamId,leagueId,0,0,stage,"","","",false);
 				gameService.addGame(game);
+				final Game lastGame=gameService.getLastGame();
+				System.out.println("create runnable for"+lastGame.getGameId());
 				Runnable task = () -> {
-					playGame(game);
+					System.out.println("task run for "+lastGame.getGameId());
+					playGame(lastGame);
 				};
 				TimeComponent tc = new TimeComponent();
-				tc.scheduling(task, game.getGameDate());
+				tc.scheduling(task, lastGame.getGameDate());
 				
-				DateUtils.addDays(gamesDate, 1);
+				gamesDate=DateUtils.addSeconds(gamesDate, 30);
 			}
 			teamsAtStage/=2;
 		}
@@ -232,18 +234,18 @@ public class LeagueController {
 		Match match = new Match(localTeamGame, visitorTeamGame);
 
 		match.startMatch();
-
 		gameService.updateGame(game.getGameId(), "LOCALTEAMRESULT", Integer.toString(match.getTeamApoints()));
 		gameService.updateGame(game.getGameId(), "VISITORTEAMRESULT", Integer.toString(match.getTeamBpoints()));
 		gameService.updateGame(game.getGameId(), "ENLOGS", match.getMatchLogs());
 		gameService.updateGame(game.getGameId(), "ESLOGS", match.getMatchLogs());
 		gameService.updateGame(game.getGameId(), "BQLOGS", match.getMatchLogs());
 		gameService.updateGame(game.getGameId(), "PLAYED", Integer.toString(1));
+		
+		game = gameService.getGame(game.getGameId());
 
 		for (Player each : localPlayers) {
 			PlayerGame playerGame = localTeamGame.getPlayerById(each.getPlayerId());
-			StatsId statsId = new StatsId(each.getPlayerId(), game.getGameId());
-			Stats stats = new Stats(statsId, playerGame.getTwoPointsScored(), playerGame.getTwoPointsShot(),
+			Stats stats = new Stats(each.getPlayerId(), game.getGameId(),playerGame.getTwoPointsScored(), playerGame.getTwoPointsShot(),
 					playerGame.getThreePointsScored(), playerGame.getThreePointsShot(), playerGame.getOffRebound(),
 					playerGame.getDeffRebound(), playerGame.getSteals(), playerGame.getBlocks());
 			statsService.addStats(stats);
@@ -251,17 +253,24 @@ public class LeagueController {
 		
 		for (Player each : visitorPlayers) {
 			PlayerGame playerGame = visitorTeamGame.getPlayerById(each.getPlayerId());
-			StatsId statsId = new StatsId(each.getPlayerId(), game.getGameId());
-			Stats stats = new Stats(statsId, playerGame.getTwoPointsScored(), playerGame.getTwoPointsShot(),
+			Stats stats = new Stats(each.getPlayerId(), game.getGameId(), playerGame.getTwoPointsScored(), playerGame.getTwoPointsShot(),
 					playerGame.getThreePointsScored(), playerGame.getThreePointsShot(), playerGame.getOffRebound(),
 					playerGame.getDeffRebound(), playerGame.getSteals(), playerGame.getBlocks());
 			statsService.addStats(stats);
 		}
 
-		if (game.getLocalTeamResult() > game.getVisitorTeamResult())
-			gameService.moveTeamUp(game.getLocalTeamId(), game.getLeagueId());
-		else
-			gameService.moveTeamUp(game.getVisitorTeamId(), game.getLeagueId());
+		if (game.getLocalTeamResult() > game.getVisitorTeamResult()) {
+			teamService.updateBudget(game.getLocalTeamId(), localTeam.getBudget()+10000);
+			if(gameService.moveTeamUp(game.getLocalTeamId(), game.getLeagueId())) {
+				teamService.updateBudget(game.getLocalTeamId(), localTeam.getBudget()+100000);
+			}
+		}
+		else {
+			teamService.updateBudget(game.getVisitorTeamId(), visitorTeam.getBudget()+10000);
+			if(gameService.moveTeamUp(game.getVisitorTeamId(), game.getLeagueId())) {
+				teamService.updateBudget(game.getVisitorTeamId(), visitorTeam.getBudget()+100000);
+			}
+		}
 	}
 
 	private void doChars(List<Characteristics> chars, List<Player> players) {

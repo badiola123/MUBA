@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.stats.entity.Stats;
-import edu.eskola.muba.stats.entity.StatsId;
 
 @Repository
 public class StatsDaoImpl implements StatsDao {
@@ -22,22 +21,22 @@ public class StatsDaoImpl implements StatsDao {
 	}
 
 	@Override
-	public Stats getStats(StatsId statsId) {
+	public Stats getStats(int playerId, int gameId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("from Stats WHERE GAMEID=:gameId AND PLAYERID=:playerId");
-		query.setParameter("gameId", statsId.getGameId());
-		query.setParameter("playerId", statsId.getPlayerId());
+		query.setParameter("gameId", gameId);
+		query.setParameter("playerId", playerId);
 		return query.getSingleResult();
 	}
 
 	@Override
-	public void updateStats(StatsId statsId, String key, String value) {
+	public void updateStats(int playerId, int gameId, String key, String value) {
 		@SuppressWarnings("unchecked")
 		Query<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("update Stats set "+key+" = :value WHERE GAMEID=:gameId AND PLAYERID=:playerId");
-		query.setParameter("gameId", statsId.getGameId());
-		query.setParameter("playerId", statsId.getPlayerId());
+		query.setParameter("gameId", gameId);
+		query.setParameter("playerId", playerId);
 		query.setParameter("value", value);
 		query.executeUpdate();
 		

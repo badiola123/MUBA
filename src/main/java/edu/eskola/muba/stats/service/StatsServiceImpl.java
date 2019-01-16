@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import edu.eskola.muba.stats.dao.StatsDao;
 import edu.eskola.muba.stats.entity.Stats;
-import edu.eskola.muba.stats.entity.StatsId;
 
 @Service
 public class StatsServiceImpl implements StatsService {
@@ -22,14 +21,14 @@ public class StatsServiceImpl implements StatsService {
 
 	@Transactional
 	@Override
-	public Stats getStats(StatsId statsId) {
-		return statsDao.getStats(statsId);
+	public Stats getStats(int playerId, int gameId) {
+		return statsDao.getStats(playerId,gameId);
 	}
 
 	@Transactional
 	@Override
-	public void updateStats(StatsId statsId, String key, String value) {
-		statsDao.updateStats(statsId, key, value);
+	public void updateStats(int playerId, int gameId, String key, String value) {
+		statsDao.updateStats(playerId, gameId, key, value);
 	}
 
 }

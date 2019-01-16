@@ -1,11 +1,9 @@
 package edu.eskola.muba.stats.dao;
 
-import edu.eskola.muba.stats.entity.StatsId;
-
 import edu.eskola.muba.stats.entity.Stats;
 
 public interface StatsDao {
 	void addStats(Stats stats);
-	Stats getStats(StatsId statsId);
-	void updateStats(StatsId statsId, String key, String value);
+	Stats getStats(int playerId, int gameId);
+	void updateStats(int playerId, int gameId, String key, String value);
 }

@@ -12,7 +12,8 @@ public interface GameService {
 	Game getLastPlayedGame(int teamId);
 	Game nextGame(int teamId);
 	void updateGame(int gameId, String key, String value);
-	void moveTeamUp(int teamId, int leagueId);
+	boolean moveTeamUp(int teamId, int leagueId);
+    Game getLastGame();
 
 }
 

@@ -41,8 +41,8 @@ public class MatchController {
 		if (user != null) {
 			Team yourTeam = teamService.getTeamByUserId(user.getUserId());
 			Game game = gameService.getLastPlayedGame(yourTeam.getTeamId());
-			
-			displayPage(game,request,locale);
+			if(game!=null)
+				displayPage(game,request,locale);
 
 			Game nextGame = gameService.nextGame(yourTeam.getTeamId());
 			if (nextGame != null)

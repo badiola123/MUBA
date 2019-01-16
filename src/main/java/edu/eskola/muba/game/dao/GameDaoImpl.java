@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.game.entity.Game;
-@Repository
-public class GameDaoImpl implements GameDao{
 
+@Repository
+public class GameDaoImpl implements GameDao {
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -50,8 +51,8 @@ public class GameDaoImpl implements GameDao{
 	@Override
 	public Game getLastPlayedGame(int teamId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Game> query = sessionFactory.getCurrentSession()
-				.createQuery("from Game G where G.played=1 and (G.localTeamId = :teamId or G.visitorTeamId = :teamId) order by G.gameDate DESC");
+		TypedQuery<Game> query = sessionFactory.getCurrentSession().createQuery(
+				"from Game G where G.played=1 and (G.localTeamId = :teamId or G.visitorTeamId = :teamId) order by G.gameDate DESC");
 		query.setParameter("teamId", teamId);
 		Game game;
 		try {
@@ -65,8 +66,8 @@ public class GameDaoImpl implements GameDao{
 	@Override
 	public Game nextGame(int teamId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Game> query = sessionFactory.getCurrentSession()
-				.createQuery("from Game G where G.played=0 and (G.localTeamId = :teamId or G.visitorTeamId = :teamId) order by G.gameDate ASC");
+		TypedQuery<Game> query = sessionFactory.getCurrentSession().createQuery(
+				"from Game G where G.played=0 and (G.localTeamId = :teamId or G.visitorTeamId = :teamId) order by G.gameDate ASC");
 		query.setParameter("teamId", teamId);
 		Game game;
 		try {
@@ -81,35 +82,51 @@ public class GameDaoImpl implements GameDao{
 	public void updateGame(int gameId, String key, String value) {
 		@SuppressWarnings("unchecked")
 		Query<Game> query = sessionFactory.getCurrentSession()
-				.createQuery("update Game set "+key+" = :value where GAMEID = :gameId");
+				.createQuery("update Game set " + key + " = :value where GAMEID = :gameId");
 		query.setParameter("gameId", gameId);
 		query.setParameter("value", value);
 		query.executeUpdate();
 	}
 
 	@Override
-	public void moveTeamUp(int teamId, int leagueId) {
+	public boolean moveTeamUp(int teamId, int leagueId) {
+		boolean returning = false;
 		@SuppressWarnings("unchecked")
-		TypedQuery<Game> query = sessionFactory.getCurrentSession()
-				.createQuery("from Game G where G.played=0 and G.leagueId =:leagueId and (G.localTeamId=0 or G.visitorTeamId=0) order by G.gameId ASC");
+		TypedQuery<Game> query = sessionFactory.getCurrentSession().createQuery(
+				"from Game G where G.played=0 and G.leagueId =:leagueId and (G.localTeamId=-1 or G.visitorTeamId=-1) order by G.gameId ASC");
 		query.setParameter("leagueId", leagueId);
-		Game newGame = query.setMaxResults(1).getSingleResult();
-		if(newGame.getLocalTeamId()==0) {
-			@SuppressWarnings("unchecked")
-			Query<Game> queryUp = sessionFactory.getCurrentSession()
-					.createQuery("update Game set LOCALTEAMID = :teamId where gameId = :gameId");
-			queryUp.setParameter("teamId", teamId);
-			queryUp.setParameter("gameId", newGame.getGameId());
-			queryUp.executeUpdate();
+		Game newGame = null;
+		try {
+			newGame = query.setMaxResults(1).getSingleResult();
+		} catch (NoResultException e) {
+			returning = true;
 		}
-		else {
-			@SuppressWarnings("unchecked")
-			Query<Game> queryUp = sessionFactory.getCurrentSession()
-					.createQuery("update Game set VISITORTEAMID = :teamId where gameId = :gameId");
-			queryUp.setParameter("teamId", teamId);
-			queryUp.setParameter("gameId", newGame.getGameId());
-			queryUp.executeUpdate();
+		if (newGame != null) {
+			if (newGame.getLocalTeamId() == -1) {
+				@SuppressWarnings("unchecked")
+				Query<Game> queryUp = sessionFactory.getCurrentSession()
+						.createQuery("update Game set LOCALTEAMID = :teamId where gameId = :gameId");
+				queryUp.setParameter("teamId", teamId);
+				queryUp.setParameter("gameId", newGame.getGameId());
+				queryUp.executeUpdate();
+			} else {
+				@SuppressWarnings("unchecked")
+				Query<Game> queryUp = sessionFactory.getCurrentSession()
+						.createQuery("update Game set VISITORTEAMID = :teamId where gameId = :gameId");
+				queryUp.setParameter("teamId", teamId);
+				queryUp.setParameter("gameId", newGame.getGameId());
+				queryUp.executeUpdate();
+			}
 		}
+		return returning;
+	}
+	
+	@Override
+	public Game getLastGame() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Game> query=sessionFactory.getCurrentSession().createQuery("from Game order by gameId desc").setMaxResults(1);
+		return query.getSingleResult();
+		
 	}
 
 }

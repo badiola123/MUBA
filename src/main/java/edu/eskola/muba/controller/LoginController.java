@@ -316,12 +316,12 @@ public class LoginController {
 	 */
 	private void createCharacteristics(int playerId) {
 		OurRandom ourRandom = new OurRandom();
-		int resistance = ourRandom.randomBetween(50, 100);
-		int height = ourRandom.randomBetween(50, 100);
-		int ballControl = ourRandom.randomBetween(50, 100);
-		int defense = ourRandom.randomBetween(50, 100);
-		int longShoot = ourRandom.randomBetween(50, 100);
-		int shortShoot = ourRandom.randomBetween(50, 100);
+		int resistance = ourRandom.randomBetween(50, 80);
+		int height = ourRandom.randomBetween(50, 80);
+		int ballControl = ourRandom.randomBetween(50, 80);
+		int defense = ourRandom.randomBetween(50, 80);
+		int longShoot = ourRandom.randomBetween(50, 80);
+		int shortShoot = ourRandom.randomBetween(50, 80);
 		int age = ourRandom.randomBetween(18, 40);
 		Date cDate = new Date();
 		
