@@ -93,12 +93,5 @@ public class MatchController {
 		if (locale.getLanguage().equals("eu"))
 			request.setAttribute("matchLogs", game.getBqLogs());
 	}
-	
-	@RequestMapping(value ="/league", method = RequestMethod.POST)
-	public String league(HttpServletRequest request) {
-		String direct = "redirect:/login/home.html";
-		leagueService.updateLeague(1, "winnerTeam", Integer.toString(2));
-		return direct;
-	}
 
 }
