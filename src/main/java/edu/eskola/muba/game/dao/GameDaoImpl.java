@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.game.entity.Game;
-import edu.eskola.muba.user.entity.User;
-import edu.eskola.muba.team.entity.Team;
-import edu.eskola.muba.user.entity.User;
 @Repository
 public class GameDaoImpl implements GameDao{
 
@@ -36,6 +33,7 @@ public class GameDaoImpl implements GameDao{
 
 	@Override
 	public List<Game> getLeagueGamesByStage(int leagueId, int stage) {
+		@SuppressWarnings("unchecked")
 		TypedQuery<Game> query = sessionFactory.getCurrentSession()
 				.createQuery("from Game G where G.leagueId = '" + leagueId + "' and G.stage = '" + stage + "'");
 		return query.getResultList();
@@ -43,6 +41,7 @@ public class GameDaoImpl implements GameDao{
 
 	@Override
 	public List<Game> getLeagueGames(int leagueId) {
+		@SuppressWarnings("unchecked")
 		TypedQuery<Game> query = sessionFactory.getCurrentSession()
 				.createQuery("from Game G where G.leagueId = '" + leagueId + "'");
 		return query.getResultList();

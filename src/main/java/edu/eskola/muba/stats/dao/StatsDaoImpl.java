@@ -1,8 +1,5 @@
 package edu.eskola.muba.stats.dao;
 
-import java.util.List;
-
-import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
@@ -10,12 +7,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import edu.eskola.muba.game.entity.Game;
-import edu.eskola.muba.leagueconnector.entity.LeagueConnector;
 import edu.eskola.muba.stats.entity.Stats;
 import edu.eskola.muba.stats.entity.StatsId;
-import edu.eskola.muba.team.entity.Team;
-import edu.eskola.muba.user.entity.User;
 
 @Repository
 public class StatsDaoImpl implements StatsDao {

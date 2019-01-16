@@ -3,14 +3,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title><spring:message code="match.title" /></title>
-</head>
-<body>
 	<div id="match">
 		<header>
 			<div class="teamName">${localTeam.teamName}</div>
@@ -80,5 +72,3 @@
 			<div class="dataLog">${matchLogs}</div>
 		</div>
 	</div>
-</body>
-</html>
