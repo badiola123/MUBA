@@ -75,6 +75,7 @@
 
 .singlePlayer>img {
 	border-bottom: thin solid black;
+	width: 100%;
 }
 
 .trainButton {
