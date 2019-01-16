@@ -1,5 +1,7 @@
 package edu.eskola.muba.stats.dao;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
@@ -39,7 +41,25 @@ public class StatsDaoImpl implements StatsDao {
 		query.setParameter("playerId", playerId);
 		query.setParameter("value", value);
 		query.executeUpdate();
-		
+	}
+
+	@Override
+	public List<Stats> getAllStatsOfPlayer(int playerId) {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
+				.createQuery("from Stats WHERE PLAYERID=:playerId");
+		query.setParameter("playerId", playerId);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Stats> getAllStatsOfTeamOfGame(int teamId, int gameId) {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
+				.createQuery("from Stats WHERE TEAMID=:teamId AND GAMEID=:gameId");
+		query.setParameter("teamId", teamId);
+		query.setParameter("gameId", gameId);
+		return query.getResultList();
 	}
 
 }

@@ -1,8 +1,8 @@
 var intervalId = 0;
 var myChart = null;
-intervalId = setInterval(getDataFromDatabase, 1000);
 
-function getDataFromDatabase(){
+
+function getDataFromDatabaseForChart(){
 	var jsonCharacteristics = "{ data : [54, 53, 67, 89, 76] }"
 	var playerId
 	$(document).ready(
@@ -12,7 +12,6 @@ function getDataFromDatabase(){
 			    contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
 				success : function(json){
-					console.log(json)
 					drawChart(json);
 				},
 				error : function(e){
@@ -64,6 +63,12 @@ $(window).on('resize', function(){
     	myChart.resize();
     }
 });
+
 $(document).ready( function () {
-    $('#table').DataTable();
+	getDataFromDatabaseForChart();
+	intervalId = setInterval(getDataFromDatabaseForChart, 10000);
+    $('#table').DataTable({
+    	"autoWidth": false,
+    	"ajax": '/MUBA/ajax/playerInfo_tableData.html?playerId=' + $("#main").attr("data-customvalueone")
+    });
 } );

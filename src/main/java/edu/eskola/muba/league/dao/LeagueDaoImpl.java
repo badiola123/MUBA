@@ -12,7 +12,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import edu.eskola.muba.game.entity.Game;
 import edu.eskola.muba.league.entity.League;
 
 @Repository

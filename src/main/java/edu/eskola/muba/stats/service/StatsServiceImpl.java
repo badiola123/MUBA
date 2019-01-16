@@ -1,6 +1,8 @@
 package edu.eskola.muba.stats.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,18 @@ public class StatsServiceImpl implements StatsService {
 	@Override
 	public void updateStats(int playerId, int gameId, String key, String value) {
 		statsDao.updateStats(playerId, gameId, key, value);
+	}
+
+	@Transactional
+	@Override
+	public List<Stats> getAllStatsOfPlayer(int playerId) {
+		return statsDao.getAllStatsOfPlayer(playerId);
+	}
+
+	@Transactional
+	@Override
+	public List<Stats> getAllStatsOfTeamOfGame(int teamId, int gameId) {
+		return statsDao.getAllStatsOfTeamOfGame(teamId, gameId);
 	}
 
 }

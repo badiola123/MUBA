@@ -3,7 +3,6 @@ package edu.eskola.muba.stats.entity;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -22,6 +21,8 @@ public class Stats implements Serializable{
 	@Column(name = "GAMEID", insertable = false, updatable = false)
 	private int gameId;
 
+	public Stats() {}
+	
 	public Stats(int playerId, int gameId, int twoPointsScored, int twoPointsShot, int threePointsScored,
 			int threePointsShot, int offRebound, int deffRebound, int steals, int blocks) {
 		this.playerId = playerId;

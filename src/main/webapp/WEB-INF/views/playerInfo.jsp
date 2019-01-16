@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<div id="main" data-customvalueone="${player.playerId}">
+<div id="main" class="container" data-customvalueone="${player.playerId}">
 	<aside id="playerInfo">		
 		<div id="singlePlayer">
 			<h4 id="name">${player.name} ${player.surname}</h4>
@@ -15,12 +15,12 @@
 		</div>
 		<div id="playerInfo_characteristicsChart"></div>
 	</aside>
-	<table id="table" class="display">
+	<table id="table" class="display dt-center">
 		<thead>
             <tr>
                 <th>Date</th>
                 <th>VS</th>
-                <th>TimePlayed</th>
+                <th>Played</th>
                 <th>FT</th>
                 <th>2P</th>
                 <th>3P</th>
@@ -28,12 +28,28 @@
                 <th>OR</th>
                 <th>S</th>
                 <th>B</th>
-                <th>OR</th>
                 <th>A</th>
                 <th>F</th>
                 <th>Val</th>
             </tr>
         </thead>
+        <tfoot>
+            <tr>
+                <th>Date</th>
+                <th>VS</th>
+                <th>Played</th>
+                <th>FT</th>
+                <th>2P</th>
+                <th>3P</th>
+                <th>DR</th>
+                <th>OR</th>
+                <th>S</th>
+                <th>B</th>
+                <th>A</th>
+                <th>F</th>
+                <th>Val</th>
+            </tr>
+        </tfoot>
 	</table>
 
 </div>
