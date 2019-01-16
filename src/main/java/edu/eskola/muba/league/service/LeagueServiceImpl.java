@@ -83,4 +83,9 @@ public class LeagueServiceImpl implements LeagueService{
 		leagueDao.deleteLeague(leagueId);
 	}
 
+	@Override
+	public void updateLeague(int leagueId, String key, String value) {
+		leagueDao.updateLeague(leagueId, key, value);
+	}
+
 }

@@ -171,7 +171,7 @@ public class LeagueController {
 	public void startLeague(int leagueId) {
 		Date leagueStartDate = new Date(); //League start date
 		Date leagueEndDate;
-		Date gamesDate=DateUtils.addSeconds(leagueStartDate, 30);
+		Date gamesDate=DateUtils.addSeconds(leagueStartDate, 5);
 		League league=leagueService.getLeague(leagueId);
 		int stages=league.getStages();
 		int daysToChange;
@@ -206,15 +206,13 @@ public class LeagueController {
 				Game game = new Game(0,gamesDate,localTeamId,visitorTeamId,leagueId,0,0,stage,"","","",false);
 				gameService.addGame(game);
 				final Game lastGame=gameService.getLastGame();
-				System.out.println("create runnable for"+lastGame.getGameId());
 				Runnable task = () -> {
-					System.out.println("task run for "+lastGame.getGameId());
 					playGame(lastGame);
 				};
 				TimeComponent tc = new TimeComponent();
 				tc.scheduling(task, lastGame.getGameDate());
 				
-				gamesDate=DateUtils.addSeconds(gamesDate, 30);
+				gamesDate=DateUtils.addSeconds(gamesDate, 5);
 			}
 			teamsAtStage/=2;
 		}
@@ -223,6 +221,7 @@ public class LeagueController {
 	public void playGame(Game game) {
 		List<Characteristics> localChars = new ArrayList<>();
 		List<Characteristics> visitorChars = new ArrayList<>();
+		game = gameService.getGame(game.getGameId());
 		Team localTeam = teamService.getTeam(game.getLocalTeamId());
 		Team visitorTeam = teamService.getTeam(game.getVisitorTeamId());
 		List<Player> localPlayers = playerService.getInitialTeamPlayers(localTeam.getTeamId());
@@ -263,12 +262,14 @@ public class LeagueController {
 			teamService.updateBudget(game.getLocalTeamId(), localTeam.getBudget()+10000);
 			if(gameService.moveTeamUp(game.getLocalTeamId(), game.getLeagueId())) {
 				teamService.updateBudget(game.getLocalTeamId(), localTeam.getBudget()+100000);
+				leagueService.updateLeague(game.getLeagueId(), "WINNERTEAM", Integer.toString(game.getLocalTeamId()));
 			}
 		}
 		else {
 			teamService.updateBudget(game.getVisitorTeamId(), visitorTeam.getBudget()+10000);
 			if(gameService.moveTeamUp(game.getVisitorTeamId(), game.getLeagueId())) {
 				teamService.updateBudget(game.getVisitorTeamId(), visitorTeam.getBudget()+100000);
+				leagueService.updateLeague(game.getLeagueId(), "winnerTeam", Integer.toString(game.getVisitorTeamId()));
 			}
 		}
 	}

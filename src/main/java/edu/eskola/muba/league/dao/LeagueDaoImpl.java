@@ -11,15 +11,16 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import edu.eskola.muba.game.entity.Game;
 import edu.eskola.muba.league.entity.League;
 
-
 @Repository
-public class LeagueDaoImpl implements LeagueDao{
+public class LeagueDaoImpl implements LeagueDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public void addLeague(League league) {
 		sessionFactory.getCurrentSession().save(league);
@@ -27,98 +28,118 @@ public class LeagueDaoImpl implements LeagueDao{
 
 	@Override
 	public League getLeague(int leagueId) {
-		 @SuppressWarnings("unchecked")
-		 TypedQuery<League> query=sessionFactory.getCurrentSession().createQuery("from League L WHERE L.leagueId ='"+leagueId+ "'");
-		 League league = query.getSingleResult();
-		 return league;
+		@SuppressWarnings("unchecked")
+		TypedQuery<League> query = sessionFactory.getCurrentSession()
+				.createQuery("from League L WHERE L.leagueId ='" + leagueId + "'");
+		League league = query.getSingleResult();
+		return league;
 	}
 
 	@Override
 	public List<League> getActiveLeagues(int teamId) {
 		@SuppressWarnings("unchecked")
-	     TypedQuery<League> query=sessionFactory.getCurrentSession().createQuery("SELECT L from League L "+
-	     		"INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "+ 
-	     		"INNER JOIN Team T ON LC.teamId=T.teamId " + 
-	     		"WHERE T.teamId ='"+ teamId+"' AND L.started = true AND L.endDate > NOW()");
-	     return query.getResultList();
+		TypedQuery<League> query = sessionFactory.getCurrentSession()
+				.createQuery("SELECT L from League L " + "INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "
+						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId ='" + teamId
+						+ "' AND L.started = true AND L.endDate > NOW()");
+		return query.getResultList();
 	}
-	
+
 	@Override
-	public List<League> getFinishedLeagues(int teamId){
+	public List<League> getFinishedLeagues(int teamId) {
 		@SuppressWarnings("unchecked")
-	     TypedQuery<League> query=sessionFactory.getCurrentSession().createQuery("SELECT L from League L "+
-	     		"INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "+ 
-	     		"INNER JOIN Team T ON LC.teamId=T.teamId " + 
-	     		"WHERE T.teamId ='"+ teamId+"' AND L.endDate < NOW()");
-	     return query.getResultList();
+		TypedQuery<League> query = sessionFactory.getCurrentSession()
+				.createQuery("SELECT L from League L " + "INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "
+						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId ='" + teamId
+						+ "' AND L.endDate < NOW()");
+		return query.getResultList();
 	}
+
 	@Override
-	public List<League> getNotStartedLeagues(int teamId){
+	public List<League> getNotStartedLeagues(int teamId) {
 		@SuppressWarnings("unchecked")
-	     TypedQuery<League> query=sessionFactory.getCurrentSession().createQuery("SELECT L from League L "+
-	     		"INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "+ 
-	     		"INNER JOIN Team T ON LC.teamId=T.teamId " + 
-	     		"WHERE T.teamId ='"+ teamId+"' AND L.started = false");
-	     return query.getResultList();
+		TypedQuery<League> query = sessionFactory.getCurrentSession()
+				.createQuery("SELECT L from League L " + "INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "
+						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId ='" + teamId
+						+ "' AND L.started = false");
+		return query.getResultList();
 	}
+
 	@Override
-	public List<Integer> getAvailableLeagues(int teamId){
+	public List<Integer> getAvailableLeagues(int teamId) {
 		@SuppressWarnings("unchecked")
-	     TypedQuery<Integer> query=sessionFactory.getCurrentSession().createQuery(
-	    		 "SELECT DISTINCT(LC.leagueId) from LeagueConnector LC INNER JOIN League L ON L.leagueId=LC.leagueId WHERE L.started = false and"+
-	    		 " LC.leagueId NOT IN(SELECT distinct(LC.leagueId) from LeagueConnector LC INNER JOIN League L ON L.leagueId=LC.leagueId"+
-	    		 " WHERE  L.started = false and LC.teamId = '"+teamId+"')");
-	     return query.getResultList();
+		TypedQuery<Integer> query = sessionFactory.getCurrentSession().createQuery(
+				"SELECT DISTINCT(LC.leagueId) from LeagueConnector LC INNER JOIN League L ON L.leagueId=LC.leagueId WHERE L.started = false and"
+						+ " LC.leagueId NOT IN(SELECT distinct(LC.leagueId) from LeagueConnector LC INNER JOIN League L ON L.leagueId=LC.leagueId"
+						+ " WHERE  L.started = false and LC.teamId = '" + teamId + "')");
+		return query.getResultList();
 	}
-	
-	
+
 	@Override
 	public int getLastLeagueId() {
 		@SuppressWarnings("unchecked")
-		TypedQuery<League> query=sessionFactory.getCurrentSession().createQuery("from League order by leagueId desc").setMaxResults(1);
+		TypedQuery<League> query = sessionFactory.getCurrentSession().createQuery("from League order by leagueId desc")
+				.setMaxResults(1);
 		League league = query.getSingleResult();
 		return league.getLeagueId();
-		
+
 	}
 
 	@Override
 	public boolean checkIfHost(int leagueId, int userTeamId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Integer> query=sessionFactory.getCurrentSession().createQuery("select hostTeam from League L where L.leagueId = '"+ leagueId + "'");
-	    int hostId= Math.toIntExact(query.getSingleResult());
-		return (hostId==userTeamId);
+		TypedQuery<Integer> query = sessionFactory.getCurrentSession()
+				.createQuery("select hostTeam from League L where L.leagueId = '" + leagueId + "'");
+		int hostId = Math.toIntExact(query.getSingleResult());
+		return (hostId == userTeamId);
 	}
 
 	@Override
 	public int getNeededTeams(int leagueId) {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Integer> query=sessionFactory.getCurrentSession().createQuery("select stages from League L where L.leagueId = '"+ leagueId + "'");
+		TypedQuery<Integer> query = sessionFactory.getCurrentSession()
+				.createQuery("select stages from League L where L.leagueId = '" + leagueId + "'");
 		int stages = query.getSingleResult();
-		return (stages==2 ? 4:8);
+		return (stages == 2 ? 4 : 8);
 	}
 
 	@Override
 	public void startLeague(int leagueId) {
 		@SuppressWarnings("rawtypes")
-		Query query=sessionFactory.getCurrentSession().createQuery("UPDATE League set started = true where leagueId = '"+leagueId+"'");
+		Query query = sessionFactory.getCurrentSession()
+				.createQuery("UPDATE League set started = true where leagueId = '" + leagueId + "'");
 		query.executeUpdate();
 	}
 
 	@Override
 	public void changeLeagueDates(int leagueId, Date startDate, Date endDate) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String start=dateFormat.format(startDate);
-		String end=dateFormat.format(endDate);
+		String start = dateFormat.format(startDate);
+		String end = dateFormat.format(endDate);
 		@SuppressWarnings("rawtypes")
-		Query query=sessionFactory.getCurrentSession().createQuery("UPDATE League set startDate = '"+start+"', endDate = '"+end+"' where leagueId = '"+leagueId+"'");
+		Query query = sessionFactory.getCurrentSession().createQuery("UPDATE League set startDate = '" + start
+				+ "', endDate = '" + end + "' where leagueId = '" + leagueId + "'");
 		query.executeUpdate();
 	}
 
 	@Override
 	public void deleteLeague(int leagueId) {
 		@SuppressWarnings("rawtypes")
-		Query query = sessionFactory.getCurrentSession().createQuery("delete from League where leagueId = '" + leagueId + "'");
+		Query query = sessionFactory.getCurrentSession()
+				.createQuery("delete from League where leagueId = '" + leagueId + "'");
 		query.executeUpdate();
+	}
+
+	@Override
+	public void updateLeague(int leagueId, String key, String value) {
+		@SuppressWarnings("unchecked")
+		Query<League> query = sessionFactory.getCurrentSession()
+				.createQuery("update League set winnerTeam = 4 where leagueId = 1");
+		//THIS SHIT IS NOT WORKING NO IDEA WHY
+		query.setParameter("leagueId", leagueId);
+		query.setParameter("value", value);
+		query.executeUpdate();
+
 	}
 
 }
