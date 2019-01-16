@@ -36,6 +36,10 @@
 	position: relative;
 }
 
+.pitch img {
+	width: 100%;
+}
+
 #match>.main>.pitch>img {
 	height: 40vw;
 }
