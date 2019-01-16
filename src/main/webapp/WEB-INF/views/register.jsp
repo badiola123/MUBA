@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
+<div class="container">
 <form action="/MUBA/login/validateRegister.html" method="post">
 
   <div class="container-fluid">
@@ -159,3 +160,4 @@
   
   <button id="regSaveBut" type="submit" name="action" value="register" class="registerForm btn btn-primary btn-lg btn-block"><spring:message code="action.register"/></button>
 </form>
+</div>

@@ -12,4 +12,5 @@ public interface PlayerService {
 	boolean checkPlayer(int playerId);
 	void updateInitialPosition(int position, int playerId);
 	int getLastId();
+	List<Player> getAllPlayers();
 }

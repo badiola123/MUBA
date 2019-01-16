@@ -68,5 +68,11 @@ public class GameServiceImpl implements GameService {
 	public Game getLastGame() {
 		return gameDao.getLastGame();
 	}
+	
+	@Transactional
+	@Override
+	public List<Game> getAllGames() {
+		return gameDao.getAllGames();
+	}
 
 }

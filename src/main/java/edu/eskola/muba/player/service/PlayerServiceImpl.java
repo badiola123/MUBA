@@ -56,5 +56,10 @@ public class PlayerServiceImpl implements PlayerService{
 	public int getLastId() {
 		return playerDao.getLastId();
 	}
-
+	
+	@Transactional
+	@Override
+	public List<Player> getAllPlayers() {
+		return playerDao.getAllPlayers();
+	}
 }

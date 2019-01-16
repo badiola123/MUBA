@@ -142,4 +142,12 @@ public class LeagueDaoImpl implements LeagueDao {
 
 	}
 
+	@Override
+	public List<League> getAllLeagues() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<League> query = sessionFactory.getCurrentSession()
+				.createQuery("from League L");
+		return query.getResultList();
+	}
+
 }

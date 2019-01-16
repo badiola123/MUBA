@@ -19,4 +19,5 @@ public interface LeagueDao {
 	void changeLeagueDates(int leagueId, Date startDate, Date endDate);
 	void deleteLeague(int leagueId);
 	void updateLeague(int leagueId, String key, String value);
+	List<League> getAllLeagues();
 }

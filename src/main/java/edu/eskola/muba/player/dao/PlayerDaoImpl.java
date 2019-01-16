@@ -92,4 +92,11 @@ public class PlayerDaoImpl implements PlayerDao {
 		int id = query.getSingleResult().getPlayerId();
 		return id;
 	}
+
+	@Override
+	public List<Player> getAllPlayers() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Player> query = sessionFactory.getCurrentSession().createQuery("from Player");
+		return query.getResultList();
+	}
 }

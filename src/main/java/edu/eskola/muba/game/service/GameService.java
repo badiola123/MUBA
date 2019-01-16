@@ -14,6 +14,6 @@ public interface GameService {
 	void updateGame(int gameId, String key, String value);
 	boolean moveTeamUp(int teamId, int leagueId);
     Game getLastGame();
-
+	List<Game> getAllGames();
 }
 

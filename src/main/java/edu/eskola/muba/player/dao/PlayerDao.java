@@ -12,4 +12,5 @@ public interface PlayerDao {
 	boolean checkPlayer(int playerId);
 	List<Player> getInitialTeamPlayers(int teamId);
 	int getLastId();
+	List<Player> getAllPlayers();
 }
