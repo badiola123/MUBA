@@ -8,6 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entity of Transaction
+ * 
+ * @author MUBA team
+ * @version Final version
+ */
+
 @Entity
 @Table(name = "TRANSACTION")
 public class Transaction implements Serializable{
@@ -36,8 +43,20 @@ public class Transaction implements Serializable{
 	@Column(name = "AMOUNT")
 	private double amount;
 
+	/**
+	 * Empty constructor of Transaction
+	 */
 	public Transaction() {}
 	  
+	/**
+	 * Constructor with the parameters to set to the transaction
+	 * 
+	 * @param buyerTeamId Id of the team that has bought the player
+	 * @param sellerTeamId Id of the team that has sold the player
+	 * @param playerId Id of the player taking part
+	 * @param transactionDate Date when the transaction has been done
+	 * @param amount Amount paid for the player
+	 */
 	public Transaction(int buyerTeamId, int sellerTeamId, int playerId, Date transactionDate, double amount) {
 		this.buyerTeamId = buyerTeamId;
 	    this.sellerTeamId = sellerTeamId;
@@ -46,22 +65,42 @@ public class Transaction implements Serializable{
 	    this.amount = amount;
 	}
 
+	/**
+	 * 
+	 * @return Returns the buyer team's id
+	 */
 	public int getBuyerTeamId() {
 		return buyerTeamId;
 	}
 
+	/**
+	 * 
+	 * @return Return the seller team's id
+	 */
 	public int getSellerTeamId() {
 		return sellerTeamId;
 	}
 
+	/**
+	 * 
+	 * @return Returns the player id
+	 */
 	public int getPlayerId() {
 		return playerId;
 	}
 
+	/**
+	 * 
+	 * @return Returns the transaction date
+	 */
 	public Date getTransactionDate() {
 		return transactionDate;
 	}
 
+	/**
+	 * 
+	 * @return Returns the amount of the transaction
+	 */
 	public double getAmount() {
 		return amount;
 	}

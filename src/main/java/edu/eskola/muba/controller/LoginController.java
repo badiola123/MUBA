@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -34,9 +35,9 @@ import edu.eskola.muba.user.service.UserService;
  *
  * @author MUBA team
  * @version Final version
- * @see The Controller annotation is used to specify that this class is a controller that handles requests
- * @see The RequestMapping annotation is used to map the methods to a path and specify the requet method (GET or POST)
- * @see The SessionAttributes annotation is used to specify the attributes with session scope that are used
+ * @see Controller annotation is used to specify that this class is a controller that handles requests
+ * @see RequestMapping annotation is used to map the methods to a path and specify the requet method (GET or POST)
+ * @see SessionAttributes annotation is used to specify the attributes with session scope that are used
  */
 
 @Controller
@@ -51,13 +52,15 @@ public class LoginController {
 	PlayerService playerService = context.getBean(PlayerService.class);
 	TransactionService transactionService = context.getBean(TransactionService.class);
 	CharacteristicsService characteristicsService = context.getBean(CharacteristicsService.class);
+	String sessUserAttr = "sessUser";
+	String warningAlert = "warning";
 	
 	/**
 	 * Catches the request for /login/home which is requested to load the home page at startup
 	 * 
 	 * @return A string containing the view that has to be loaded
 	 */
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@GetMapping(value = "/home")
 	public String homePage() {
 		return "home"; 
 	}
@@ -65,18 +68,18 @@ public class LoginController {
 	/**
 	 * Catches the request for /login/login which is requested to process a log in request using the POST method
 	 * 
-	 * @param username The username entered by the user with which the log in is performed
-	 * @param password The password entered by the user with which the log in is performed
+	 * @param username Username entered by the user with which the log in is performed
+	 * @param password Password entered by the user with which the log in is performed
 	 * @return ModelAndView object which holds the model and the view to be displayed
 	 * @see RequestParam annotation is used to get the parameters needed from the web request
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping(value = "/login")
 	public ModelAndView checkUser(@RequestParam("username")String username, @RequestParam("password")String password) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("home");
 		User user = userService.checkUser(username, password);
 		if(user != null) {
-			modelAndView.addObject("sessUser", user);
+			modelAndView.addObject(sessUserAttr, user);
 			modelAndView.addObject("success", "login.success");
 		}
 		else {
@@ -92,7 +95,7 @@ public class LoginController {
 	 * @param status Used to end the user session
 	 * @return ModelAndView instance containing the view to be displayed
 	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@GetMapping(value = "/logout")
 	public ModelAndView logoutUser(SessionStatus status) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/loggedOut.html");
@@ -105,7 +108,7 @@ public class LoginController {
 	 * 
 	 * @return ModelAndView instance containing the view and an attribute used to show an alert showing the successful log out
 	 */
-	@RequestMapping(value = "/loggedOut", method = RequestMethod.GET)
+	@GetMapping(value = "/loggedOut")
 	public ModelAndView loggedOut() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("home");
@@ -121,14 +124,14 @@ public class LoginController {
 	 * @param redir Attributes that need to be passed between redirects are added to it
 	 * @return An instance of ModelAndView containing the view
 	 */
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@PostMapping(value = "/register")
 	public ModelAndView register(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute("sessUser");
+		User user = (User) request.getSession().getAttribute(sessUserAttr);
 		
 		if(user==null) modelAndView.setViewName("register");
-		else redir.addFlashAttribute("warning", "logout.warning");
+		else redir.addFlashAttribute(warningAlert, "logout.warning");
 		
 		return modelAndView;
 	}
@@ -136,8 +139,8 @@ public class LoginController {
 	/**
 	 * Called when the register form is filled to check the data and proceed with the register.
 	 * 
-	 * @param regUserInfo The username and the password to be registered
-	 * @param regTeamName The team name to be registered
+	 * @param regUserInfo Username and the password to be registered
+	 * @param regTeamName Team name to be registered
 	 * @param regPlayer1 Team's 1st player's name and surname
 	 * @param regPlayer2 Team's 2nd player's name and surname
 	 * @param regPlayer3 Team's 3rd player's name and surname
@@ -152,7 +155,7 @@ public class LoginController {
 	 * @param redir Attributes that need to be passed between redirects are added to it
 	 * @return Instance of ModelAndView containing the view
 	 */
-	@RequestMapping(value = "/validateRegister", method = RequestMethod.POST)
+	@PostMapping(value = "/validateRegister")
 	public ModelAndView validateRegister(@RequestParam(value="regUserInfo[]")String[] regUserInfo, @RequestParam("regTeamName")String regTeamName,
 										 @RequestParam(value="regPlayer1[]")String[] regPlayer1, @RequestParam(value="regPlayer2[]")String[] regPlayer2,
 										 @RequestParam(value="regPlayer3[]")String[] regPlayer3, @RequestParam(value="regPlayer4[]")String[] regPlayer4,
@@ -163,50 +166,27 @@ public class LoginController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute("sessUser");
+		User user = (User) request.getSession().getAttribute(sessUserAttr);
 		
 		if(user==null) {
-			validData(modelAndView, redir, regUserInfo, regTeamName, 
-					  groupPlayers(regPlayer1, regPlayer2, regPlayer3, regPlayer4, regPlayer5,
-							       regPlayer6, regPlayer7, regPlayer8, regPlayer9, regPlayer10));
+			
+			List<String[]> playerList = new ArrayList<>();
+			playerList.add(regPlayer1);
+			playerList.add(regPlayer2);
+			playerList.add(regPlayer3);
+			playerList.add(regPlayer4);
+			playerList.add(regPlayer5);
+			playerList.add(regPlayer6);
+			playerList.add(regPlayer7);
+			playerList.add(regPlayer8);
+			playerList.add(regPlayer9);
+			playerList.add(regPlayer10);
+			
+			validData(modelAndView, redir, regUserInfo, regTeamName, playerList);
 		}
-		else redir.addFlashAttribute("warning", "logout.warning");
+		else redir.addFlashAttribute(warningAlert, "logout.warning");
 		
 		return modelAndView;
-	}
-
-	/**
-	 * Groups the ten player's information into a list to make it easier to handle
-	 * 
-	 * @param regPlayer1 Team's 1st player's name and surname
-	 * @param regPlayer2 Team's 2nd player's name and surname
-	 * @param regPlayer3 Team's 3rd player's name and surname
-	 * @param regPlayer4 Team's 4th player's name and surname
-	 * @param regPlayer5 Team's 5th player's name and surname
-	 * @param regPlayer6 Team's 6th player's name and surname
-	 * @param regPlayer7 Team's 7th player's name and surname
-	 * @param regPlayer8 Team's 8th player's name and surname
-	 * @param regPlayer9 Team's 9th player's name and surname
-	 * @param regPlayer10 Team's 10th player's name and surname
-	 * @return A list of String[] which contains each user's name and surname
-	 */
-	private List<String[]> groupPlayers(String[] regPlayer1, String[] regPlayer2, String[] regPlayer3, String[] regPlayer4,
-			String[] regPlayer5, String[] regPlayer6, String[] regPlayer7, String[] regPlayer8, String[] regPlayer9,
-			String[] regPlayer10) {
-		
-		List<String[]> playerList = new ArrayList<>();
-		playerList.add(regPlayer1);
-		playerList.add(regPlayer2);
-		playerList.add(regPlayer3);
-		playerList.add(regPlayer4);
-		playerList.add(regPlayer5);
-		playerList.add(regPlayer6);
-		playerList.add(regPlayer7);
-		playerList.add(regPlayer8);
-		playerList.add(regPlayer9);
-		playerList.add(regPlayer10);
-		
-		return playerList;
 	}
 
 	/**
@@ -221,7 +201,11 @@ public class LoginController {
 	 * @param list List with all the player's names and surname
 	 */
 	private void validData(ModelAndView modelAndView, RedirectAttributes redir, String[] regUserInfo, String regTeamName, List<String[]> list) {
-		if((checkUsername(modelAndView, regUserInfo) == -1) & (checkTeam(modelAndView, regTeamName) == 1) & (checkPlayer(modelAndView, list) == 1)) {
+		int resultCheckUsername = checkUsername(modelAndView, regUserInfo);
+		int resultCheckTeam = checkTeam(modelAndView, regTeamName);
+		int resultCheckPlayer = checkPlayer(modelAndView, list);
+		
+		if(resultCheckUsername == -1 && resultCheckTeam == 1 && resultCheckPlayer == 1) {
 			createWithData(regUserInfo, regTeamName, list);
 			redir.addFlashAttribute("info", "register.success");
 		}
@@ -250,12 +234,14 @@ public class LoginController {
 	 * Additionally, it calls the functions to create these players characteristics and the transaction that links them to the team
 	 * 
 	 * @param list List with all the player's names and surname
-	 * @param teamId The team id to which the players are from
+	 * @param teamId Team id to which the players are from
 	 */
 	private void createPlayers(List<String[]> list, int teamId) {
 		for(int i = 0; i < list.size(); i++) {
 			String[] playerData = list.get(i);
-			Player player = new Player(teamId, playerData[0], playerData[1], i<5? true : false, false, i<5? i+2 : 1);
+			boolean initialFive = false;
+			if(i<5) initialFive = true;
+			Player player = new Player(teamId, playerData[0], playerData[1], initialFive, false, i<5? i+2 : 1);
 			playerService.addPlayer(player);
 			int playerId = playerService.getLastId();
 			createCharacteristics(playerId);
@@ -322,7 +308,7 @@ public class LoginController {
 	 * 
 	 * @param modelAndView Instance of ModelAndView which is used, if needed, to add a warning attribute to display an alert later
 	 * @param list List with all the player's names and surname
-	 * @return
+	 * @return 1 if it is ok and 0 if it is wrong
 	 */
 	private int checkPlayer(ModelAndView modelAndView, List<String[]> list) {
 		int result = 1;
@@ -330,7 +316,7 @@ public class LoginController {
 			String[] playerData = list.get(i);
 			if((playerData[0].length() >=15) || (playerData[1].length() >=15)) {
 				result = 0;
-				modelAndView.addObject("warning", "register.playerLengthError");
+				modelAndView.addObject(warningAlert, "register.playerLengthError");
 			}
 		}
 		
@@ -342,7 +328,7 @@ public class LoginController {
 	 * 
 	 * @param modelAndView Instance of ModelAndView which is used, if needed, to add an error attribute to display an alert later
 	 * @param regUserInfo Username and password of the user to be created
-	 * @return
+	 * @return -1 if the username if free and another int if it is taken
 	 */
 	private int checkUsername(ModelAndView modelAndView, String[] regUserInfo) {
 		int result = userService.checkUsername(regUserInfo[0]);
@@ -355,7 +341,7 @@ public class LoginController {
 	 * 
 	 * @param modelAndView Instance of ModelAndView which is used, if needed, to add an information attribute to display an alert later
 	 * @param regTeamName Name of the team to be created
-	 * @return
+	 * @return 1 if it is ok and 0 if it is wrong
 	 */
 	private int checkTeam(ModelAndView modelAndView, String regTeamName) {
 		int result = 1;
