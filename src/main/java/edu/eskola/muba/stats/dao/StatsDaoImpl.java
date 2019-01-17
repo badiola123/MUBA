@@ -24,8 +24,8 @@ public class StatsDaoImpl implements StatsDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	private static final String gameIdString = "gameId";
-	private static final String playerIdString = "playerId";
+	private static final String GAMEIDSTRING = "gameId";
+	private static final String PLAYERIDSTRING = "playerId";
 	
 	@Override
 	public void addStats(Stats stats) {
@@ -37,8 +37,8 @@ public class StatsDaoImpl implements StatsDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("from Stats WHERE GAMEID=:gameId AND PLAYERID=:playerId");
-		query.setParameter(gameIdString, gameId);
-		query.setParameter(playerIdString, playerId);
+		query.setParameter(GAMEIDSTRING, gameId);
+		query.setParameter(PLAYERIDSTRING, playerId);
 		return query.getSingleResult();
 	}
 
@@ -47,8 +47,8 @@ public class StatsDaoImpl implements StatsDao {
 		@SuppressWarnings("unchecked")
 		Query<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("update Stats set "+key+" = :value WHERE GAMEID=:gameId AND PLAYERID=:playerId");
-		query.setParameter(gameIdString, gameId);
-		query.setParameter(playerIdString, playerId);
+		query.setParameter(GAMEIDSTRING, gameId);
+		query.setParameter(PLAYERIDSTRING, playerId);
 		query.setParameter("value", value);
 		query.executeUpdate();
 	}
@@ -58,7 +58,7 @@ public class StatsDaoImpl implements StatsDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("from Stats WHERE PLAYERID=:playerId");
-		query.setParameter(playerIdString, playerId);
+		query.setParameter(PLAYERIDSTRING, playerId);
 		return query.getResultList();
 	}
 
@@ -68,7 +68,7 @@ public class StatsDaoImpl implements StatsDao {
 		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("from Stats WHERE TEAMID=:teamId AND GAMEID=:gameId");
 		query.setParameter("teamId", teamId);
-		query.setParameter(gameIdString, gameId);
+		query.setParameter(GAMEIDSTRING, gameId);
 		return query.getResultList();
 	}
 
