@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,6 +25,12 @@ import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
 import edu.eskola.muba.user.entity.User;
 
+/**
+ * This class performs displaying game information on the /match page
+ * @author MUBA team
+ * @version Final version
+ */
+
 @Controller
 @RequestMapping("match")
 public class MatchController {
@@ -38,12 +43,19 @@ public class MatchController {
 	StatsService statsService = context.getBean(StatsService.class);
 	LeagueService leagueService = context.getBean(LeagueService.class);
 	
-	private static final String homeAddress = "redirect:/login/home.html";
-	private static final String matchLogs = "matchLogs";
+	private static final String HOME_ADDRESS = "redirect:/login/home.html";
+	private static final String MATCH_LOGS = "matchLogs";
 
+	/**
+	 * This functions handles redirecting to the /match page
+	 * @param request is used to get the session and to put attributes 
+	 * @param redir is used to put attribute in case of redirecting to /home page
+	 * @param locale is used to define in which language the logs should be displayed
+	 * @return is a direction either to the /match or /home (if the user is not logged)
+	 */
 	@GetMapping(path = "/goToMatch")
 	public String goToMatch(HttpServletRequest request, RedirectAttributes redir, Locale locale) {
-		String direct = homeAddress;
+		String direct = HOME_ADDRESS;
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
 			Team yourTeam = teamService.getTeamByUserId(user.getUserId());
@@ -64,9 +76,18 @@ public class MatchController {
 		return direct;
 	}
 	
+	/**
+	 * This function is used to display game from the league
+	 * 
+	 * @param gameId is the id of the game we want to display
+	 * @param request request is used to get the session and to put attributes 
+	 * @param redir is used to put attribute in case of redirecting to /home page
+	 * @param locale locale is used to define in which language the logs should be displayed
+	 * @return is a direction either to the /match or /home (if the user is not logged)
+	 */
 	@PostMapping(value ="/showGame")
 	public String showGame(@RequestParam("gameId") int gameId, HttpServletRequest request, RedirectAttributes redir, Locale locale) {
-		String direct = homeAddress;
+		String direct = HOME_ADDRESS;
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
 			Game game = gameService.getGame(gameId);
@@ -80,6 +101,13 @@ public class MatchController {
 		return direct;
 	}
 
+	/**
+	 * This function is responsible for copying attributes to the request
+	 * 
+	 * @param game data of this game will be displayed on the /match
+	 * @param request request is used to get the session and to put attributes 
+	 * @param locale locale is used to define in which language the logs should be displayed
+	 */
 	private void displayPage(Game game, HttpServletRequest request, Locale locale) {
 		Team localTeam = teamService.getTeam(game.getLocalTeamId());
 		Team visitorTeam = teamService.getTeam(game.getVisitorTeamId());
@@ -91,11 +119,11 @@ public class MatchController {
 		request.setAttribute("visitorPlayers", visitorPlayers);
 		request.setAttribute("score", game.getLocalTeamResult() + " : " + game.getVisitorTeamResult());
 		if (locale.getLanguage().equals("es"))
-			request.setAttribute(matchLogs, game.getEsLogs());
+			request.setAttribute(MATCH_LOGS, game.getEsLogs());
 		if (locale.getLanguage().equals("en"))
-			request.setAttribute(matchLogs, game.getEnLogs());
+			request.setAttribute(MATCH_LOGS, game.getEnLogs());
 		if (locale.getLanguage().equals("eu"))
-			request.setAttribute(matchLogs, game.getBqLogs());
+			request.setAttribute(MATCH_LOGS, game.getBqLogs());
 	}
 
 }
