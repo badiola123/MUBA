@@ -22,6 +22,8 @@ import edu.eskola.muba.player.entity.Player;
 @Repository
 public class PlayerDaoImpl implements PlayerDao {
 
+	private static final String PLAYER_ID = "playerId";
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -37,7 +39,7 @@ public class PlayerDaoImpl implements PlayerDao {
 
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.playerId = :playerId");
-		query.setParameter("playerId", playerId);
+		query.setParameter(PLAYER_ID, playerId);
 		return query.getSingleResult();
 	}
 
@@ -68,7 +70,7 @@ public class PlayerDaoImpl implements PlayerDao {
 
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.playerId =:playerId");
-		query.setParameter("playerId", playerId);
+		query.setParameter(PLAYER_ID, playerId);
 		Player player = query.getSingleResult();
 		boolean playerBoolean = false;
 		if(player != null) playerBoolean = true;
@@ -88,7 +90,7 @@ public class PlayerDaoImpl implements PlayerDao {
 					.createQuery("update Player set INITIALFIVE = TRUE, PLAYING = TRUE, POSITION = :position where playerId = :playerId");
 			query.setParameter("position", position);
 		}
-		query.setParameter("playerId", playerId);
+		query.setParameter(PLAYER_ID, playerId);
 		query.executeUpdate();
 	}
 
