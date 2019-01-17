@@ -83,9 +83,7 @@ button:hover {
 	flex-direction: row;
 	justify-content: space-around;
 }
-.gameResultCell > p {
 
-}
 .points{
 
 	font-weight: bold;

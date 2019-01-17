@@ -9,6 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.eskola.muba.characteristics.dao.CharacteristicsDao;
 import edu.eskola.muba.characteristics.entity.Characteristics;
 
+/**
+ * Service implementation of Characteristics
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see CharacteristicsDao
+ */
 @Service
 public class CharacteristicsServiceImpl implements CharacteristicsService{
 
