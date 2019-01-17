@@ -10,7 +10,7 @@ import edu.eskola.muba.league.entity.League;
  * 
  * @author MUBA team
  * @version Final version
- * @see LeagueDao
+ * @see edu.eskola.muba.league.dao.LeagueDao
  */
 public interface LeagueService {
 	void addLeague(League league);

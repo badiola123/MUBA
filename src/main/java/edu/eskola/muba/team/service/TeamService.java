@@ -9,7 +9,7 @@ import edu.eskola.muba.team.entity.Team;
  * 
  * @author MUBA team
  * @version Final version
- * @see TeamDao
+ * @see edu.eskola.muba.team.dao.TeamDao
  */
 
 public interface TeamService {

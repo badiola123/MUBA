@@ -48,8 +48,8 @@ import edu.eskola.muba.user.entity.User;
  *
  * @author MUBA team
  * @version Final version
- * @see The Controller annotation is used to specify that this class is a controller that handles requests
- * @see The RequestMapping annotation is used to map the methods to a path and specify the requet method (GET or POST)
+ * The Controller annotation is used to specify that this class is a controller that handles requests
+ * The RequestMapping annotation is used to map the methods to a path and specify the request method (GET or POST)
  */
 
 @Controller

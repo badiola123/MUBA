@@ -14,7 +14,7 @@ import edu.eskola.muba.transaction.entity.Transaction;
  * 
  * @author MUBA team
  * @version Final version
- * @see TransactionDao
+ * @see edu.eskola.muba.transaction.dao.TransactionDao
  */
 
 @Service

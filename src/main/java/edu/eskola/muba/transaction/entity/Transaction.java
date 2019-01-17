@@ -13,7 +13,6 @@ import javax.persistence.Table;
  * 
  * @author MUBA team
  * @version Final version
- * @see As it has a composed primary key, Serializable must be implemented
  */
 
 @Entity

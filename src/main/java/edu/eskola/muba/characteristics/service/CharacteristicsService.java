@@ -10,7 +10,7 @@ import edu.eskola.muba.characteristics.entity.Characteristics;
  * 
  * @author MUBA team
  * @version Final version
- * @see CharacteristicsDao
+ * @see edu.eskola.muba.characteristics.dao.CharacteristicsDao
  */
 public interface CharacteristicsService {
 	void addCharacteristics(Characteristics characteristics);

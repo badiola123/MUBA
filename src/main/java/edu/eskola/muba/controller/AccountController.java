@@ -109,7 +109,7 @@ public class AccountController {
 	 * 
 	 * @param request Used to check if a user attribute exists which shows that someone is logged in
 	 * @param redir Attributes that need to be passed between redirects are added to it
-	 * @return
+	 * @return An instance of ModelAndView containing the view
 	 */
 	@GetMapping(value = "/manage")
 	public ModelAndView accountPage(HttpServletRequest request, RedirectAttributes redir) {
