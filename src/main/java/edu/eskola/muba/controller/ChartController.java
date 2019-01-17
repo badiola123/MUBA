@@ -100,7 +100,7 @@ public class ChartController {
 		int players = playerService.getAllPlayers().size();
 		List<Integer> list = new ArrayList<>();
 		list.add(leagues);
-		list.add(teams);
+		list.add(teams - 1);
 		list.add(games);
 		list.add(players);
 		
