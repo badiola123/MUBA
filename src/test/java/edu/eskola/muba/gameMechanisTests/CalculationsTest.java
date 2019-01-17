@@ -107,7 +107,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player1);
 		replayAll();
     	
-		assertEquals(calculations.goingToAttackResult(player1, player2),true);
+		assertEquals(true, calculations.goingToAttackResult(player1, player2));
 		verifyAll();
 	}
 	
@@ -119,7 +119,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player2);
 		replayAll();
     	
-		assertEquals(calculations.goingToAttackResult(player1, player2),false);
+		assertEquals(false, calculations.goingToAttackResult(player1, player2));
 		verifyAll();
 	}
 	
@@ -131,7 +131,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player2);
 		replayAll();
     	
-		assertEquals(calculations.goingToShootResult(player1, player2),false);
+		assertEquals(false, calculations.goingToShootResult(player1, player2));
 		verifyAll();
 	}
 	
@@ -143,7 +143,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player1);
 		replayAll();
     	
-		assertEquals(calculations.goingToShootResult(player1, player2),true);
+		assertEquals(true, calculations.goingToShootResult(player1, player2));
 		verifyAll();
 	}
 	
@@ -155,7 +155,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player2);
 		replayAll();
     	
-		assertEquals(calculations.reboundResult(player1, player2),false);
+		assertEquals(false, calculations.reboundResult(player1, player2));
 		verifyAll();
 	}
 	
@@ -167,7 +167,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player1);
 		replayAll();
     	
-		assertEquals(calculations.reboundResult(player1, player2),true);
+		assertEquals(true, calculations.reboundResult(player1, player2));
 		verifyAll();
 	}
 	
@@ -179,7 +179,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player1);
 		replayAll();
     	
-		assertEquals(calculations.shootResult(player1, player2,2),2);
+		assertEquals(2, calculations.shootResult(player1, player2,2));
 		verifyAll();
 	}
 	
@@ -191,7 +191,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player2);
 		replayAll();
     	
-		assertEquals(calculations.shootResult(player1, player2,2),0);
+		assertEquals(0, calculations.shootResult(player1, player2,2));
 		verifyAll();
 	}
 	
@@ -203,7 +203,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player1);
 		replayAll();
     	
-		assertEquals(calculations.shootResult(player1, player2,3),3);
+		assertEquals(3, calculations.shootResult(player1, player2,3));
 		verifyAll();
 	}
 	
@@ -215,7 +215,7 @@ public class CalculationsTest extends EasyMockSupport{
 		EasyMock.expect(ourRandomMock.ruletteWheelSelection(players)).andReturn(player2);
 		replayAll();
     	
-		assertEquals(calculations.shootResult(player1, player2,3),0);
+		assertEquals(0, calculations.shootResult(player1, player2,3));
 		verifyAll();
 	}
 }
