@@ -113,7 +113,7 @@ public class TeamController {
 	public String save(@RequestParam("position1") String position1, @RequestParam("position2") String position2,
 			@RequestParam("position3") String position3, @RequestParam("position4") String position4,
 			@RequestParam("position5") String position5, RedirectAttributes redir) {
-		String direct = HOME_ADDRESS;
+		String direct = "redirect:/team/goToTeam.html";
 		ArrayList<String> positions = new ArrayList<>();
 		positions.add(position1);
 		positions.add(position2);

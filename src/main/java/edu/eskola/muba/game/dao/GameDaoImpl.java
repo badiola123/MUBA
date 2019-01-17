@@ -39,7 +39,7 @@ public class GameDaoImpl implements GameDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Game> query = sessionFactory.getCurrentSession()
 				.createQuery("from Game G WHERE G.gameId = :gameId");
-		query.setParameter(gameId, gameId);
+		query.setParameter(GAMEIDSTRING, gameId);
 		return query.getSingleResult();
 	}
 

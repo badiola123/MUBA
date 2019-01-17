@@ -43,22 +43,22 @@ public class LeagueConnectorDaoImpl implements LeagueConnectorDao {
 	public List<LeagueConnector> getLeagueTeams(int leagueId) {
 		 @SuppressWarnings("unchecked")
 	     TypedQuery<LeagueConnector> query=sessionFactory.getCurrentSession().createQuery("from LeagueConnector LC where LC.leagueId = :leagueId");
-		 query.setParameter(leagueId, leagueId);
+		 query.setParameter("leagueId", leagueId);
 		 return query.getResultList();
 	}
 	@Override
 	public int getRegisteredTeams(int leagueId) {
 		 @SuppressWarnings("unchecked")
 	     TypedQuery<Long> query=sessionFactory.getCurrentSession().createQuery("select count(distinct LC.teamId) from LeagueConnector LC where LC.leagueId = :leagueId");
-		 query.setParameter(leagueId, leagueId);
+		 query.setParameter("leagueId", leagueId);
 		 return Math.toIntExact(query.getSingleResult());
 	}
 
 	@Override
 	public void leaveLeague(int leagueId, int userTeamId) {	
 		Query query = sessionFactory.getCurrentSession().createQuery("delete from LeagueConnector where leagueId = :leagueId' AND teamId = :userTeamId");
-		query.setParameter(leagueId, leagueId);
-		query.setParameter(userTeamId, userTeamId);
+		query.setParameter("leagueId", leagueId);
+		query.setParameter("userTeamId", userTeamId);
 		query.executeUpdate();
 	}
 }
