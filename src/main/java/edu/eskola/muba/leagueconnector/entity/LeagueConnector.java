@@ -7,13 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entity of LeagueConnector
+ * 
+ * @author MUBA team
+ * @version Final version
+ */
+
 @Entity
 @Table(name = "LEAGUECONNECTOR")
 public class LeagueConnector implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -24,29 +28,36 @@ public class LeagueConnector implements Serializable{
 	@Column(name = "TEAMID", insertable = false, updatable = false)
 	private int teamId;
 	
+	/**
+	 * Empty constructor for LeagueConnector
+	 */
 	public LeagueConnector() {}
 	
+	/**
+	 * 
+	 * @param leagueId The league ID
+	 * @param teamId The team ID
+	 */
 	public LeagueConnector(int leagueId, int teamId) {
 		super();
 		this.leagueId=leagueId;
 		this.teamId=teamId;
 	}
 
+	/**
+	 * 
+	 * @return The league ID
+	 */
 	public int getLeagueId() {
 		return leagueId;
 	}
 
-	public void setLeagueId(int leagueId) {
-		this.leagueId = leagueId;
-	}
-
+	/**
+	 * 
+	 * @return The team ID
+	 */
 	public int getTeamId() {
 		return teamId;
 	}
-
-	public void setTeamId(int teamId) {
-		this.teamId = teamId;
-	}
-	
 	
 }

@@ -5,6 +5,13 @@ import java.util.List;
 
 import edu.eskola.muba.league.entity.League;
 
+/**
+ * Service of League
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see LeagueDao
+ */
 public interface LeagueService {
 	void addLeague(League league);
 	League getLeague(int leagueId);

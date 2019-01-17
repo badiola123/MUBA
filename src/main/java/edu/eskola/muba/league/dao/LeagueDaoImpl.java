@@ -14,6 +14,14 @@ import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.league.entity.League;
 
+/**
+ * DAO implementation of League
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see LeagueDao
+ */
+
 @Repository
 public class LeagueDaoImpl implements LeagueDao {
 
@@ -29,9 +37,9 @@ public class LeagueDaoImpl implements LeagueDao {
 	public League getLeague(int leagueId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<League> query = sessionFactory.getCurrentSession()
-				.createQuery("from League L WHERE L.leagueId ='" + leagueId + "'");
-		League league = query.getSingleResult();
-		return league;
+				.createQuery("from League L WHERE L.leagueId =:leagueId");
+		query.setParameter(leagueId, leagueId);
+		return query.getSingleResult();
 	}
 
 	@Override
@@ -39,8 +47,9 @@ public class LeagueDaoImpl implements LeagueDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<League> query = sessionFactory.getCurrentSession()
 				.createQuery("SELECT L from League L " + "INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "
-						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId ='" + teamId
-						+ "' AND L.started = true AND L.endDate > NOW()");
+						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId = :teamId"
+						+ " AND L.started = true AND L.endDate > NOW()");
+		query.setParameter(teamId, teamId);
 		return query.getResultList();
 	}
 
@@ -49,8 +58,9 @@ public class LeagueDaoImpl implements LeagueDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<League> query = sessionFactory.getCurrentSession()
 				.createQuery("SELECT L from League L " + "INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "
-						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId ='" + teamId
-						+ "' AND L.endDate < NOW()");
+						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId = :teamId"
+						+ " AND L.endDate < NOW()");
+		query.setParameter(teamId, teamId);
 		return query.getResultList();
 	}
 
@@ -59,8 +69,9 @@ public class LeagueDaoImpl implements LeagueDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<League> query = sessionFactory.getCurrentSession()
 				.createQuery("SELECT L from League L " + "INNER JOIN LeagueConnector LC ON L.leagueId=LC.leagueId "
-						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId ='" + teamId
-						+ "' AND L.started = false");
+						+ "INNER JOIN Team T ON LC.teamId=T.teamId " + "WHERE T.teamId = :teamId"
+						+ " AND L.started = false");
+		query.setParameter(teamId, teamId);
 		return query.getResultList();
 	}
 
@@ -70,7 +81,8 @@ public class LeagueDaoImpl implements LeagueDao {
 		TypedQuery<Integer> query = sessionFactory.getCurrentSession().createQuery(
 				"SELECT DISTINCT(LC.leagueId) from LeagueConnector LC INNER JOIN League L ON L.leagueId=LC.leagueId WHERE L.started = false and"
 						+ " LC.leagueId NOT IN(SELECT distinct(LC.leagueId) from LeagueConnector LC INNER JOIN League L ON L.leagueId=LC.leagueId"
-						+ " WHERE  L.started = false and LC.teamId = '" + teamId + "')");
+						+ " WHERE  L.started = false and LC.teamId = :teamId)");
+		query.setParameter(teamId, teamId);
 		return query.getResultList();
 	}
 
@@ -79,8 +91,8 @@ public class LeagueDaoImpl implements LeagueDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<League> query = sessionFactory.getCurrentSession().createQuery("from League order by leagueId desc")
 				.setMaxResults(1);
-		League league = query.getSingleResult();
-		return league.getLeagueId();
+		return query.getSingleResult().getLeagueId();
+
 
 	}
 
@@ -88,7 +100,8 @@ public class LeagueDaoImpl implements LeagueDao {
 	public boolean checkIfHost(int leagueId, int userTeamId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Integer> query = sessionFactory.getCurrentSession()
-				.createQuery("select hostTeam from League L where L.leagueId = '" + leagueId + "'");
+				.createQuery("select hostTeam from League L where L.leagueId = :leagueId");
+		query.setParameter(leagueId, leagueId);
 		int hostId = Math.toIntExact(query.getSingleResult());
 		return (hostId == userTeamId);
 	}
@@ -97,8 +110,9 @@ public class LeagueDaoImpl implements LeagueDao {
 	public int getNeededTeams(int leagueId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Integer> query = sessionFactory.getCurrentSession()
-				.createQuery("select stages from League L where L.leagueId = '" + leagueId + "'");
+				.createQuery("select stages from League L where L.leagueId = :leagueId");
 		int stages = query.getSingleResult();
+		query.setParameter(leagueId, leagueId);
 		return (stages == 2 ? 4 : 8);
 	}
 
@@ -106,7 +120,8 @@ public class LeagueDaoImpl implements LeagueDao {
 	public void startLeague(int leagueId) {
 		@SuppressWarnings("rawtypes")
 		Query query = sessionFactory.getCurrentSession()
-				.createQuery("UPDATE League set started = true where leagueId = '" + leagueId + "'");
+				.createQuery("UPDATE League set started = true where leagueId = :leagueId");
+		query.setParameter(leagueId, leagueId);
 		query.executeUpdate();
 	}
 
@@ -117,7 +132,8 @@ public class LeagueDaoImpl implements LeagueDao {
 		String end = dateFormat.format(endDate);
 		@SuppressWarnings("rawtypes")
 		Query query = sessionFactory.getCurrentSession().createQuery("UPDATE League set startDate = '" + start
-				+ "', endDate = '" + end + "' where leagueId = '" + leagueId + "'");
+				+ "', endDate = '" + end + "' where leagueId = :leagueId");
+		query.setParameter(leagueId, leagueId);
 		query.executeUpdate();
 	}
 
@@ -125,7 +141,8 @@ public class LeagueDaoImpl implements LeagueDao {
 	public void deleteLeague(int leagueId) {
 		@SuppressWarnings("rawtypes")
 		Query query = sessionFactory.getCurrentSession()
-				.createQuery("delete from League where leagueId = '" + leagueId + "'");
+				.createQuery("delete from League where leagueId = :leagueId");
+		query.setParameter(leagueId, leagueId);
 		query.executeUpdate();
 	}
 

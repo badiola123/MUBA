@@ -7,6 +7,12 @@ import javax.persistence.Table;
 
 import java.util.Date;
 
+/**
+ * Entity of League
+ * 
+ * @author MUBA team
+ * @version Final version
+ */
 @Entity
 @Table(name = "LEAGUE")
 public class League {
@@ -39,8 +45,24 @@ public class League {
 	@Column(name = "WINNERTEAM")
 	private int winnerTeam;
 	
+	/**
+	 * Empty constructor for League
+	 */
 	public League() {}
 	
+	/**
+	 * League constructor with all fields
+	 * 
+	 * @param leagueId The league ID
+	 * @param hostTeam The host team ID of the league
+	 * @param started Checker to know if the league has started
+	 * @param startDate League starting date
+	 * @param endDate League ending date
+	 * @param leagueName League name
+	 * @param leagueDesc League description
+	 * @param stages Number of stages of the league
+	 * @param winnerTeam Winner team ID of the league
+	 */
 	public League(int leagueId, int hostTeam, boolean started, Date startDate, Date endDate, String leagueName, String leagueDesc, int stages, int winnerTeam) {
 		super();
 		this.leagueId=leagueId;
@@ -54,76 +76,76 @@ public class League {
 		this.winnerTeam=winnerTeam;
 	}
 
+	/**
+	 * 
+	 * @return The league ID
+	 */
 	public int getLeagueId() {
 		return leagueId;
 	}
-
-	public void setLeagueId(int leagueId) {
-		this.leagueId = leagueId;
-	}
 	
+	/**
+	 * 
+	 * @return The host team ID
+	 */
 	public int getHostTeam() {
 		return hostTeam;
 	}
-
-	public void setHostTeam(int hostTeam) {
-		this.hostTeam = hostTeam;
-	}
 	
+	/**
+	 * 
+	 * @return If the league has started
+	 */
 	public boolean isStarted() {
 		return started;
 	}
 
-	public void setStarted(boolean started) {
-		this.started = started;
-	}
-
+	/**
+	 * 
+	 * @return The league starting date
+	 */
 	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
+	/**
+	 * 
+	 * @return The league ending date
+	 */
 	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
+	/**
+	 * 
+	 * @return The league name
+	 */
 	public String getLeagueName() {
 		return leagueName;
 	}
 
-	public void setLeagueName(String leagueName) {
-		this.leagueName = leagueName;
-	}
-
+	/**
+	 * 
+	 * @return The league description
+	 */
 	public String getLeagueDesc() {
 		return leagueDesc;
 	}
-
-	public void setLeagueDesc(String leagueDesc) {
-		this.leagueDesc = leagueDesc;
-	}
 	
+	/**
+	 * 
+	 * @return The number of stages of the league
+	 */
 	public int getStages() {
 		return stages;
 	}
 
-	public void setStages(int stages) {
-		this.stages = stages;
-	}
-	
+	/**
+	 * 
+	 * @return The league winner's team ID
+	 */
 	public int getWinnerTeam() {
 		return winnerTeam;
-	}
-
-	public void setWinnerTeam(int winnerTeam) {
-		this.winnerTeam = winnerTeam;
 	}
 	
 }

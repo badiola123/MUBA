@@ -10,6 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.eskola.muba.league.dao.LeagueDao;
 import edu.eskola.muba.league.entity.League;
 
+/**
+ * Service implementation of League
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see LeagueDao
+ */
 @Service
 public class LeagueServiceImpl implements LeagueService{
 

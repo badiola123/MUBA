@@ -189,7 +189,7 @@ public class ChartController {
 	 * @return A list with the total statistics data.
 	 */
 	private List<String> createTotalStatsJson(List<Stats> stats) {
-		List<String> stats_list = new ArrayList<>();
+		List<String> statsList = new ArrayList<>();
 		int scored2 = 0;
 		int shot2 = 0;
 		int scored3 = 0;
@@ -201,13 +201,13 @@ public class ChartController {
 		int val = 0;
 
 		//Date
-		stats_list.add("Total");
+		statsList.add("Total");
 		//Vs Team
-		stats_list.add("");
+		statsList.add("");
 		//TimePlayed
-		stats_list.add("-");
+		statsList.add("-");
 		//FT
-		stats_list.add("-");
+		statsList.add("-");
 		//2PT
 		
 		for(int i = 0; i< stats.size(); i++) {
@@ -223,26 +223,26 @@ public class ChartController {
 		}
 		double calcPercentage = 0;
 		if(shot2 > 0) calcPercentage = ((double)scored2/(double)shot2)*100;
-		stats_list.add(scored2+"/" + shot2+ "\t" + round(calcPercentage, 2) + "%");
+		statsList.add(scored2+"/" + shot2+ "\t" + round(calcPercentage, 2) + "%");
 		//3PT
 		calcPercentage = 0;
 		if(shot3 > 0) calcPercentage = ((double)scored3/(double)shot3)*100;
-		stats_list.add(scored3+"/" + shot3+ "\t" + round(calcPercentage, 2)+ "%");
+		statsList.add(scored3+"/" + shot3+ "\t" + round(calcPercentage, 2)+ "%");
 		//DR
-		stats_list.add(Integer.toString(dr));
+		statsList.add(Integer.toString(dr));
 		//OR
-		stats_list.add(Integer.toString(or));
+		statsList.add(Integer.toString(or));
 		//S
-		stats_list.add(Integer.toString(s));
+		statsList.add(Integer.toString(s));
 		//B
-		stats_list.add(Integer.toString(b));
+		statsList.add(Integer.toString(b));
 		//A
-		stats_list.add("-");
+		statsList.add("-");
 		//F
-		stats_list.add("-");
+		statsList.add("-");
 		//Val
-		stats_list.add(Integer.toString(val));
-		return stats_list;
+		statsList.add(Integer.toString(val));
+		return statsList;
 	}
 	
 	/**
