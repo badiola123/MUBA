@@ -5,6 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entity of Player
+ * 
+ * @author MUBA team
+ * @version Final version
+ */
+
 @Entity
 @Table(name = "PLAYER")
 public class Player {
@@ -31,9 +38,21 @@ public class Player {
 	@Column(name = "POSITION")
 	private int position;
 
-	
+	/**
+	 * Empty constructor of Player
+	 */
 	public Player() {}
 	
+	/**
+	 * Constructor with the parameters to set to the player
+	 * 
+	 * @param teamId Team id the player belongs to
+	 * @param name Player's name
+	 * @param surname Player's surname
+	 * @param initialFive Whether the player is in the initial five or not
+	 * @param playing Wheter the player is currently playing or not
+	 * @param position Position where the player plays
+	 */
 	public Player(int teamId, String name, String surname, boolean initialFive, boolean playing, int position) {
 		super();
 		this.teamId = teamId;
@@ -44,57 +63,59 @@ public class Player {
 		this.position = position;
 	}
 
+	/**
+	 * 
+	 * @return Returns the team id
+	 */
 	public int getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(int teamId) {
-		this.teamId = teamId;
-	}
-	
+	/**
+	 * 
+	 * @return Returns the player id
+	 */
 	public int getPlayerId() {
 		return playerId;
 	}
 
+	/**
+	 * 
+	 * @return Return the player's name
+	 */
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	/**
+	 * 
+	 * @return Returns the player's surname
+	 */
 	public String getSurname() {
 		return surname;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
+	/**
+	 * 
+	 * @return Returns the initial five boolean
+	 */
 	public boolean isInitialFive() {
 		return initialFive;
 	}
 
-	public void setInitialFive(boolean initialFive) {
-		this.initialFive = initialFive;
-	}
-
+	/**
+	 * 
+	 * @return Returns the playing boolean
+	 */
 	public boolean isPlaying() {
 		return playing;
 	}
 
-	public void setPlayign(boolean playing) {
-		this.playing = playing;
-	}
-
+	/**
+	 * 
+	 * @return Returns the player position
+	 */
 	public int getPosition() {
 		return position;
 	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
-	
-	
 }

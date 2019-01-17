@@ -10,9 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.player.entity.Player;
+import edu.eskola.muba.user.dao.UserDao;
+
+/**
+ * DAO implementation of Player
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see PlayerDao
+ */
 
 @Repository
-
 public class PlayerDaoImpl implements PlayerDao {
 
 	@Autowired

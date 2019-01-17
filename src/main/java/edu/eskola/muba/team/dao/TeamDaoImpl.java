@@ -10,6 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.team.entity.Team;
+import edu.eskola.muba.user.dao.UserDao;
+
+/**
+ * DAO implementation of Team
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see TeamDao
+ */
 
 @Repository
 public class TeamDaoImpl implements TeamDao {
