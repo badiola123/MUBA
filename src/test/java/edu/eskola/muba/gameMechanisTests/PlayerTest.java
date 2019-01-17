@@ -24,7 +24,7 @@ public class PlayerTest {
 	public void staminaLossTest() {
 		player.staminaLoss();
 		
-		assertEquals(player.getStamina(),99.4f,2);
+		assertEquals(99.4f,player.getStamina(),2);
 	}
 	
 	@Test
@@ -34,7 +34,7 @@ public class PlayerTest {
 		player.staminaLoss();
 		player.rest();
 		
-		assertEquals(player.getStamina(),100.0f,2);
+		assertEquals(100.0f,player.getStamina(),2);
 	}
 	
 	@Test
@@ -43,12 +43,12 @@ public class PlayerTest {
 			player.staminaLoss();
 		}
 
-		assertEquals(player.getStamina(),10.0f,2);
+		assertEquals(10.0f,player.getStamina(),2);
 	}
 	
 	@Test
 	public void getBallControlTest() {
-		assertEquals(player.getBallControl(),90);
+		assertEquals(90,player.getBallControl());
 	}
 	
 	@Test
@@ -57,17 +57,17 @@ public class PlayerTest {
 			player.staminaLoss();
 		}
 		System.out.println(player.getStamina());
-		assertEquals(player.getDefence(),79);
+		assertEquals(79,player.getDefence());
 	}
 	
 	@Test
 	public void getLongShootSkillTest() {
-		assertEquals(player.getLongShootSkill(),70);
+		assertEquals(70,player.getLongShootSkill());
 	}
 	
 	@Test
 	public void getShortShootSkillTest() {
-		assertEquals(player.getShortShootSkill(),60);
+		assertEquals(60,player.getShortShootSkill());
 	}
 
 }
