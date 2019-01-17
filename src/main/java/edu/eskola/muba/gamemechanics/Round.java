@@ -35,11 +35,7 @@ public class Round {
 	private int fightRebound(int currentRebounds, int returnValue) {
 		while(currentRebounds<MAX_REBOUNDS && returnValue==-1) {
 			currentRebounds++;
-			//int shootResult = shoot();
 			returnValue = getShootResult(shoot());
-			/*if(shootResult==3) returnValue = 3;
-			if(shootResult==2) returnValue = 2;
-			if(shootResult==0) if(!rebound()) returnValue = 0;*/
 		}
 		return returnValue;
 	}
@@ -48,7 +44,7 @@ public class Round {
 		int returnValue = -1;
 		if(shootResult==3) returnValue = 3;
 		if(shootResult==2) returnValue = 2;
-		if(shootResult==0) if(!rebound()) returnValue = 0;
+		if(shootResult==0 && !rebound()) returnValue = 0;
 		return returnValue;
 		
 	}
