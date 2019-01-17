@@ -29,7 +29,7 @@ import edu.eskola.muba.team.service.TeamService;
  *
  * @author MUBA team
  * @version Final version
- * @see The Controller annotation is used to specify that this class is a controller that handles requests
+ * The Controller annotation is used to specify that this class is a controller that handles requests
  */
 
 @Controller

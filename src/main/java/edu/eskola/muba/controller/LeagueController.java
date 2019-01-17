@@ -454,7 +454,7 @@ public class LeagueController {
 	 * Gets an ordered list of teams involved in all the games of a league's specific stage for the league schedule visualization.
 	 * @param leagueId League of which the teams are required
 	 * @param stage	Stage of which teams are required
-	 * @return
+	 * @return Ordered list of teams
 	 */
 	public List<Team> getStageTeamsOrdered(int leagueId, int stage){
 		List<Team> stageTeams=new ArrayList<>();
