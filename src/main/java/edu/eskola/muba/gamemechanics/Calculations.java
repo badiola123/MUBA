@@ -40,40 +40,43 @@ public class Calculations {
 	}
 	
 	public boolean goingToAttackResult(PlayerGame attackingPlayer,PlayerGame defendingPlayer) {
-		ArrayList<PlayerGame> players = new ArrayList<PlayerGame>();
+		boolean result = false;
+		ArrayList<PlayerGame> players = new ArrayList<>();
 		attackingPlayer.setNeededStatValue(attackingPlayer.getBallControl());
 		defendingPlayer.setNeededStatValue(defendingPlayer.getDefence());
 		players.add(attackingPlayer);
 		players.add(defendingPlayer);
 		PlayerGame winner = ourRandom.ruletteWheelSelection(players);
-		if(attackingPlayer.equals(winner)) return true;
-		return false; 
+		if(attackingPlayer.equals(winner)) result = true;
+		return result; 
 	}
 	
 	public boolean goingToShootResult(PlayerGame attackingPlayer,PlayerGame defendingPlayer) {
-		ArrayList<PlayerGame> players = new ArrayList<PlayerGame>();
+		boolean result = false;
+		ArrayList<PlayerGame> players = new ArrayList<>();
 		attackingPlayer.setNeededStatValue(attackingPlayer.getBallControl());
 		defendingPlayer.setNeededStatValue(defendingPlayer.getDefence());
 		players.add(attackingPlayer);
 		players.add(defendingPlayer);
 		PlayerGame winner = ourRandom.ruletteWheelSelection(players);
-		if(attackingPlayer.equals(winner)) return true;
-		return false; 
+		if(attackingPlayer.equals(winner)) result = true;
+		return result; 
 	}
 	
 	public boolean reboundResult(PlayerGame attackingPlayer,PlayerGame defendingPlayer) {
-		ArrayList<PlayerGame> players = new ArrayList<PlayerGame>();
+		boolean result = false;
+		ArrayList<PlayerGame> players = new ArrayList<>();
 		attackingPlayer.setNeededStatValue(attackingPlayer.getHeight());
 		defendingPlayer.setNeededStatValue(defendingPlayer.getHeight());
 		players.add(attackingPlayer);
 		players.add(defendingPlayer);
 		PlayerGame winner = ourRandom.ruletteWheelSelection(players);
-		if(attackingPlayer.equals(winner)) return true;
-		return false; 
+		if(attackingPlayer.equals(winner)) result = true;
+		return result; 
 	}
 	
 	public int shootResult(PlayerGame attackingPlayer,PlayerGame defendingPlayer, int pointsForShoot) {
-		ArrayList<PlayerGame> players = new ArrayList<PlayerGame>();
+		ArrayList<PlayerGame> players = new ArrayList<>();
 		defendingPlayer.setNeededStatValue(defendingPlayer.getDefence());
 		players.add(attackingPlayer);
 		players.add(defendingPlayer);
