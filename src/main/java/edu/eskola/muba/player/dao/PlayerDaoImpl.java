@@ -82,13 +82,14 @@ public class PlayerDaoImpl implements PlayerDao {
 	@Override
 	public void updateInitialPosition(int position, int playerId) {
 		Query<Player> query;
+		
 		if (position == 0)
 			query = sessionFactory.getCurrentSession().createQuery(
-					"update Player set INITIALFIVE = FALSE, PLAYING = FALSE, POSITION = NULL where playerId = :playerId");
+					"update Player set INITIALFIVE = FALSE, PLAYING = FALSE, POSITION = '0' where playerId = :playerId");
 		else {
 			query = sessionFactory.getCurrentSession()
 					.createQuery("update Player set INITIALFIVE = TRUE, PLAYING = TRUE, POSITION = :position where playerId = :playerId");
-			query.setParameter("position", position);
+			query.setParameter("position", position+1);
 		}
 		query.setParameter(PLAYER_ID, playerId);
 		query.executeUpdate();
