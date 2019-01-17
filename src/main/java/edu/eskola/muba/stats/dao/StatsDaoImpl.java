@@ -11,12 +11,22 @@ import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.stats.entity.Stats;
 
+/**
+ * DAO implementation of Stats
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see StatsDao
+ */
 @Repository
 public class StatsDaoImpl implements StatsDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	private static final String gameIdString = "gameId";
+	private static final String playerIdString = "playerId";
+	
 	@Override
 	public void addStats(Stats stats) {
 		sessionFactory.getCurrentSession().save(stats);		
@@ -27,8 +37,8 @@ public class StatsDaoImpl implements StatsDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("from Stats WHERE GAMEID=:gameId AND PLAYERID=:playerId");
-		query.setParameter("gameId", gameId);
-		query.setParameter("playerId", playerId);
+		query.setParameter(gameIdString, gameId);
+		query.setParameter(playerIdString, playerId);
 		return query.getSingleResult();
 	}
 
@@ -37,8 +47,8 @@ public class StatsDaoImpl implements StatsDao {
 		@SuppressWarnings("unchecked")
 		Query<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("update Stats set "+key+" = :value WHERE GAMEID=:gameId AND PLAYERID=:playerId");
-		query.setParameter("gameId", gameId);
-		query.setParameter("playerId", playerId);
+		query.setParameter(gameIdString, gameId);
+		query.setParameter(playerIdString, playerId);
 		query.setParameter("value", value);
 		query.executeUpdate();
 	}
@@ -48,7 +58,7 @@ public class StatsDaoImpl implements StatsDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("from Stats WHERE PLAYERID=:playerId");
-		query.setParameter("playerId", playerId);
+		query.setParameter(playerIdString, playerId);
 		return query.getResultList();
 	}
 
@@ -58,7 +68,7 @@ public class StatsDaoImpl implements StatsDao {
 		TypedQuery<Stats> query = sessionFactory.getCurrentSession()
 				.createQuery("from Stats WHERE TEAMID=:teamId AND GAMEID=:gameId");
 		query.setParameter("teamId", teamId);
-		query.setParameter("gameId", gameId);
+		query.setParameter(gameIdString, gameId);
 		return query.getResultList();
 	}
 
