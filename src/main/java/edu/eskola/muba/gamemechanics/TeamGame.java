@@ -1,4 +1,4 @@
-package edu.eskola.muba.gameMechanics;
+package edu.eskola.muba.gamemechanics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class TeamGame {
 	private String name;
 	
 	public TeamGame(String name, List<Characteristics> chars) {
-		players = new ArrayList<PlayerGame >();
+		players = new ArrayList<>();
 		players.add(new PlayerGame(chars.get(0)));
 		players.add(new PlayerGame(chars.get(1)));
 		players.add(new PlayerGame(chars.get(2)));
@@ -20,7 +20,7 @@ public class TeamGame {
 	}
 	
 	public TeamGame(String name, PlayerGame player1, PlayerGame player2, PlayerGame player3, PlayerGame player4, PlayerGame player5) {
-		players = new ArrayList<PlayerGame >();
+		players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
 		players.add(player3);

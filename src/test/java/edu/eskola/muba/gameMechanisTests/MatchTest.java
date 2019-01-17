@@ -9,9 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
-import edu.eskola.muba.gameMechanics.Match;
-import edu.eskola.muba.gameMechanics.PlayerGame;
-import edu.eskola.muba.gameMechanics.TeamGame;
+import edu.eskola.muba.gamemechanics.Match;
+import edu.eskola.muba.gamemechanics.PlayerGame;
+import edu.eskola.muba.gamemechanics.TeamGame;
 
 public class MatchTest extends EasyMockSupport {
 	PlayerGame teamAPlayer1;

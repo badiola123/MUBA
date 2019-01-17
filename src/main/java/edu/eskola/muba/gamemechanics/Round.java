@@ -1,4 +1,4 @@
-package edu.eskola.muba.gameMechanics;
+package edu.eskola.muba.gamemechanics;
 
 public class Round {
 	private final TeamGame attackingTeam;

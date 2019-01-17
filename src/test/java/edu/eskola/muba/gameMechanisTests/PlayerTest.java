@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
-import edu.eskola.muba.gameMechanics.PlayerGame;
+import edu.eskola.muba.gamemechanics.PlayerGame;
 
 
 public class PlayerTest {

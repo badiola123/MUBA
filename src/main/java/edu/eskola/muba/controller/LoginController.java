@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.eskola.muba.characteristics.entity.Characteristics;
 import edu.eskola.muba.characteristics.service.CharacteristicsService;
 import edu.eskola.muba.config.AppConfig;
-import edu.eskola.muba.gameMechanics.OurRandom;
+import edu.eskola.muba.gamemechanics.OurRandom;
 import edu.eskola.muba.player.entity.Player;
 import edu.eskola.muba.player.service.PlayerService;
 import edu.eskola.muba.team.entity.Team;
