@@ -22,6 +22,11 @@
 	border: 3px solid black;
 }
 
+.singlePlayer>img {
+	border-bottom: thin solid black;
+	width: 100%;
+}
+
 #initial>img {
 	width: 100%;
 }
@@ -71,11 +76,6 @@
 
 .singlePlayer>p {
 	text-align: center;
-}
-
-.singlePlayer>img {
-	border-bottom: thin solid black;
-	width: 100%;
 }
 
 .trainButton {
