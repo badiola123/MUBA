@@ -15,10 +15,10 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
-import edu.eskola.muba.gameMechanics.Calculations;
-import edu.eskola.muba.gameMechanics.PlayerGame;
-import edu.eskola.muba.gameMechanics.Round;
-import edu.eskola.muba.gameMechanics.TeamGame;
+import edu.eskola.muba.gamemechanics.Calculations;
+import edu.eskola.muba.gamemechanics.PlayerGame;
+import edu.eskola.muba.gamemechanics.Round;
+import edu.eskola.muba.gamemechanics.TeamGame;
 
 public class RoundTest extends EasyMockSupport {
 	PlayerGame teamAPlayer1;
