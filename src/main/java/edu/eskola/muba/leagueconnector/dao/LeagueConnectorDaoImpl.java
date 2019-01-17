@@ -58,7 +58,7 @@ public class LeagueConnectorDaoImpl implements LeagueConnectorDao {
 
 	@Override
 	public void leaveLeague(int leagueId, int userTeamId) {	
-		Query query = sessionFactory.getCurrentSession().createQuery("delete from LeagueConnector where leagueId = :leagueId' AND teamId = :userTeamId");
+		Query query = sessionFactory.getCurrentSession().createQuery("delete from LeagueConnector where leagueId = :leagueId AND teamId = :userTeamId");
 		query.setParameter(LEAGUEID, leagueId);
 		query.setParameter("userTeamId", userTeamId);
 		query.executeUpdate();
