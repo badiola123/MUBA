@@ -76,6 +76,12 @@ public class MatchController {
 		return direct;
 	}
 	
+	@RequestMapping(value ="/showGame", method = RequestMethod.GET)
+	public String showGame(HttpServletRequest request, RedirectAttributes redir) {
+		String direct = "redirect:/login/home.html";
+		return direct;
+	}
+	
 	private void displayPage(Game game, HttpServletRequest request, Locale locale) {
 		Team localTeam = teamService.getTeam(game.getLocalTeamId());
 		Team visitorTeam = teamService.getTeam(game.getVisitorTeamId());

@@ -269,7 +269,7 @@ public class LeagueController {
 			teamService.updateBudget(game.getVisitorTeamId(), visitorTeam.getBudget()+10000);
 			if(gameService.moveTeamUp(game.getVisitorTeamId(), game.getLeagueId())) {
 				teamService.updateBudget(game.getVisitorTeamId(), visitorTeam.getBudget()+100000);
-				leagueService.updateLeague(game.getLeagueId(), "winnerTeam", Integer.toString(game.getVisitorTeamId()));
+				leagueService.updateLeague(game.getLeagueId(), "WINNERTEAM", Integer.toString(game.getVisitorTeamId()));
 			}
 		}
 	}
@@ -298,8 +298,9 @@ public class LeagueController {
 	public String goToLeague(HttpServletRequest request) {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
-		if (user != null) {
-			String leagueIdStr = request.getParameter("leagueId");
+		String leagueIdStr = request.getParameter("leagueId");
+		if (user != null && leagueIdStr != null) {
+			
 			int leagueId=Integer.parseInt(leagueIdStr);
 			league=leagueService.getLeague(leagueId);
 			if(league.getWinnerTeam()!=-1) {

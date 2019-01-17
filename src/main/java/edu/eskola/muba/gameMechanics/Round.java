@@ -4,7 +4,7 @@ public class Round {
 	private final TeamGame attackingTeam;
 	private final TeamGame defendingTeam;
 	private final Calculations calculations;
-	static final int MAX_REBOUNDS = 3; 
+	public static final int MAX_REBOUNDS = 3; 
 	private String matchLogs;
 	
 	public Round (TeamGame attackingTeam, TeamGame defendingTeam, Calculations calculations, String matchLogs) {

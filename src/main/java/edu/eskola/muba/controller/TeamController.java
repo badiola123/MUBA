@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
@@ -107,13 +108,18 @@ public class TeamController {
 	}
 
 	@RequestMapping(value = "/player", method = RequestMethod.GET)
-	public String player(@RequestParam("playerId") int playerId, HttpServletRequest request) {
-		String direct = "playerInfo";
-		Player player = playerService.getPlayer(playerId);
-		Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
-		request.setAttribute("player", player);
-		request.setAttribute("chars", chars);
-		return direct;
+	public ModelAndView player(@RequestParam("playerId") int playerId, HttpServletRequest request, RedirectAttributes redir) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/login/home.html");
+		User user = (User) request.getSession().getAttribute("sessUser");
+		if (user != null) {
+			modelAndView.setViewName("playerInfo");
+			Player player = playerService.getPlayer(playerId);
+			Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
+			request.setAttribute("player", player);
+			request.setAttribute("chars", chars);
+		}else redir.addFlashAttribute("warning", "login.warning");
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/train", method = RequestMethod.GET)

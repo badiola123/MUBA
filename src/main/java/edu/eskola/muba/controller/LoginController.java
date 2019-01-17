@@ -87,19 +87,6 @@ public class LoginController {
 	}
 	
 	/**
-	 * Mapped to the same path of the above function but using the GET method. It is called when, after login, a language change is requested.
-	 * The same page is loaded but in another language
-	 * 
-	 * @return the home page, where the function was called from
-	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView checkUser() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("home");
-		return modelAndView;
-	}
-	
-	/**
 	 * Catches the request for /login/logout which is requested to process a log out request
 	 * 
 	 * @param status Used to end the user session
@@ -136,26 +123,6 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView register(HttpServletRequest request, RedirectAttributes redir) {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute("sessUser");
-		
-		if(user==null) modelAndView.setViewName("register");
-		else redir.addFlashAttribute("warning", "logout.warning");
-		
-		return modelAndView;
-	}
-	
-	/**
-	 * Mapped to the same path of the above function but using the GET method. It is called when, in the register page, a language change is requested.
-	 * The same page is loaded but in another language
-	 * 
-	 * @param request Used to check if a user attribute exists which shows that someone is logged in
-	 * @param redir Attributes that need to be passed between redirects are added to it
-	 * @return An instance of ModelAndView containing the view
-	 */
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView registerChangeLang(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
 		User user = (User) request.getSession().getAttribute("sessUser");

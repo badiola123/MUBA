@@ -103,8 +103,7 @@ public class AccountController {
 
 	/**
 	 * Mapped to /account/manage with GET method.
-	 * It is called to access the register page or when, once in the register page, a language change is requested.
-	 * In the last case, the same page is loaded but in another language
+	 * It is called to access the register page
 	 * 
 	 * @param request Used to check if a user attribute exists which shows that someone is logged in
 	 * @param redir Attributes that need to be passed between redirects are added to it

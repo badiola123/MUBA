@@ -19,6 +19,16 @@ public class TeamGame {
 		this.name = name; 
 	}
 	
+	public TeamGame(String name, PlayerGame player1, PlayerGame player2, PlayerGame player3, PlayerGame player4, PlayerGame player5) {
+		players = new ArrayList<PlayerGame >();
+		players.add(player1);
+		players.add(player2);
+		players.add(player3);
+		players.add(player4);
+		players.add(player5);
+		this.name = name;
+	}
+	
 	public PlayerGame getPlayerById(int playerId) {
 		PlayerGame player = null;
 		for(PlayerGame each : players) {

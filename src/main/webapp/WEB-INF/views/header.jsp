@@ -33,9 +33,9 @@
 	  </c:choose>
 	  
 	  <div class="lang">
-		<a href="?locale=en"><img class="flag" border="0" alt="<spring:message code="language.en"/>" src="/MUBA/resources/english.jpg"></a>
-		<a href="?locale=es_ES"><img class="flag" border="0" alt="<spring:message code="language.es"/>" src="/MUBA/resources/hispania.png"></a>
-		<a href="?locale=eu"><img class="flag" border="0" alt="<spring:message code="language.eu"/>" src="/MUBA/resources/euskera.png"></a>
+		<a href="/MUBA/login/home.html?locale=en"><img class="flag" border="0" alt="<spring:message code="language.en"/>" src="/MUBA/resources/english.jpg"></a>
+		<a href="/MUBA/login/home.html?locale=es_ES"><img class="flag" border="0" alt="<spring:message code="language.es"/>" src="/MUBA/resources/hispania.png"></a>
+		<a href="/MUBA/login/home.html?locale=eu"><img class="flag" border="0" alt="<spring:message code="language.eu"/>" src="/MUBA/resources/euskera.png"></a>
 	  </div>
 	  
     </div>
