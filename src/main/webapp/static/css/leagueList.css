@@ -53,3 +53,11 @@
 	margin: 1rem;
 	border: 1px solid cyan;
 }
+
+.leagueNotSelected {
+	text-decoration: none;
+}
+
+.leagueSelected {
+	font-weight: bold;
+}

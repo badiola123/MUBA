@@ -7,10 +7,10 @@
 	
 		<form action="/MUBA/league/goToLeagueList.html" method="get">
 			<aside id="categoryBar">
-	    	<button id="runningBut" type="submit" name="category" value="running"><spring:message code="leagueList.running"/></button>
-			<button id="finishedBut" type="submit" name="category" value="finished"><spring:message code="leagueList.finished"/></button>
-			<button id="notStartedBut" type="submit" name="category" value="notStarted"><spring:message code="leagueList.notStarted"/></button>
-			<button id="availableBut" type="submit" name="category" value="available"><spring:message code="leagueList.available"/></button>
+	    	<button id="running" class="leagueSelected" type="submit" name="category" value="running"><spring:message code="leagueList.running"/></button>
+			<button id="finished" class="leagueNotSelected" type="submit" name="category" value="finished"><spring:message code="leagueList.finished"/></button>
+			<button id="notStarted" class="leagueNotSelected" type="submit" name="category" value="notStarted"><spring:message code="leagueList.notStarted"/></button>
+			<button id="available" class="leagueNotSelected" type="submit" name="category" value="available"><spring:message code="leagueList.available"/></button>
 			</aside>
 		</form>
 		<form action="/MUBA/league/newLeague.html" method="post">
@@ -63,3 +63,5 @@
 		</c:forEach>
   </div>
 </div>
+
+<script>setLeagueButton("${requestScope.category}");</script>

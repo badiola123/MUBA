@@ -22,7 +22,7 @@ pipeline {
         }
 		stage ('Deploy') {
             steps {
-              sh 'sudo cp /var/lib/jenkins/workspace/MUBA_development/target/MUBA-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/MUBA.war'
+              sh 'sudo cp /var/lib/jenkins/workspace/MUBA_development/target/V1.war /opt/tomcat/webapps/MUBA.war'
               sh 'sudo service tomcat restart'
             }
         }

@@ -65,6 +65,9 @@
         <put-list-attribute name="stylesheets" inherit="true">
           <add-attribute value="/static/css/leagueList.css" />
         </put-list-attribute>
+        <put-list-attribute name="javascripts" inherit="true">
+        	<add-attribute value="/static/js/league.js" />
+        </put-list-attribute>
     </definition>
     
 	<definition name="newLeague" extends="base.definition">
