@@ -64,7 +64,7 @@ public class LeagueDaoImpl implements LeagueDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<League> query = sessionFactory.getCurrentSession()
 				.createQuery(SELECTFROMLEAGUE + INNERJOINCONNECTOR + INNERJOINTEAM + WHERETEAMID
-						+ " AND L.endDate < NOW()");
+						+ " AND L.endDate < NOW() AND L.started = true");
 		query.setParameter(TEAMID, teamId);
 		return query.getResultList();
 	}
