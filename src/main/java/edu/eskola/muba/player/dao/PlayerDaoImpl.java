@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.player.entity.Player;
-import edu.eskola.muba.user.dao.UserDao;
 
 /**
  * DAO implementation of Player
@@ -39,8 +38,7 @@ public class PlayerDaoImpl implements PlayerDao {
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.playerId = :playerId");
 		query.setParameter("playerId", playerId);
-		Player player = query.getSingleResult();
-		return player;
+		return query.getSingleResult();
 	}
 
 	@Override
@@ -72,8 +70,10 @@ public class PlayerDaoImpl implements PlayerDao {
 				.createQuery("from Player P WHERE P.playerId =:playerId");
 		query.setParameter("playerId", playerId);
 		Player player = query.getSingleResult();
-
-		return player != null ? true : false;
+		boolean playerBoolean = false;
+		if(player != null) playerBoolean = true;
+		
+		return playerBoolean;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,8 +97,7 @@ public class PlayerDaoImpl implements PlayerDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player order by playerId desc").setMaxResults(1);
-		int id = query.getSingleResult().getPlayerId();
-		return id;
+		return query.getSingleResult().getPlayerId();
 	}
 
 	@Override

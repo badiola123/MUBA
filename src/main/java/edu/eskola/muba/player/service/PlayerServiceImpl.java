@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.eskola.muba.player.dao.PlayerDao;
 import edu.eskola.muba.player.entity.Player;
-import edu.eskola.muba.user.dao.UserDao;
 
 /**
  * Service implementation of Player
