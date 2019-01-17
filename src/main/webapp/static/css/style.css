@@ -106,7 +106,7 @@ header div.banner {
 
 header div.banner img.logo {
 	width: 15vw;
-	height: calc((15vw)*0.5625);
+	height: calc((15vw) * 0.5625);
 }
 
 .block {
@@ -139,5 +139,5 @@ form {
 
 .flag {
 	width: 4vw;
-	height: calc((4vw)*0.5625);
+	height: calc((4vw) * 0.5625);
 }
