@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.eskola.muba.characteristics.entity.Characteristics;
 import edu.eskola.muba.characteristics.service.CharacteristicsService;
 import edu.eskola.muba.config.AppConfig;
-import edu.eskola.muba.gameMechanics.OurRandom;
+import edu.eskola.muba.gamemechanics.OurRandom;
 import edu.eskola.muba.player.entity.Player;
 import edu.eskola.muba.player.service.PlayerService;
 import edu.eskola.muba.team.entity.Team;
@@ -52,8 +52,8 @@ public class LoginController {
 	PlayerService playerService = context.getBean(PlayerService.class);
 	TransactionService transactionService = context.getBean(TransactionService.class);
 	CharacteristicsService characteristicsService = context.getBean(CharacteristicsService.class);
-	String sessUserAttr = "sessUser";
-	String warningAlert = "warning";
+	private static final String SESS_USER_ATTR = "sessUser";
+	private static final String WARNING_ALERT = "warning";
 	
 	/**
 	 * Catches the request for /login/home which is requested to load the home page at startup
@@ -79,7 +79,7 @@ public class LoginController {
 		modelAndView.setViewName("home");
 		User user = userService.checkUser(username, password);
 		if(user != null) {
-			modelAndView.addObject(sessUserAttr, user);
+			modelAndView.addObject(SESS_USER_ATTR, user);
 			modelAndView.addObject("success", "login.success");
 		}
 		else {
@@ -128,10 +128,10 @@ public class LoginController {
 	public ModelAndView register(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute(sessUserAttr);
+		User user = (User) request.getSession().getAttribute(SESS_USER_ATTR);
 		
 		if(user==null) modelAndView.setViewName("register");
-		else redir.addFlashAttribute(warningAlert, "logout.warning");
+		else redir.addFlashAttribute(WARNING_ALERT, "logout.warning");
 		
 		return modelAndView;
 	}
@@ -166,7 +166,7 @@ public class LoginController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute(sessUserAttr);
+		User user = (User) request.getSession().getAttribute(SESS_USER_ATTR);
 		
 		if(user==null) {
 			
@@ -184,7 +184,7 @@ public class LoginController {
 			
 			validData(modelAndView, redir, regUserInfo, regTeamName, playerList);
 		}
-		else redir.addFlashAttribute(warningAlert, "logout.warning");
+		else redir.addFlashAttribute(WARNING_ALERT, "logout.warning");
 		
 		return modelAndView;
 	}
@@ -316,7 +316,7 @@ public class LoginController {
 			String[] playerData = list.get(i);
 			if((playerData[0].length() >=15) || (playerData[1].length() >=15)) {
 				result = 0;
-				modelAndView.addObject(warningAlert, "register.playerLengthError");
+				modelAndView.addObject(WARNING_ALERT, "register.playerLengthError");
 			}
 		}
 		

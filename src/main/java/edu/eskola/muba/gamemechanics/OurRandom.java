@@ -1,6 +1,6 @@
-package edu.eskola.muba.gameMechanics;
+package edu.eskola.muba.gamemechanics;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class OurRandom {
@@ -15,7 +15,7 @@ public class OurRandom {
 		return random.nextInt(to-from+1) + from;
 	}
 	
-	public PlayerGame ruletteWheelSelection(ArrayList<PlayerGame> players) {
+	public PlayerGame ruletteWheelSelection(List<PlayerGame> players) {
 		int totalSum = 0;
 
 		for(int i = 0; i< players.size(); i++) {

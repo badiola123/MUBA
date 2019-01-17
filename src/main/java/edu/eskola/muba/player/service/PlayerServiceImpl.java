@@ -9,6 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.eskola.muba.player.dao.PlayerDao;
 import edu.eskola.muba.player.entity.Player;
 
+/**
+ * Service implementation of Player
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see PlayerDao
+ */
+
 @Service
 public class PlayerServiceImpl implements PlayerService{
 

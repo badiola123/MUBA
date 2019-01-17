@@ -1,4 +1,4 @@
-package edu.eskola.muba.gameMechanics;
+package edu.eskola.muba.gamemechanics;
 
 public class Round {
 	private final TeamGame attackingTeam;
@@ -6,6 +6,8 @@ public class Round {
 	private final Calculations calculations;
 	public static final int MAX_REBOUNDS = 3; 
 	private String matchLogs;
+	
+	private static final String LOGLOSSESBALL = " looses the ball. \n";
 	
 	public Round (TeamGame attackingTeam, TeamGame defendingTeam, Calculations calculations, String matchLogs) {
 		this.attackingTeam = attackingTeam;
@@ -21,22 +23,32 @@ public class Round {
 		else if(!goingToShoot()) returnValue = 0;
 		else {
 			int currentRebounds=0;
-			while(currentRebounds<MAX_REBOUNDS && returnValue==-1) {
-			currentRebounds++;
-			int shootResult = shoot();
-			if(shootResult==3) returnValue = 3;
-			if(shootResult==2) returnValue = 2;
-			if(shootResult==0)
-				if(!rebound()) returnValue = 0;
-		}
+			returnValue = fightRebound(currentRebounds, returnValue);
 		}
 		if(returnValue == -1) {
 			returnValue = 0;
-			matchLogs += attackingTeam.getName() + " looses the ball. \n";
+			matchLogs += attackingTeam.getName() + LOGLOSSESBALL;
 		}
 		return returnValue;
 	}
 	
+	private int fightRebound(int currentRebounds, int returnValue) {
+		while(currentRebounds<MAX_REBOUNDS && returnValue==-1) {
+			currentRebounds++;
+			returnValue = getShootResult(shoot());
+		}
+		return returnValue;
+	}
+
+	private int getShootResult(int shootResult) {
+		int returnValue = -1;
+		if(shootResult==3) returnValue = 3;
+		if(shootResult==2) returnValue = 2;
+		if(shootResult==0 && !rebound()) returnValue = 0;
+		return returnValue;
+		
+	}
+
 	private boolean goingToAttack() {
 		PlayerGame attackingPlayer = calculations.getGoingToAttackAttackingPlayer(attackingTeam);
 		PlayerGame defendingPlayer = calculations.getRandomPlayer(defendingTeam);
@@ -45,7 +57,7 @@ public class Round {
 		if(returnValue) matchLogs += attackingTeam.getName() + " is on the enemy's side. \n";
 		else {
 			defendingPlayer.increaseSteals();
-			matchLogs += attackingTeam.getName() + " looses the ball. \n";
+			matchLogs += attackingTeam.getName() + LOGLOSSESBALL;
 		}
 		return returnValue;
 	}
@@ -58,7 +70,7 @@ public class Round {
 		if(returnValue) matchLogs += attackingTeam.getName() + " is ready to shoot. \n";
 		else {
 			defendingPlayer.increaseSteals();
-			matchLogs += attackingTeam.getName() + " looses the ball. \n";
+			matchLogs += attackingTeam.getName() + LOGLOSSESBALL;
 		}
 		return returnValue;
 	}
@@ -75,7 +87,7 @@ public class Round {
 		int returnValue = calculations.shootResult(attackingPlayer,defendingPlayer,pointsForShoot);
 		
 		if(returnValue == 0) {
-			matchLogs += attackingTeam.getName() + " looses the ball. \n";
+			matchLogs += attackingTeam.getName() + LOGLOSSESBALL;
 			defendingPlayer.increaseBlocks();
 		}
 		if(returnValue == 2) {
@@ -100,7 +112,7 @@ public class Round {
 		}
 		else {
 			defendingPlayer.increaseDeffRebound();
-			matchLogs += attackingTeam.getName() + " looses the ball. \n";
+			matchLogs += attackingTeam.getName() + LOGLOSSESBALL;
 		}
 		return returnValue;
 	}

@@ -33,8 +33,8 @@ public class AccountController {
 	AnnotationConfigApplicationContext context = 
 			new AnnotationConfigApplicationContext(AppConfig.class);
 	UserService userService = context.getBean(UserService.class);
-	String errorAlert = "error";
-	String warningAlert = "warning";
+	private static final String ERROR_ALERT = "error";
+	private static final String WARNING_ALERT = "warning";
 	
 	/**
 	 * Catches the request for /account/manage with POST method which is requested to process a password change by the user
@@ -53,7 +53,7 @@ public class AccountController {
 		User user = (User) request.getSession().getAttribute("sessUser");
 		
 		if(user!=null) checkOldPass(modelAndView, user, oldPass, newPass, reNewPass);
-		else redir.addFlashAttribute(warningAlert, "login.warning");
+		else redir.addFlashAttribute(WARNING_ALERT, "login.warning");
 		
 		return modelAndView;
 	}
@@ -72,7 +72,7 @@ public class AccountController {
 	private void checkOldPass(ModelAndView modelAndView, User user, String oldPass, String newPass, String reNewPass) {
 		modelAndView.setViewName("account");
 		if(user.getPassword().equals(oldPass)) checkNewPass(modelAndView, user, newPass, reNewPass);
-		else modelAndView.addObject(errorAlert, "password.error");
+		else modelAndView.addObject(ERROR_ALERT, "password.error");
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class AccountController {
 	 */
 	private void checkNewPass(ModelAndView modelAndView, User user, String newPass, String reNewPass) {
 		if(newPass.equals(reNewPass)) changePass(modelAndView, user, newPass);
-		else modelAndView.addObject(errorAlert, "newPass.error");
+		else modelAndView.addObject(ERROR_ALERT, "newPass.error");
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class AccountController {
 	 */
 	private void changePass(ModelAndView modelAndView, User user, String newPass) {
 		if(userService.changePass(newPass, user.getUserId()) == 1) modelAndView.addObject("success", "password.success");
-		else modelAndView.addObject(errorAlert, "passDb.error");
+		else modelAndView.addObject(ERROR_ALERT, "passDb.error");
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class AccountController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		if(user!=null) retPage="account";
-		else redir.addFlashAttribute(warningAlert, "login.warning");
+		else redir.addFlashAttribute(WARNING_ALERT, "login.warning");
 		
 		modelAndView.setViewName(retPage);
 		return modelAndView;

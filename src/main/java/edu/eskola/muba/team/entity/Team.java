@@ -5,6 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entity of Team
+ * 
+ * @author MUBA team
+ * @version Final version
+ */
+
 @Entity
 @Table(name = "TEAM")
 public class Team {
@@ -22,14 +29,32 @@ public class Team {
 	@Column(name = "USERID")
 	private int userId;
 
+	/**
+	 * Empty constructor of team
+	 */
 	public Team() {}
 	
+	/**
+	 * Constructor with the parameters to set to the team
+	 * 
+	 * @param teamName Name to set to the team
+	 * @param budget Budget of the team
+	 * @param userId User id the team belongs to
+	 */
 	public Team(String teamName, int budget, int userId) {
 		this.teamName = teamName;
 		this.budget = budget;
 		this.userId = userId;
 	}
 	
+	/**
+	 * Constructor with the parameters to set to the team
+	 * 
+	 * @param teamId Id of the team
+	 * @param teamName Name of the team
+	 * @param budget Budget of the team
+	 * @param userId Id of the user the team belongs to
+	 */
 	public Team(int teamId, String teamName, int budget, int userId) {
 		super();
 		this.teamId=teamId;
@@ -38,33 +63,35 @@ public class Team {
 		this.userId=userId;
 	}
 	
+	/**
+	 * 
+	 * @return Returns the team name
+	 */
 	public String getTeamName() {
 		return teamName;
 	}
-
 	
+	/**
+	 * 
+	 * @return Returns the team id
+	 */
 	public int getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamName(String username) {
-		this.teamName = username;
-	}
-
+	/**
+	 * 
+	 * @return Return the team budget
+	 */
 	public int getBudget() {
 		return budget;
 	}
 
-	public void setBudget(int budget) {
-		this.budget = budget;
-	}
-
+	/**
+	 * 
+	 * @return Returns the user id
+	 */
 	public int getUserId() {
 		return userId;
 	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
 }

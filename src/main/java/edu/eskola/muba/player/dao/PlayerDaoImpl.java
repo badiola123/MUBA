@@ -11,10 +11,19 @@ import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.player.entity.Player;
 
-@Repository
+/**
+ * DAO implementation of Player
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see PlayerDao
+ */
 
+@Repository
 public class PlayerDaoImpl implements PlayerDao {
 
+	private static final String PLAYER_ID = "playerId";
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -30,9 +39,8 @@ public class PlayerDaoImpl implements PlayerDao {
 
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.playerId = :playerId");
-		query.setParameter("playerId", playerId);
-		Player player = query.getSingleResult();
-		return player;
+		query.setParameter(PLAYER_ID, playerId);
+		return query.getSingleResult();
 	}
 
 	@Override
@@ -62,10 +70,12 @@ public class PlayerDaoImpl implements PlayerDao {
 
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player P WHERE P.playerId =:playerId");
-		query.setParameter("playerId", playerId);
+		query.setParameter(PLAYER_ID, playerId);
 		Player player = query.getSingleResult();
-
-		return player != null ? true : false;
+		boolean playerBoolean = false;
+		if(player != null) playerBoolean = true;
+		
+		return playerBoolean;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -80,7 +90,7 @@ public class PlayerDaoImpl implements PlayerDao {
 					.createQuery("update Player set INITIALFIVE = TRUE, PLAYING = TRUE, POSITION = :position where playerId = :playerId");
 			query.setParameter("position", position);
 		}
-		query.setParameter("playerId", playerId);
+		query.setParameter(PLAYER_ID, playerId);
 		query.executeUpdate();
 	}
 
@@ -89,8 +99,7 @@ public class PlayerDaoImpl implements PlayerDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Player> query = sessionFactory.getCurrentSession()
 				.createQuery("from Player order by playerId desc").setMaxResults(1);
-		int id = query.getSingleResult().getPlayerId();
-		return id;
+		return query.getSingleResult().getPlayerId();
 	}
 
 	@Override

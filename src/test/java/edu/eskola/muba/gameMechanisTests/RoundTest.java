@@ -15,10 +15,10 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
-import edu.eskola.muba.gameMechanics.Calculations;
-import edu.eskola.muba.gameMechanics.PlayerGame;
-import edu.eskola.muba.gameMechanics.Round;
-import edu.eskola.muba.gameMechanics.TeamGame;
+import edu.eskola.muba.gamemechanics.Calculations;
+import edu.eskola.muba.gamemechanics.PlayerGame;
+import edu.eskola.muba.gamemechanics.Round;
+import edu.eskola.muba.gamemechanics.TeamGame;
 
 public class RoundTest extends EasyMockSupport {
 	PlayerGame teamAPlayer1;
@@ -75,7 +75,7 @@ public class RoundTest extends EasyMockSupport {
 		EasyMock.expect(calculationsMock.goingToAttackResult(teamAPlayer1,teamBPlayer1)).andReturn(false);
     	
 		replayAll();
-		assertEquals(round.playRound(),0);
+		assertEquals(0,round.playRound());
 		verifyAll();
 	}
 	
@@ -91,7 +91,7 @@ public class RoundTest extends EasyMockSupport {
 		EasyMock.expect(calculationsMock.goingToShootResult(teamAPlayer1, teamBPlayer1)).andReturn(false);
     	
 		replayAll();
-		assertEquals(round.playRound(),0);
+		assertEquals(0,round.playRound());
 		verifyAll();
 	}
 	
@@ -115,7 +115,7 @@ public class RoundTest extends EasyMockSupport {
 		EasyMock.expect(calculationsMock.reboundResult(teamAPlayer1, teamBPlayer1)).andReturn(false);
 		
     	replayAll();
-		assertEquals(round.playRound(),0);
+		assertEquals(0,round.playRound());
 		verifyAll();
 	}
 	
@@ -144,7 +144,7 @@ public class RoundTest extends EasyMockSupport {
 		
 		
     	replayAll();
-		assertEquals(round.playRound(),2);
+		assertEquals(2,round.playRound());
 		verifyAll();
 	}
 	
@@ -164,7 +164,7 @@ public class RoundTest extends EasyMockSupport {
 		EasyMock.expect(calculationsMock.shootResult(EasyMock.anyObject(PlayerGame.class), EasyMock.anyObject(PlayerGame.class), EasyMock.anyInt())).andReturn(3);
 		
     	replayAll();
-		assertEquals(round.playRound(),3);
+		assertEquals(3,round.playRound());
 		verifyAll();
 	}
 	
@@ -192,7 +192,7 @@ public class RoundTest extends EasyMockSupport {
 	
 		
     	replayAll();
-		assertEquals(round.playRound(),0);
+		assertEquals(0,round.playRound());
 		verifyAll();
 	}
 

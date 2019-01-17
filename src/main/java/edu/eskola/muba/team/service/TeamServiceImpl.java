@@ -9,6 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.eskola.muba.team.dao.TeamDao;
 import edu.eskola.muba.team.entity.Team;
 
+/**
+ * Service implementation of Team
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see TeamDao
+ */
+
 @Service
 public class TeamServiceImpl implements TeamService {
 	

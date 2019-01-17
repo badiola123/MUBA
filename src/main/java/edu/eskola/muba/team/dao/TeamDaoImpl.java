@@ -11,6 +11,14 @@ import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.team.entity.Team;
 
+/**
+ * DAO implementation of Team
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see TeamDao
+ */
+
 @Repository
 public class TeamDaoImpl implements TeamDao {
 
@@ -27,8 +35,7 @@ public class TeamDaoImpl implements TeamDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Team> query = sessionFactory.getCurrentSession().createQuery("from Team T WHERE T.teamId = :teamId");
 		query.setParameter("teamId", teamId);
-		Team team = query.getSingleResult();
-		return team;
+		return query.getSingleResult();
 	}
 
 	@Override
@@ -36,8 +43,7 @@ public class TeamDaoImpl implements TeamDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Team> query = sessionFactory.getCurrentSession().createQuery("from Team T WHERE T.userId = :userId");
 		query.setParameter("userId", userId);
-		Team team = query.getSingleResult();
-		return team;
+		return query.getSingleResult();
 	}
 
 	@Override
