@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -44,8 +43,8 @@ public class MatchController {
 	StatsService statsService = context.getBean(StatsService.class);
 	LeagueService leagueService = context.getBean(LeagueService.class);
 	
-	private static final String homeAddress = "redirect:/login/home.html";
-	private static final String matchLogs = "matchLogs";
+	private static final String HOME_ADDRESS = "redirect:/login/home.html";
+	private static final String MATCH_LOGS = "matchLogs";
 
 	/**
 	 * This functions handles redirecting to the /match page
@@ -56,7 +55,7 @@ public class MatchController {
 	 */
 	@GetMapping(path = "/goToMatch")
 	public String goToMatch(HttpServletRequest request, RedirectAttributes redir, Locale locale) {
-		String direct = homeAddress;
+		String direct = HOME_ADDRESS;
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
 			Team yourTeam = teamService.getTeamByUserId(user.getUserId());
@@ -88,7 +87,7 @@ public class MatchController {
 	 */
 	@PostMapping(value ="/showGame")
 	public String showGame(@RequestParam("gameId") int gameId, HttpServletRequest request, RedirectAttributes redir, Locale locale) {
-		String direct = homeAddress;
+		String direct = HOME_ADDRESS;
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
 			Game game = gameService.getGame(gameId);
@@ -120,11 +119,11 @@ public class MatchController {
 		request.setAttribute("visitorPlayers", visitorPlayers);
 		request.setAttribute("score", game.getLocalTeamResult() + " : " + game.getVisitorTeamResult());
 		if (locale.getLanguage().equals("es"))
-			request.setAttribute(matchLogs, game.getEsLogs());
+			request.setAttribute(MATCH_LOGS, game.getEsLogs());
 		if (locale.getLanguage().equals("en"))
-			request.setAttribute(matchLogs, game.getEnLogs());
+			request.setAttribute(MATCH_LOGS, game.getEnLogs());
 		if (locale.getLanguage().equals("eu"))
-			request.setAttribute(matchLogs, game.getBqLogs());
+			request.setAttribute(MATCH_LOGS, game.getBqLogs());
 	}
 
 }

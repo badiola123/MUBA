@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,7 +27,9 @@ import edu.eskola.muba.team.service.TeamService;
 import edu.eskola.muba.user.entity.User;
 
 /**
- * This class handles actions on /team page, /payerInfo page and /playerTrain page
+ * This class handles actions on /team page, /payerInfo page and /playerTrain
+ * page
+ * 
  * @author MUBA team
  * @version Final version
  */
@@ -45,7 +46,7 @@ public class TeamController {
 	private Characteristics trainingCharacteristics;
 	private int skillToTrain;
 
-	private static Map<String, Runnable> skillValues = new HashMap<String, Runnable>();
+	private final Map<String, Runnable> skillValues = new HashMap<>();
 
 	/**
 	 * This function enables receiving required skill by string key
@@ -58,22 +59,24 @@ public class TeamController {
 		skillValues.put("SHORTSHOOT", () -> skillToTrain = trainingCharacteristics.getShortShoot());
 	}
 
-	private static final String homeAddress = "redirect:/login/home.html";
-	private static final String sessUser = "sessUser";
-	private static final String success = "success";
-	private static final String error = "error";
-	private static final String playerTrain = "playerTrain";
+	private static final String HOME_ADDRESS = "redirect:/login/home.html";
+	private static final String SESS_USER = "sessUser";
+	private static final String SUCCESS = "success";
+	private static final String ERROR = "error";
+	private static final String PLAYER_TRAIN = "playerTrain";
 
 	/**
 	 * This function handles directing to /team page
-	 * @param request is used to get the session and to put attributes 
-	 * @param redir is used to put attribute in case of redirecting to /home page
-	 * @return is a direction either to the /team or /home (if the user is not logged)
+	 * 
+	 * @param request is used to get the session and to put attributes
+	 * @param redir   is used to put attribute in case of redirecting to /home page
+	 * @return is a direction either to the /team or /home (if the user is not
+	 *         logged)
 	 */
 	@GetMapping(path = "/goToTeam")
 	public String goToMatch(HttpServletRequest request, RedirectAttributes redir) {
-		String direct = homeAddress;
-		User user = (User) request.getSession().getAttribute(sessUser);
+		String direct = HOME_ADDRESS;
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		if (user != null) {
 			direct = "team";
 			Team team = teamService.getTeamByUserId(user.getUserId());
@@ -97,19 +100,20 @@ public class TeamController {
 
 	/**
 	 * This function saves the new positions of initial players
+	 * 
 	 * @param position1 is a name of player on position 1
 	 * @param position2 is a name of player on position 2
 	 * @param position3 is a name of player on position 3
 	 * @param position4 is a name of player on position 4
 	 * @param position5 is a name of player on position 5
-	 * @param redir is used to put flash attributes
+	 * @param redir     is used to put flash attributes
 	 * @return is a String leading to /team page
 	 */
 	@PostMapping(path = "/save")
 	public String save(@RequestParam("position1") String position1, @RequestParam("position2") String position2,
 			@RequestParam("position3") String position3, @RequestParam("position4") String position4,
 			@RequestParam("position5") String position5, RedirectAttributes redir) {
-		String direct = homeAddress;
+		String direct = HOME_ADDRESS;
 		ArrayList<String> positions = new ArrayList<>();
 		positions.add(position1);
 		positions.add(position2);
@@ -124,15 +128,16 @@ public class TeamController {
 				int playerId = Integer.parseInt(current.substring(0, current.indexOf('=')));
 				playerService.updateInitialPosition(i + 1, playerId);
 			}
-			redir.addFlashAttribute(success, "team.success");
+			redir.addFlashAttribute(SUCCESS, "team.success");
 		} else {
-			redir.addFlashAttribute(error, "team.error");
+			redir.addFlashAttribute(ERROR, "team.error");
 		}
 		return direct;
 	}
 
 	/**
 	 * This functions checks if one player is not appearing in more than one place
+	 * 
 	 * @param positions list of names of player on following positions
 	 * @return it returns true if each player has unique position
 	 */
@@ -149,40 +154,45 @@ public class TeamController {
 
 	/**
 	 * This function redirects to the /playerInfo page
+	 * 
 	 * @param playerId id of the player we want to check
-	 * @param request is used to get the session and to put attributes 
-	 * @param redir is used to put flash attributes
+	 * @param request  is used to get the session and to put attributes
+	 * @param redir    is used to put flash attributes
 	 * @return it returns ModelAndView object directing to /playerInfo page
 	 */
 	@GetMapping(path = "/player")
 	public ModelAndView player(@RequestParam("playerId") int playerId, HttpServletRequest request,
 			RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName(homeAddress);
-		User user = (User) request.getSession().getAttribute(sessUser);
+		modelAndView.setViewName(HOME_ADDRESS);
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		if (user != null) {
 			modelAndView.setViewName("playerInfo");
 			Player player = playerService.getPlayer(playerId);
 			Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
 			request.setAttribute("player", player);
 			request.setAttribute("chars", chars);
-		} else
+		} else {
 			redir.addFlashAttribute("warning", "login.warning");
+
+		}
 		return modelAndView;
 	}
 
 	/**
 	 * This function redirects to the /playerTrain page
+	 * 
 	 * @param playerId id of the player we want to train
-	 * @param request is used to get the session and to put attributes 
-	 * @return is a direction either to the /playerTrain or /home (if the user is not logged)
+	 * @param request  is used to get the session and to put attributes
+	 * @return is a direction either to the /playerTrain or /home (if the user is
+	 *         not logged)
 	 */
 	@GetMapping(path = "/train")
 	public String train(@RequestParam("playerId") int playerId, HttpServletRequest request) {
-		String direct = homeAddress;
-		User user = (User) request.getSession().getAttribute(sessUser);
+		String direct = HOME_ADDRESS;
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		if (user != null) {
-			direct = playerTrain;
+			direct = PLAYER_TRAIN;
 			Team team = teamService.getTeamByUserId(user.getUserId());
 			Player player = playerService.getPlayer(playerId);
 			Characteristics chars = characteristicsService.getCurrentCharacteristics(playerId);
@@ -195,31 +205,33 @@ public class TeamController {
 
 	/**
 	 * This function is responsible for improving players' skills
+	 * 
 	 * @param playerId id of the player we want to train
-	 * @param request is used to get the session and to put attributes 
-	 * @param skill is a string key used later to obtain required sill values and update right table in database
-	 * @return is a direction either to the /playerTrain or /home (if the user is not logged)
+	 * @param request  is used to get the session and to put attributes
+	 * @param skill    is a string key used later to obtain required sill values and
+	 *                 update right table in database
+	 * @return is a direction either to the /playerTrain or /home (if the user is
+	 *         not logged)
 	 */
 	private String trainSkill(int playerId, HttpServletRequest request, String skill) {
-		String direct = homeAddress;
-		User user = (User) request.getSession().getAttribute(sessUser);
+		String direct = HOME_ADDRESS;
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		if (user != null) {
-			direct = playerTrain;
+			direct = PLAYER_TRAIN;
 			trainingCharacteristics = characteristicsService.getCurrentCharacteristics(playerId);
 			Team team = teamService.getTeamByUserId(user.getUserId());
 			addOptionsToMap();
 			skillValues.get(skill).run();
 			int currentSkill = skillToTrain;
-			System.out.println("curr skill" + currentSkill);
 			int price = currentSkill * 10000;
 			int budget = team.getBudget();
 			budget -= price;
 			if (budget >= 0 && currentSkill < 100) {
 				teamService.updateBudget(team.getTeamId(), budget);
 				characteristicsService.updateCharacteristic(trainingCharacteristics.getId(), skill, currentSkill + 1);
-				request.setAttribute(success, "train.success");
+				request.setAttribute(SUCCESS, "train.success");
 			} else {
-				request.setAttribute(error, "train.error");
+				request.setAttribute(ERROR, "train.error");
 			}
 			train(playerId, request);
 		}
@@ -228,9 +240,11 @@ public class TeamController {
 
 	/**
 	 * This function is responsible for improving players' resistance skill
+	 * 
 	 * @param playerId id of the player we want to train
-	 * @param request is used to get the session and to put attributes 
-	 * @return is a direction either to the /playerTrain or /home (if the user is not logged)
+	 * @param request  is used to get the session and to put attributes
+	 * @return is a direction either to the /playerTrain or /home (if the user is
+	 *         not logged)
 	 */
 	@PostMapping(path = "/trainResistance")
 	public String trainResistance(@RequestParam("playerId") int playerId, HttpServletRequest request) {
@@ -239,9 +253,11 @@ public class TeamController {
 
 	/**
 	 * This function is responsible for improving players' defense skill
+	 * 
 	 * @param playerId id of the player we want to train
-	 * @param request is used to get the session and to put attributes 
-	 * @return is a direction either to the /playerTrain or /home (if the user is not logged)
+	 * @param request  is used to get the session and to put attributes
+	 * @return is a direction either to the /playerTrain or /home (if the user is
+	 *         not logged)
 	 */
 	@PostMapping(path = "/trainDefense")
 	public String trainDefense(@RequestParam("playerId") int playerId, HttpServletRequest request) {
@@ -250,9 +266,11 @@ public class TeamController {
 
 	/**
 	 * This function is responsible for improving players' long shoot skill
+	 * 
 	 * @param playerId id of the player we want to train
-	 * @param request is used to get the session and to put attributes 
-	 * @return is a direction either to the /playerTrain or /home (if the user is not logged)
+	 * @param request  is used to get the session and to put attributes
+	 * @return is a direction either to the /playerTrain or /home (if the user is
+	 *         not logged)
 	 */
 	@PostMapping(path = "/trainLongShoot")
 	public String trainLongShoot(@RequestParam("playerId") int playerId, HttpServletRequest request) {
@@ -261,9 +279,11 @@ public class TeamController {
 
 	/**
 	 * This function is responsible for improving players' short shoot skill
+	 * 
 	 * @param playerId id of the player we want to train
-	 * @param request is used to get the session and to put attributes 
-	 * @return is a direction either to the /playerTrain or /home (if the user is not logged)
+	 * @param request  is used to get the session and to put attributes
+	 * @return is a direction either to the /playerTrain or /home (if the user is
+	 *         not logged)
 	 */
 	@PostMapping(path = "/trainShortShoot")
 	public String trainShortShoot(@RequestParam("playerId") int playerId, HttpServletRequest request) {
@@ -272,9 +292,11 @@ public class TeamController {
 
 	/**
 	 * This function is responsible for improving players' ball control skill
+	 * 
 	 * @param playerId id of the player we want to train
-	 * @param request is used to get the session and to put attributes 
-	 * @return is a direction either to the /playerTrain or /home (if the user is not logged)
+	 * @param request  is used to get the session and to put attributes
+	 * @return is a direction either to the /playerTrain or /home (if the user is
+	 *         not logged)
 	 */
 	@PostMapping(path = "/trainBallControl")
 	public String trainBallControl(@RequestParam("playerId") int playerId, HttpServletRequest request) {
