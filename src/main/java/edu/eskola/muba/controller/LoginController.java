@@ -269,13 +269,13 @@ public class LoginController {
 	 */
 	private void createCharacteristics(int playerId) {
 		OurRandom ourRandom = new OurRandom();
-		int resistance = ourRandom.randomBetween(50, 80);
-		int height = ourRandom.randomBetween(50, 80);
-		int ballControl = ourRandom.randomBetween(50, 80);
-		int defense = ourRandom.randomBetween(50, 80);
-		int longShoot = ourRandom.randomBetween(50, 80);
-		int shortShoot = ourRandom.randomBetween(50, 80);
-		int age = ourRandom.randomBetween(18, 40);
+		int resistance = ourRandom.randomBetween(50, 75);
+		int height = ourRandom.randomBetween(50, 75);
+		int ballControl = ourRandom.randomBetween(50, 75);
+		int defense = ourRandom.randomBetween(50, 75);
+		int longShoot = ourRandom.randomBetween(50, 75);
+		int shortShoot = ourRandom.randomBetween(50, 75);
+		int age = ourRandom.randomBetween(18, 35);
 		Date cDate = new Date();
 		
 		Characteristics characteristics = new Characteristics(resistance, height, ballControl, defense, longShoot, shortShoot, age, cDate, playerId);
@@ -289,7 +289,7 @@ public class LoginController {
 	 * @param userId User id the team belongs to
 	 */
 	private void createTeam(String regTeamName, int userId) {
-		Team team = new Team(regTeamName, 50000000, userId);
+		Team team = new Team(regTeamName, 10000000, userId);
 		teamService.addTeam(team);
 	}
 

@@ -212,21 +212,13 @@ public class LeagueController {
 	 */
 	public void startLeague(int leagueId) {
 		Date leagueStartDate = new Date(); //League start date
-		Date leagueEndDate;
-		Date gamesDate=DateUtils.addSeconds(leagueStartDate, 5);
+		Date leagueEndDate = new Date();
+		Date gamesDate=DateUtils.addMinutes(leagueStartDate, 5);
 		int stages=leagueService.getLeague(leagueId).getStages();
-		int daysToChange;
 		int teamsAtStage;
-		if(stages==2) {
-			daysToChange=3;
-			teamsAtStage=4;
-		}
-		else {
-			daysToChange=7;
-			teamsAtStage=8;
-		}
-		leagueEndDate=DateUtils.addDays(leagueStartDate, daysToChange);
-		leagueEndDate=DateUtils.addMinutes(leagueEndDate, 90); //League end date
+		if(stages==2)teamsAtStage=4;
+		else teamsAtStage=8;
+		leagueEndDate=DateUtils.addMinutes(leagueEndDate, 60);
 		leagueService.changeLeagueDates(leagueId, leagueStartDate, leagueEndDate);
 		leagueService.startLeague(leagueId);
 		int localTeamId;
@@ -251,7 +243,7 @@ public class LeagueController {
 				TimeComponent tc = new TimeComponent();
 				tc.scheduling(task, lastGame.getGameDate());
 				
-				gamesDate=DateUtils.addSeconds(gamesDate, 5);
+				gamesDate=DateUtils.addMinutes(gamesDate, 5);
 			}
 			teamsAtStage/=2;
 		}
