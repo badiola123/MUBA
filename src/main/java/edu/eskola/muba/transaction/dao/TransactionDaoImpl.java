@@ -10,6 +10,14 @@ import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.transaction.entity.Transaction;
 
+/**
+ * DAO implementation of Transaction
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see TransactionDao
+ */
+
 @Repository
 public class TransactionDaoImpl implements TransactionDao{
 	

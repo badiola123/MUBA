@@ -3,12 +3,10 @@ package edu.eskola.muba.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -26,6 +24,14 @@ import edu.eskola.muba.stats.service.StatsService;
 import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
 
+/**
+ * This class catches all the requests directed to /ajax and handles the required actions JSON creation when AJAX is used to update data.
+ *
+ * @author MUBA team
+ * @version Final version
+ * @see The Controller annotation is used to specify that this class is a controller that handles requests
+ */
+
 @Controller
 @RequestMapping("ajax")
 public class ChartController {
@@ -37,17 +43,30 @@ public class ChartController {
 	GameService gameService = context.getBean(GameService.class);
 	CharacteristicsService characteristicsService = context.getBean(CharacteristicsService.class);
 	StatsService statsService = context.getBean(StatsService.class);
+	String jsonStartString = "{ \"data\" : " ;
 	
-	@RequestMapping(value = "/playerInfo_charactChart", method = RequestMethod.GET)
+	/**
+	 * Catches the request for /ajax/playerInfo_charactChart which is requested in the player information display page for the characteristics chart.
+	 * 
+	 * @param playerId The ID of the player which the characteristic data has to be taken for the chart.
+	 * @return An string in JSON format is returned with the characteristics data.
+	 */
+	@GetMapping(value = "/playerInfo_charactChart")
 	@ResponseBody
-	public String playerInfo_characteristicsChartData(int playerId, HttpServletRequest request) {
+	public String playerInfoCharacteristicsChartData(int playerId) {
 		String json = createJsonPlayerCharacteristics(playerId);
-		return "{ \"data\" : " + json + "}";
+		return jsonStartString + json + "}";
 	}
 	
+	/**
+	 * Generates the JSON file String with the player characteristics data.
+	 * 
+	 * @param playerId The ID of the player for which the characteristics have to be taken.
+	 * @return An string with the data list to introduce in the JSON
+	 */
 	private String createJsonPlayerCharacteristics(int playerId) {
 		Characteristics c = characteristicsService.getCurrentCharacteristics(playerId);
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 		list.add(c.getResistance());
 		list.add(c.getBallControl());
 		list.add(c.getDefense());
@@ -57,19 +76,29 @@ public class ChartController {
 		return new Gson().toJson(list);
 	}
 	
-	@RequestMapping(value = "/homePage_gameData", method = RequestMethod.GET)
+	/**
+	 * Catches the request for /ajax/homePage_gameData/ which is requested in the Home Page to get game data
+	 * 
+	 * @return An string in JSON format is returned with the online game data.
+	 */
+	@GetMapping(value = "/homePage_gameData")
 	@ResponseBody
-	public String homePage_gameData(HttpServletRequest request) {
+	public String homePageGameData() {
 		String json = createJsonMUBAData();
-		return "{ \"data\" : " + json + "}";
+		return jsonStartString + json + "}";
 	}
-
+	
+	/**
+	 * Generates the JSON file String with the online game data.
+	 * 
+	 * @return An string with the data list to introduce in the JSON
+	 */
 	private String createJsonMUBAData() {
 		int teams = teamService.getAllTeams().size();
 		int leagues = leagueService.getAllLeagues().size();
 		int games = gameService.getAllGames().size();
 		int players = playerService.getAllPlayers().size();
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 		list.add(leagues);
 		list.add(teams);
 		list.add(games);
@@ -78,21 +107,32 @@ public class ChartController {
 		return new Gson().toJson(list);
 	}
 	
-	@RequestMapping(value = "/playerInfo_tableData", method = RequestMethod.GET)
+	/**
+	 * Catches the request for /ajax/playerInfo_tableData which is requested in the player information display page for the statistics table.
+	 * 
+	 * @param playerId The ID of the player which the statistics data has to be taken for the table.
+	 * @return An string in JSON format is returned with the statistics data.
+	 */
+	@GetMapping(value = "/playerInfo_tableData")
 	@ResponseBody
-	public String playerInfo_tableData(int playerId, HttpServletRequest request) {
+	public String playerInfoTableData(int playerId) {
 		String json = createJsonPlayerStats(playerId);
-		return "{ \"data\" : " + json + "}";
+		return jsonStartString + json + "}";
 	}
 	
+	/**
+	 * Generates the JSON file String with the player statistics data.
+	 * 
+	 * @param playerId The ID of the player for which the statistics have to be taken.
+	 * @return An string with the data list to introduce in the JSON
+	 */
 	private String createJsonPlayerStats(int playerId) {
 		List<Stats> stats = statsService.getAllStatsOfPlayer(playerId);
 		Player p = playerService.getPlayer(playerId);
-		List<List<String>> list = new ArrayList<List<String>>();
-		List<String> stats_list = new ArrayList<String>();
+		List<List<String>> list = new ArrayList<>();
 
 		for(int i = 0; i < stats.size(); i++) {
-			stats_list = new ArrayList<String>();
+			List<String> statsList = new ArrayList<>();
 			Game g = gameService.getGame(stats.get(i).getGameId());
 			int vsTeamId = -1;
 			if(g.getVisitorTeamId() != p.getTeamId()) {
@@ -102,47 +142,64 @@ public class ChartController {
 			}
 			Team vsT = teamService.getTeam(vsTeamId);
 			//Date
-			stats_list.add(g.getGameDate().toString());
+			statsList.add(g.getGameDate().toString());
 			//Vs Team
-			stats_list.add(vsT.getTeamName());
+			statsList.add(vsT.getTeamName());
 			//TimePlayed
-			stats_list.add("-");
+			statsList.add("-");
 			//FT
-			stats_list.add("-");
+			statsList.add("-");
 			//2PT
 			double shot = (double) stats.get(i).getTwoPointsShot();
 			double scored = (double) stats.get(i).getTwoPointsScored();
-
-			double calcPercentage = ((scored/shot)*100);
-			stats_list.add(stats.get(i).getTwoPointsScored()+"/" + stats.get(i).getTwoPointsShot()+ " " + round(calcPercentage, 2) + "%");
+			double calcPercentage = 0;
+			if(shot > 0) calcPercentage = ((scored/shot)*100);
+			statsList.add(stats.get(i).getTwoPointsScored()+"/" + stats.get(i).getTwoPointsShot()+ " " + round(calcPercentage, 2) + "%");
 			//3PT
 			shot = (double) stats.get(i).getThreePointsShot();
 			scored = (double) stats.get(i).getThreePointsScored();
-			calcPercentage = ((scored/shot)*100);
-			stats_list.add(stats.get(i).getThreePointsScored()+"/" + stats.get(i).getThreePointsShot()+ " " + round(calcPercentage, 2) + "%");
+			calcPercentage = 0;
+			if(shot > 0) calcPercentage = ((scored/shot)*100);
+			statsList.add(stats.get(i).getThreePointsScored()+"/" + stats.get(i).getThreePointsShot()+ " " + round(calcPercentage, 2) + "%");
 			//DR
-			stats_list.add(Integer.toString(stats.get(i).getDeffRebound()));
+			statsList.add(Integer.toString(stats.get(i).getDeffRebound()));
 			//OR
-			stats_list.add(Integer.toString(stats.get(i).getOffRebound()));
+			statsList.add(Integer.toString(stats.get(i).getOffRebound()));
 			//S
-			stats_list.add(Integer.toString(stats.get(i).getSteals()));
+			statsList.add(Integer.toString(stats.get(i).getSteals()));
 			//B
-			stats_list.add(Integer.toString(stats.get(i).getBlocks()));
+			statsList.add(Integer.toString(stats.get(i).getBlocks()));
 			//A
-			stats_list.add("-");
+			statsList.add("-");
 			//F
-			stats_list.add("-");
+			statsList.add("-");
 			//Val
-			stats_list.add(Integer.toString(getStatsValoration(stats.get(i))));
-			list.add(stats_list);
+			statsList.add(Integer.toString(getStatsValoration(stats.get(i))));
+			list.add(statsList);
 		}
 		list.add(createTotalStatsJson(stats));
 		
 		return new Gson().toJson(list);
 	}
 	
+	/**
+	 * Generates a list with the total statistics of all the games played.
+	 * 
+	 * @param stats All the statistics of a player.
+	 * @return A list with the total statistics data.
+	 */
 	private List<String> createTotalStatsJson(List<Stats> stats) {
-		List<String> stats_list = new ArrayList<String>();
+		List<String> stats_list = new ArrayList<>();
+		int scored2 = 0;
+		int shot2 = 0;
+		int scored3 = 0;
+		int shot3 = 0;
+		int dr = 0;
+		int or = 0;
+		int s = 0;
+		int b = 0;
+		int val = 0;
+
 		//Date
 		stats_list.add("Total");
 		//Vs Team
@@ -152,7 +209,6 @@ public class ChartController {
 		//FT
 		stats_list.add("-");
 		//2PT
-		int scored2 = 0, shot2 = 0, scored3 = 0, shot3 = 0, dr = 0, or = 0, s = 0, b = 0, val = 0;
 		
 		for(int i = 0; i< stats.size(); i++) {
 			scored2 += stats.get(i).getTwoPointsScored();
@@ -165,10 +221,12 @@ public class ChartController {
 			b += stats.get(i).getBlocks();
 			val += getStatsValoration(stats.get(i));
 		}
-		double calcPercentage = ((double)scored2/(double)shot2)*100;
+		double calcPercentage = 0;
+		if(shot2 > 0) calcPercentage = ((double)scored2/(double)shot2)*100;
 		stats_list.add(scored2+"/" + shot2+ "\t" + round(calcPercentage, 2) + "%");
 		//3PT
-		calcPercentage = ((double)scored3/(double)shot3)*100;
+		calcPercentage = 0;
+		if(shot3 > 0) calcPercentage = ((double)scored3/(double)shot3)*100;
 		stats_list.add(scored3+"/" + shot3+ "\t" + round(calcPercentage, 2)+ "%");
 		//DR
 		stats_list.add(Integer.toString(dr));
@@ -186,13 +244,26 @@ public class ChartController {
 		stats_list.add(Integer.toString(val));
 		return stats_list;
 	}
-
+	
+	/**
+	 * Calculates the total valoration value of a player.
+	 * 
+	 * @param stat The statistic from which the valoration has to be calculated
+	 * @return the valoration value.
+	 */
 	private int getStatsValoration(Stats stat) {
 		int val = 0;
 		val = (stat.getTwoPointsScored()*2) - (stat.getTwoPointsShot()) + (stat.getThreePointsScored()*3) - (stat.getThreePointsShot()) + stat.getBlocks() + stat.getDeffRebound() + stat.getOffRebound() + stat.getSteals();
 		return val;
 	}
 	
+	/**
+	 * Rounds a double value to a limited decimal
+	 * 
+	 * @param value The double value that has to be rounded.
+	 * @param places The number of decimals that want to be left.
+	 * @return The double value with only the wanted decimals.
+	 */
 	private double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 

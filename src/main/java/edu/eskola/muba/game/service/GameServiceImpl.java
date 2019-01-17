@@ -9,6 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.eskola.muba.game.dao.GameDao;
 import edu.eskola.muba.game.entity.Game;
 
+/**
+ * Service implementation of Game
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see GameDao
+ */
 @Service
 public class GameServiceImpl implements GameService {
 

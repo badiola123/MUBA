@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,11 +37,13 @@ public class MatchController {
 	GameService gameService = context.getBean(GameService.class);
 	StatsService statsService = context.getBean(StatsService.class);
 	LeagueService leagueService = context.getBean(LeagueService.class);
+	
+	private static final String homeAddress = "redirect:/login/home.html";
+	private static final String matchLogs = "matchLogs";
 
-
-	@RequestMapping(value = "/goToMatch", method = RequestMethod.GET)
+	@GetMapping(path = "/goToMatch")
 	public String goToMatch(HttpServletRequest request, RedirectAttributes redir, Locale locale) {
-		String direct = "redirect:/login/home.html";
+		String direct = homeAddress;
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
 			Team yourTeam = teamService.getTeamByUserId(user.getUserId());
@@ -60,9 +64,9 @@ public class MatchController {
 		return direct;
 	}
 	
-	@RequestMapping(value ="/showGame", method = RequestMethod.POST)
+	@PostMapping(value ="/showGame")
 	public String showGame(@RequestParam("gameId") int gameId, HttpServletRequest request, RedirectAttributes redir, Locale locale) {
-		String direct = "redirect:/login/home.html";
+		String direct = homeAddress;
 		User user = (User) request.getSession().getAttribute("sessUser");
 		if (user != null) {
 			Game game = gameService.getGame(gameId);
@@ -75,13 +79,7 @@ public class MatchController {
 		}
 		return direct;
 	}
-	
-	@RequestMapping(value ="/showGame", method = RequestMethod.GET)
-	public String showGame(HttpServletRequest request, RedirectAttributes redir) {
-		String direct = "redirect:/login/home.html";
-		return direct;
-	}
-	
+
 	private void displayPage(Game game, HttpServletRequest request, Locale locale) {
 		Team localTeam = teamService.getTeam(game.getLocalTeamId());
 		Team visitorTeam = teamService.getTeam(game.getVisitorTeamId());
@@ -93,11 +91,11 @@ public class MatchController {
 		request.setAttribute("visitorPlayers", visitorPlayers);
 		request.setAttribute("score", game.getLocalTeamResult() + " : " + game.getVisitorTeamResult());
 		if (locale.getLanguage().equals("es"))
-			request.setAttribute("matchLogs", game.getEsLogs());
+			request.setAttribute(matchLogs, game.getEsLogs());
 		if (locale.getLanguage().equals("en"))
-			request.setAttribute("matchLogs", game.getEnLogs());
+			request.setAttribute(matchLogs, game.getEnLogs());
 		if (locale.getLanguage().equals("eu"))
-			request.setAttribute("matchLogs", game.getBqLogs());
+			request.setAttribute(matchLogs, game.getBqLogs());
 	}
 
 }

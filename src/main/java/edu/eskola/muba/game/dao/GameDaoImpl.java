@@ -12,6 +12,13 @@ import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.game.entity.Game;
 
+/**
+ * DAO implementation of Game
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see GameDao
+ */
 @Repository
 public class GameDaoImpl implements GameDao {
 	
