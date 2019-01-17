@@ -9,6 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.eskola.muba.transaction.dao.TransactionDao;
 import edu.eskola.muba.transaction.entity.Transaction;
 
+/**
+ * Service implementation of Transaction
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see TransactionDao
+ */
+
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
