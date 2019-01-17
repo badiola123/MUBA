@@ -3,8 +3,6 @@ var myChart = null;
 
 
 function getDataFromDatabaseForChart(){
-	var jsonCharacteristics = "{ data : [54, 53, 67, 89, 76] }"
-	var playerId
 	$(document).ready(
 			$.ajax({
 				type : "GET",
@@ -22,8 +20,8 @@ function getDataFromDatabaseForChart(){
 }
 
 function drawChart(json){
-	myChart = echarts.init(document.getElementById('playerInfo_characteristicsChart'));
-	option = {
+	var myChart = echarts.init(document.getElementById('playerInfo_characteristicsChart'));
+	var option = {
 	    title: {
 	        //text: 'Player Characteristics'
 	    },

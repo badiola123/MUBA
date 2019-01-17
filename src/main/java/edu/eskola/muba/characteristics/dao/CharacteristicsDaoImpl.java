@@ -11,7 +11,13 @@ import org.springframework.stereotype.Repository;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
 
-
+/**
+ * DAO implementation of Characteristics
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see CharacteristicsDao
+ */
 @Repository
 public class CharacteristicsDaoImpl implements CharacteristicsDao{
 	@Autowired
@@ -20,7 +26,6 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao{
 	@Override
 	public void addCharacteristics(Characteristics characteristics) {
 		sessionFactory.getCurrentSession().save(characteristics);
-
 	}
 
 	@Override
@@ -29,8 +34,7 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao{
 		TypedQuery<Characteristics> query = sessionFactory.getCurrentSession()
 				.createQuery("from Characteristics c WHERE c.playerId = :playerId ");
 		query.setParameter("playerId", playerId);
-		Characteristics c = query.getSingleResult();
-		return c;
+		return query.getSingleResult();
 	}
 
 	@Override
@@ -46,7 +50,6 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao{
 	@Override
 	public boolean checkCharacteristics(int characteristicsId) {
 		@SuppressWarnings("unchecked")
-
 		TypedQuery<Characteristics> query = sessionFactory.getCurrentSession()
 				.createQuery("from Characteristics C WHERE C.characteristicsId =:characteristicsId");
 		query.setParameter("characteristicsId", characteristicsId);
@@ -60,8 +63,9 @@ public class CharacteristicsDaoImpl implements CharacteristicsDao{
 	@Override
 	public void updateCharacteristic(int charId, String name, int value) {
 		Query<Characteristics> query = sessionFactory.getCurrentSession()
-				.createQuery("update Characteristics set "+name+" = :value where CHARACTERISTICSID = '" + charId + "'");
+				.createQuery("update Characteristics set "+name +" = :value where CHARACTERISTICSID = :charId");
 		query.setParameter("value", value);
+		query.setParameter("charId", charId);
 		query.executeUpdate();
 	}
 

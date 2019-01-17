@@ -2,8 +2,16 @@ package edu.eskola.muba.game.service;
 
 import java.util.List;
 
+import edu.eskola.muba.game.dao.GameDao;
 import edu.eskola.muba.game.entity.Game;
 
+/**
+ * Service of Game
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see GameDao
+ */
 public interface GameService {
 	void addGame(Game game);
 	Game getGame(int gameId);

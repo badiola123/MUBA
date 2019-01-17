@@ -9,6 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.eskola.muba.stats.dao.StatsDao;
 import edu.eskola.muba.stats.entity.Stats;
 
+/**
+ * Service implementation of Stats
+ * 
+ * @author MUBA team
+ * @version Final version
+ * @see StatsDao
+ */
 @Service
 public class StatsServiceImpl implements StatsService {
 

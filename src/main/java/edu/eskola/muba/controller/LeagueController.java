@@ -11,13 +11,15 @@ import edu.eskola.muba.leagueconnector.entity.LeagueConnector;
 import edu.eskola.muba.leagueconnector.service.LeagueConnectorService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -41,6 +43,15 @@ import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
 import edu.eskola.muba.user.entity.User;
 
+/**
+ * This class catches all the requests directed to /league and handles the required actions to manage league related pages.
+ *
+ * @author MUBA team
+ * @version Final version
+ * @see The Controller annotation is used to specify that this class is a controller that handles requests
+ * @see The RequestMapping annotation is used to map the methods to a path and specify the requet method (GET or POST)
+ */
+
 @Controller
 @RequestMapping("league")
 public class LeagueController {
@@ -54,20 +65,31 @@ public class LeagueController {
 	GameService gameService = context.getBean(GameService.class);
 	StatsService statsService = context.getBean(StatsService.class);
 	
-	
+	private static final String HOME_REDIRECTION = "redirect:/login/home.html";
+	private static final String SESS_USER = "sessUser";
+	private static final String CATEGORY = "category";
+	private static final String WARNING= "warning";
+	private static final String LOGIN_WARNING= "login.warning";
+
 	private League league;
 	List<League> leagues;
 	Team leagueWinner;
 	List<Game> gameList;
 	
-
-	@RequestMapping(value = "/goToLeagueList", method = RequestMethod.GET)
+	/**
+	 * Catches the request for /league/goToLeagueList with GET method, requested to get a list of leagues of any category
+	 * 
+	 * @param request Used to check if the user is logged and which category is selected to show leagues.
+	 * @param redir Attributes that need to be passed between redirects are added to it
+	 * @return A string containing the redirecting address
+	 */
+	@GetMapping(value = "/goToLeagueList")
 	public String goToLeagueList(HttpServletRequest request, RedirectAttributes redir) {
-		String direct = "redirect:/login/home.html";
-		User user = (User) request.getSession().getAttribute("sessUser");
+		String direct = HOME_REDIRECTION;
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		if (user != null) {
 			Team userTeam= teamService.getTeamByUserId(user.getUserId());
-			String category = request.getParameter("category");
+			String category = request.getParameter(CATEGORY);
 			leagues=leagueService.getActiveLeagues(userTeam.getTeamId());
 			HashMap<Integer, Integer> joinedTeamsMap;
 			if(category==null) category="running";
@@ -76,7 +98,7 @@ public class LeagueController {
 					List<Integer>leagueIdList;
 					leagueIdList=leagueService.getAvailableLeagues(userTeam.getTeamId());
 					leagues=getLeaguesFromIdList(leagueIdList);
-					joinedTeamsMap=getLeagueJoinedTeams(leagues);
+					joinedTeamsMap=(HashMap<Integer, Integer>) getLeagueJoinedTeams(leagues);
 					request.setAttribute("joinedTeamsMap", joinedTeamsMap);
 					break;
 				case "finished":
@@ -84,7 +106,7 @@ public class LeagueController {
 					break;
 				case "notStarted":
 					leagues=leagueService.getNotStartedLeagues(userTeam.getTeamId());
-					joinedTeamsMap=getLeagueJoinedTeams(leagues);
+					joinedTeamsMap=(HashMap<Integer, Integer>) getLeagueJoinedTeams(leagues);
 					request.setAttribute("joinedTeamsMap", joinedTeamsMap);
 					break;
 				case "running":
@@ -97,14 +119,20 @@ public class LeagueController {
 			direct = "leagueList";
 		}
 		else {
-			redir.addFlashAttribute("warning", "login.warning");
+			redir.addFlashAttribute(WARNING, LOGIN_WARNING);
 		}
 		return direct;
 	}
 	
-	
+	/**
+	 * Used when available to register league list is requested. Gets a list of league objects
+	 * from a list of league IDs.
+	 * 
+	 * @param leagueIdList A list of league IDs to get league objects.
+	 * @return A list of league objects.
+	 */
 	public List<League> getLeaguesFromIdList(List<Integer> leagueIdList) {
-		List<League>leagueList=new ArrayList<League>();
+		List<League>leagueList=new ArrayList<>();
 		Iterator<Integer> it= leagueIdList.iterator();
 		while(it.hasNext()) {
 			leagueList.add(leagueService.getLeague(it.next()));
@@ -113,8 +141,17 @@ public class LeagueController {
 	}
 
 
-
-	@RequestMapping(value = "/leagueActions", method = RequestMethod.GET)
+	/**
+	 * Catches the request for /league/leagueActions with GET method, requested when an option 
+	 * of any league is selected inside the league list view. Depending on the attribute got in
+	 * the request, a different action is performed (join or leave). Also controls league starting 
+	 * and game scheduling process when a league gets full.
+	 * 
+	 * @param request Used to check if the user is logged and getting the action selected by the user.
+	 * @param redir Attributes that need to be passed between redirects are added to it
+	 * @return An instance of ModelAndView containing the view and needed attributes
+	 */
+	@GetMapping(value = "/leagueActions")
 	public ModelAndView manageLeagueActions(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
@@ -130,11 +167,11 @@ public class LeagueController {
 					boolean host=leagueService.checkIfHost(leagueId, userTeamId);
 					List<LeagueConnector> leagueTeams=leagueConnectorService.getLeagueTeams(leagueId);
 					int nTeams=leagueTeams.size();
-					if(host == true && nTeams==1) {
+					if(host  && nTeams==1) {
 						leagueConnectorService.leaveLeague(leagueId, userTeamId);
 						leagueService.deleteLeague(leagueId);
 						modelAndView.addObject("info", "league.deleted");
-					}else if(host==true) {
+					}else if(host) {
 						modelAndView.addObject("info", "league.cantLeave");
 					}else {
 						leagueConnectorService.leaveLeague(leagueId, userTeamId);
@@ -167,13 +204,17 @@ public class LeagueController {
 		
 		return modelAndView;
 	}
-
+	/**
+	 * Used to start a league and all involving games, as well as setting dates and scheduling 
+	 * games to run at the specified date.
+	 * 
+	 * @param leagueId League ID of the league to start.
+	 */
 	public void startLeague(int leagueId) {
 		Date leagueStartDate = new Date(); //League start date
 		Date leagueEndDate;
 		Date gamesDate=DateUtils.addSeconds(leagueStartDate, 5);
-		League league=leagueService.getLeague(leagueId);
-		int stages=league.getStages();
+		int stages=leagueService.getLeague(leagueId).getStages();
 		int daysToChange;
 		int teamsAtStage;
 		if(stages==2) {
@@ -206,9 +247,7 @@ public class LeagueController {
 				Game game = new Game(0,gamesDate,localTeamId,visitorTeamId,leagueId,0,0,stage,"","","",false);
 				gameService.addGame(game);
 				final Game lastGame=gameService.getLastGame();
-				Runnable task = () -> {
-					playGame(lastGame);
-				};
+				Runnable task = () -> playGame(lastGame);	
 				TimeComponent tc = new TimeComponent();
 				tc.scheduling(task, lastGame.getGameDate());
 				
@@ -218,6 +257,12 @@ public class LeagueController {
 		}
 	}
 	
+	/**
+	 * Runnable task that plays the match. After the match finishes, updates the corresponding game entry
+	 * and passes the winner team to the following stage.
+	 * 
+	 * @param game Game that must be run
+	 */
 	public void playGame(Game game) {
 		List<Characteristics> localChars = new ArrayList<>();
 		List<Characteristics> visitorChars = new ArrayList<>();
@@ -233,13 +278,7 @@ public class LeagueController {
 		Match match = new Match(localTeamGame, visitorTeamGame);
 
 		match.startMatch();
-		gameService.updateGame(game.getGameId(), "LOCALTEAMRESULT", Integer.toString(match.getTeamApoints()));
-		gameService.updateGame(game.getGameId(), "VISITORTEAMRESULT", Integer.toString(match.getTeamBpoints()));
-		gameService.updateGame(game.getGameId(), "ENLOGS", match.getMatchLogs());
-		gameService.updateGame(game.getGameId(), "ESLOGS", match.getMatchLogs());
-		gameService.updateGame(game.getGameId(), "BQLOGS", match.getMatchLogs());
-		gameService.updateGame(game.getGameId(), "PLAYED", Integer.toString(1));
-		
+		updateGameStatus(match, game);
 		game = gameService.getGame(game.getGameId());
 
 		for (Player each : localPlayers) {
@@ -274,15 +313,42 @@ public class LeagueController {
 		}
 	}
 
+	/**
+	 * Updates in the database the game entry after the match finishes.
+	 * 
+	 * @param match The match already played.
+	 * @param game The game corresponding to the match updated in database.
+	 */
+	private void updateGameStatus(Match match, Game game) {
+		gameService.updateGame(game.getGameId(), "LOCALTEAMRESULT", Integer.toString(match.getTeamApoints()));
+		gameService.updateGame(game.getGameId(), "VISITORTEAMRESULT", Integer.toString(match.getTeamBpoints()));
+		gameService.updateGame(game.getGameId(), "ENLOGS", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "ESLOGS", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "BQLOGS", match.getMatchLogs());
+		gameService.updateGame(game.getGameId(), "PLAYED", Integer.toString(1));
+	}
+
+	/**
+	 * Gets a list of characteristics regarding to the list of players passed.
+	 * 
+	 * @param chars List of characteristics passed empty to return filled
+	 * @param players List of players of which characteristics are requested
+	 */
 	private void doChars(List<Characteristics> chars, List<Player> players) {
 		for (int i = 0; i < players.size(); i++) {
 			chars.add(characteristicsService.getCurrentCharacteristics(players.get(i).getPlayerId()));
 		}
 	}
 
-	public HashMap<Integer, Integer> getLeagueJoinedTeams(List<League> leagues) {
+	/**
+	 * Gets a map of the league IDs with the number of teams already joined to that league.
+	 * 
+	 * @param leagues List of leagues of which joined team number is required
+	 * @return Map with league ID as key and number of teams joined as value.
+	 */
+	public Map<Integer, Integer> getLeagueJoinedTeams(List<League> leagues) {
 		HashMap<Integer, Integer> map 
-	    = new HashMap<Integer,Integer>();
+	    = new HashMap<>();
 		Iterator<League> it= leagues.iterator();
 		League l;
 		int numTeams;
@@ -294,7 +360,14 @@ public class LeagueController {
 		return map;
 	}
 
-	@RequestMapping(value = "/goToLeague", method = RequestMethod.GET)
+	/**
+	 * Catches the request for /league/goToLeague with GET method, requested when the user
+	 * selects a specific league to view.
+	 * 
+	 * @param request Used to check if the user is logged and to get the league ID.
+	 * @return A string with the redirection address.
+	 */
+	@GetMapping(value = "/goToLeague")
 	public String goToLeague(HttpServletRequest request) {
 		String direct = "redirect:/login/home.html";
 		User user = (User) request.getSession().getAttribute("sessUser");
@@ -314,7 +387,7 @@ public class LeagueController {
 				listStageTeamList.add((ArrayList<Team>) getStageTeamsOrdered(leagueId, stageNumber));
 			}
 			gameList=gameService.getLeagueGames(leagueId);
-			HashMap<Integer, String> teamMap=getTeamMap();
+			HashMap<Integer, String> teamMap=(HashMap<Integer, String>) getTeamMap();
 			
 			request.setAttribute("teamMap", teamMap);
 			request.setAttribute("gameList", gameList);
@@ -326,9 +399,15 @@ public class LeagueController {
 		return direct;
 	}
 	
-	
-
-	@RequestMapping(value = "/newLeague", method = RequestMethod.POST)
+	/**
+	 * Catches the request for /league/newLeague with POST method, requested when the user selects the 
+	 * league creation button.
+	 * 
+	 * @param request Used to check if the user is logged in.
+	 * @param redir Attributes that need to be passed between redirects are added to it
+	 * @return An instance of ModelAndView containing the view and needed attributes
+	 */
+	@PostMapping(value = "/newLeague")
 	public ModelAndView newLeague(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
@@ -338,7 +417,19 @@ public class LeagueController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/confirmLeague", method = RequestMethod.POST)
+	/**
+	 * Catches the request for /league/confirmLeague with POST method, requested when the user interacts with any of the buttons of the view of new league creation.
+	 * a new league creation.
+	 * 
+	 * @param request Used to check if the user is logged and to get the action selected 
+	 * @param leagueName Name of the league introduced by user
+	 * @param leagueDesc Description of the league introduced by user
+	 * @param teamAmount Number of teams that the league will have
+	 * @param action Action of the button pressed
+	 * @param redir Attributes that need to be passed between redirects are added to it
+	 * @return An instance of ModelAndView containing the view and needed attributes
+	 */
+	@PostMapping(value = "/confirmLeague")
 	public ModelAndView confirmLeague(HttpServletRequest request, @RequestParam("leagueName")String leagueName, @RequestParam("leagueDesc")String leagueDesc, @RequestParam("teamAmount")int teamAmount,@RequestParam("action")String action,  RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
@@ -348,8 +439,8 @@ public class LeagueController {
 				Team userTeam= teamService.getTeamByUserId(user.getUserId());
 				int stages = (teamAmount==8) ? 3 : 2;
 				Date date = new Date();
-				League league= new League(0,userTeam.getTeamId(), false, date,date, leagueName, leagueDesc, stages, -1 );
-				leagueService.addLeague(league);
+				League newLeague= new League(0,userTeam.getTeamId(), false, date,date, leagueName, leagueDesc, stages, -1 );
+				leagueService.addLeague(newLeague);
 				int teamId = teamService.getTeamByUserId(user.getUserId()).getTeamId();
 				leagueConnectorService.addLeagueConnector(new LeagueConnector(leagueService.getLastLeagueId(),teamId));
 			}
@@ -359,10 +450,15 @@ public class LeagueController {
 		return modelAndView;
 	}
 	
-	
+	/**
+	 * Gets an ordered list of teams involved in all the games of a league's specific stage for the league schedule visualization.
+	 * @param leagueId League of which the teams are required
+	 * @param stage	Stage of which teams are required
+	 * @return
+	 */
 	public List<Team> getStageTeamsOrdered(int leagueId, int stage){
-		List<Team> stageTeams=new ArrayList<Team>();
-		List<Game> leagueGames=new ArrayList<Game>();
+		List<Team> stageTeams=new ArrayList<>();
+		List<Game> leagueGames;
 		Game game;
 		leagueGames=gameService.getLeagueGamesByStage(leagueId, stage);
 		Iterator<Game> itr = leagueGames.iterator();
@@ -383,39 +479,23 @@ public class LeagueController {
 		
 	}
 	
-	public List<Team> getGameResultsWithTeams(int leagueId, int stage){
-		List<Team> stageTeams=new ArrayList<Team>();
-		List<Game> leagueGames=new ArrayList<Game>();
-		Game game;
-		leagueGames=gameService.getLeagueGamesByStage(leagueId, stage);
-		Iterator<Game> itr = leagueGames.iterator();
-		while(itr.hasNext()) {
-			 game = itr.next();
-
-			 if(game.getLocalTeamId()!=-1) {
-				 stageTeams.add(teamService.getTeam(game.getLocalTeamId()));
-			 }else {
-				 stageTeams.add(getImaginaryTeam());
-			 }
-
-			 if(game.getVisitorTeamId()!=-1) {
-				 stageTeams.add(teamService.getTeam(game.getVisitorTeamId()));
-			 }else {
-				 stageTeams.add(getImaginaryTeam());
-			 }
-		}
-		return stageTeams;
-		
-	}
-	
+	/**
+	 * Creates and return an "imaginary" team, used to represent that the team for a game has not been defined yet.
+	 * 
+	 * @return Team 
+	 */
 	public Team getImaginaryTeam() {
-		Team t=new Team(-1,"NoTeam",0,0);
-		return t;
+		return new Team(-1,"NoTeam",0,0);
 	}
 	
-	public HashMap<Integer, String> getTeamMap(){
+	/**
+	 * Creates and return a map of team IDs and its regarding team object, required in the view for visualization.
+	 * 
+	 * @return Map of team ID with its team object
+	 */
+	public Map<Integer, String> getTeamMap(){
 		HashMap<Integer, String> teamMap 
-	    = new HashMap<Integer,String>();
+	    = new HashMap<>();
 		List<LeagueConnector> leagueParticipants=leagueConnectorService.getLeagueTeams(league.getLeagueId());
 		Iterator<LeagueConnector> it= leagueParticipants.iterator();
 		while(it.hasNext()) {

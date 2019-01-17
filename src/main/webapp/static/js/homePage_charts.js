@@ -4,8 +4,6 @@ var myChart = null;
 intervalId = setInterval(getDataFromDatabase, 2000);
 
 function getDataFromDatabase(){
-	var jsonCharacteristics = "{ data : [54, 53, 67, 89] }"
-	var playerId
 	$(document).ready(
 			$.ajax({
 				type : "GET",
@@ -24,8 +22,8 @@ function getDataFromDatabase(){
 }
 
 function drawChart(json){
-	myChart = echarts.init(document.getElementById('usersChart'));
-	option = {
+	var myChart = echarts.init(document.getElementById('usersChart'));
+	var option = {
 		    tooltip: {
 		        trigger: 'axis',
 		        axisPointer: {
