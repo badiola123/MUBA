@@ -114,7 +114,7 @@ public class LeagueController {
 					leagues=leagueService.getActiveLeagues(userTeam.getTeamId());
 					break;
 			}	
-			request.setAttribute("category", category);
+			request.setAttribute(CATEGORY, category);
 			request.setAttribute("leagues", leagues);
 			direct = "leagueList";
 		}
@@ -154,8 +154,8 @@ public class LeagueController {
 	@GetMapping(value = "/leagueActions")
 	public ModelAndView manageLeagueActions(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute("sessUser");
+		modelAndView.setViewName(HOME_REDIRECTION);
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		if (user != null) {
 			Team userTeam= teamService.getTeamByUserId(user.getUserId());
 			int userTeamId=userTeam.getTeamId();
@@ -197,9 +197,9 @@ public class LeagueController {
 				}
 			}
 			modelAndView.setViewName("leagueList");
-			modelAndView.addObject("category", redirectionCategory);
+			modelAndView.addObject(CATEGORY, redirectionCategory);
 		}else {
-			redir.addFlashAttribute("warning", "login.warning");
+			redir.addFlashAttribute(WARNING, LOGIN_WARNING);
 		}
 		
 		return modelAndView;
@@ -369,8 +369,8 @@ public class LeagueController {
 	 */
 	@GetMapping(value = "/goToLeague")
 	public String goToLeague(HttpServletRequest request) {
-		String direct = "redirect:/login/home.html";
-		User user = (User) request.getSession().getAttribute("sessUser");
+		String direct = HOME_REDIRECTION;
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		String leagueIdStr = request.getParameter("leagueId");
 		if (user != null && leagueIdStr != null) {
 			
@@ -382,7 +382,7 @@ public class LeagueController {
 				leagueWinner=getImaginaryTeam();
 			}
 			int stages=league.getStages();
-			List<ArrayList<Team>> listStageTeamList= new ArrayList<ArrayList<Team>>();
+			List<ArrayList<Team>> listStageTeamList= new ArrayList<>();
 			for(int stageNumber=1; stageNumber<=stages; stageNumber++) {
 				listStageTeamList.add((ArrayList<Team>) getStageTeamsOrdered(leagueId, stageNumber));
 			}
@@ -410,10 +410,10 @@ public class LeagueController {
 	@PostMapping(value = "/newLeague")
 	public ModelAndView newLeague(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute("sessUser");
+		modelAndView.setViewName(HOME_REDIRECTION);
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		if(user!=null) 	modelAndView.setViewName("newLeague");
-		else redir.addFlashAttribute("warning", "login.warning");
+		else redir.addFlashAttribute(WARNING, LOGIN_WARNING);
 		return modelAndView;
 	}
 	
@@ -432,8 +432,8 @@ public class LeagueController {
 	@PostMapping(value = "/confirmLeague")
 	public ModelAndView confirmLeague(HttpServletRequest request, @RequestParam("leagueName")String leagueName, @RequestParam("leagueDesc")String leagueDesc, @RequestParam("teamAmount")int teamAmount,@RequestParam("action")String action,  RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute("sessUser");
+		modelAndView.setViewName(HOME_REDIRECTION);
+		User user = (User) request.getSession().getAttribute(SESS_USER);
 		if(user!=null) {
 			if(action.equals("confirmLeague")) {
 				Team userTeam= teamService.getTeamByUserId(user.getUserId());
@@ -446,7 +446,7 @@ public class LeagueController {
 			}
 			modelAndView.setViewName("redirect:/league/goToLeagueList.html");
 			
-		}else redir.addFlashAttribute("warning", "login.warning");
+		}else redir.addFlashAttribute(WARNING, LOGIN_WARNING);
 		return modelAndView;
 	}
 	

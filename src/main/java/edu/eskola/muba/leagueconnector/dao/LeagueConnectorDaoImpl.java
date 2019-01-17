@@ -25,6 +25,8 @@ public class LeagueConnectorDaoImpl implements LeagueConnectorDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	private static final String LEAGUEID = "leagueId";
+
 	@Override
 	public void addLeagueConnector(LeagueConnector leagueConnector) {
 		sessionFactory.getCurrentSession().save(leagueConnector);
