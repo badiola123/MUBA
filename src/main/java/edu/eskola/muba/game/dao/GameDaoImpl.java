@@ -25,9 +25,9 @@ public class GameDaoImpl implements GameDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	private static final String teamIdString = "teamId";
-	private static final String gameIdString = "gameId";
-	private static final String leagueIdString = "leagueId";
+	private static final String TEAMIDSTRING = "teamId";
+	private static final String GAMEIDSTRING = "gameId";
+	private static final String LEAGUEIDSTRING = "leagueId";
 	
 	@Override
 	public void addGame(Game game) {
@@ -48,7 +48,7 @@ public class GameDaoImpl implements GameDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Game> query = sessionFactory.getCurrentSession()
 				.createQuery("from Game G where G.leagueId = :leagueId and G.stage = :stage");
-		query.setParameter(leagueIdString, leagueId);
+		query.setParameter(LEAGUEIDSTRING, leagueId);
 		query.setParameter("stage", stage);
 		return query.getResultList();
 	}
@@ -58,7 +58,7 @@ public class GameDaoImpl implements GameDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Game> query = sessionFactory.getCurrentSession()
 				.createQuery("from Game G where G.leagueId = :leagueId");
-		query.setParameter(leagueIdString, leagueId);
+		query.setParameter(LEAGUEIDSTRING, leagueId);
 		return query.getResultList();
 	}
 
@@ -67,7 +67,7 @@ public class GameDaoImpl implements GameDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Game> query = sessionFactory.getCurrentSession().createQuery(
 				"from Game G where G.played=1 and (G.localTeamId = :teamId or G.visitorTeamId = :teamId) order by G.gameDate DESC");
-		query.setParameter(teamIdString, teamId);
+		query.setParameter(TEAMIDSTRING, teamId);
 		Game game;
 		try {
 			game = query.setMaxResults(1).getSingleResult();
@@ -82,7 +82,7 @@ public class GameDaoImpl implements GameDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Game> query = sessionFactory.getCurrentSession().createQuery(
 				"from Game G where G.played=0 and (G.localTeamId = :teamId or G.visitorTeamId = :teamId) order by G.gameDate ASC");
-		query.setParameter(teamIdString, teamId);
+		query.setParameter(TEAMIDSTRING, teamId);
 		Game game;
 		try {
 			game = query.setMaxResults(1).getSingleResult();
@@ -97,7 +97,7 @@ public class GameDaoImpl implements GameDao {
 		@SuppressWarnings("unchecked")
 		Query<Game> query = sessionFactory.getCurrentSession()
 				.createQuery("update Game set " + key + " = :value where GAMEID = :gameId");
-		query.setParameter(gameIdString, gameId);
+		query.setParameter(GAMEIDSTRING, gameId);
 		query.setParameter("value", value);
 		query.executeUpdate();
 	}
@@ -108,7 +108,7 @@ public class GameDaoImpl implements GameDao {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Game> query = sessionFactory.getCurrentSession().createQuery(
 				"from Game G where G.played=0 and G.leagueId =:leagueId and (G.localTeamId=-1 or G.visitorTeamId=-1) order by G.gameId ASC");
-		query.setParameter(leagueIdString, leagueId);
+		query.setParameter(LEAGUEIDSTRING, leagueId);
 		Game newGame = null;
 		try {
 			newGame = query.setMaxResults(1).getSingleResult();
@@ -120,15 +120,15 @@ public class GameDaoImpl implements GameDao {
 				@SuppressWarnings("unchecked")
 				Query<Game> queryUp = sessionFactory.getCurrentSession()
 						.createQuery("update Game set LOCALTEAMID = :teamId where gameId = :gameId");
-				queryUp.setParameter(teamIdString, teamId);
-				queryUp.setParameter(gameIdString, newGame.getGameId());
+				queryUp.setParameter(TEAMIDSTRING, teamId);
+				queryUp.setParameter(GAMEIDSTRING, newGame.getGameId());
 				queryUp.executeUpdate();
 			} else {
 				@SuppressWarnings("unchecked")
 				Query<Game> queryUp = sessionFactory.getCurrentSession()
 						.createQuery("update Game set VISITORTEAMID = :teamId where gameId = :gameId");
-				queryUp.setParameter(teamIdString, teamId);
-				queryUp.setParameter(gameIdString, newGame.getGameId());
+				queryUp.setParameter(TEAMIDSTRING, teamId);
+				queryUp.setParameter(GAMEIDSTRING, newGame.getGameId());
 				queryUp.executeUpdate();
 			}
 		}
