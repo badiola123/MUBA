@@ -26,6 +26,12 @@ import edu.eskola.muba.team.entity.Team;
 import edu.eskola.muba.team.service.TeamService;
 import edu.eskola.muba.user.entity.User;
 
+/**
+ * This class performs displaying game information on the /match page
+ * @author MUBA team
+ * @version Final version
+ */
+
 @Controller
 @RequestMapping("match")
 public class MatchController {
@@ -41,6 +47,13 @@ public class MatchController {
 	private static final String homeAddress = "redirect:/login/home.html";
 	private static final String matchLogs = "matchLogs";
 
+	/**
+	 * This functions handles redirecting to the /match page
+	 * @param request is used to get the session and to put attributes 
+	 * @param redir is used to put attribute in case of redirecting to /home page
+	 * @param locale is used to define in which language the logs should be displayed
+	 * @return is a direction either to the /match or /home (if the user is not logged)
+	 */
 	@GetMapping(path = "/goToMatch")
 	public String goToMatch(HttpServletRequest request, RedirectAttributes redir, Locale locale) {
 		String direct = homeAddress;
@@ -64,6 +77,15 @@ public class MatchController {
 		return direct;
 	}
 	
+	/**
+	 * This function is used to display game from the league
+	 * 
+	 * @param gameId is the id of the game we want to display
+	 * @param request request is used to get the session and to put attributes 
+	 * @param redir is used to put attribute in case of redirecting to /home page
+	 * @param locale locale is used to define in which language the logs should be displayed
+	 * @return is a direction either to the /match or /home (if the user is not logged)
+	 */
 	@PostMapping(value ="/showGame")
 	public String showGame(@RequestParam("gameId") int gameId, HttpServletRequest request, RedirectAttributes redir, Locale locale) {
 		String direct = homeAddress;
@@ -80,6 +102,13 @@ public class MatchController {
 		return direct;
 	}
 
+	/**
+	 * This function is responsible for copying attributes to the request
+	 * 
+	 * @param game data of this game will be displayed on the /match
+	 * @param request request is used to get the session and to put attributes 
+	 * @param locale locale is used to define in which language the logs should be displayed
+	 */
 	private void displayPage(Game game, HttpServletRequest request, Locale locale) {
 		Team localTeam = teamService.getTeam(game.getLocalTeamId());
 		Team visitorTeam = teamService.getTeam(game.getVisitorTeamId());
