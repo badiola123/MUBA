@@ -1,17 +1,11 @@
 package edu.eskola.muba.gameMechanisTests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
-import org.easymock.EasyMock;
-import org.easymock.EasyMockRule;
 import org.easymock.EasyMockSupport;
-import org.easymock.Mock;
-import org.easymock.TestSubject;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import edu.eskola.muba.characteristics.entity.Characteristics;
@@ -64,7 +58,7 @@ public class MatchTest extends EasyMockSupport {
 		if(match.getTeamBpoints() > match.getTeamApoints() && winnerTeam == teamA) correctResult = false;
 		}
 		
-		assertEquals(correctResult, true);
+		assertEquals(true, correctResult);
 	}
 
 }
