@@ -20,7 +20,7 @@
 				<div class="singlePosition">
 					<spring:bind path="players">
 						<label><spring:message code="team.position"/> 1</label>
-						<form:select path="players" name="position1">
+						<form:select path="players" name="position1" id="position1Id">
 							<c:forEach items="${players}" var="player" varStatus="status">
 								<c:choose>
 									<c:when test="${player.key eq position1}">
@@ -38,7 +38,7 @@
 				<div class="singlePosition">
 					<spring:bind path="players">
 						<label><spring:message code="team.position"/> 2</label>
-						<form:select path="players" name="position2">
+						<form:select path="players" name="position2" id="position2Id">
 							<c:forEach items="${players}" var="player" varStatus="status">
 								<c:choose>
 									<c:when test="${player.key eq position2}">
@@ -56,7 +56,7 @@
 				<div class="singlePosition">
 					<spring:bind path="players">
 						<label><spring:message code="team.position"/> 3</label>
-						<form:select path="players" name="position3">
+						<form:select path="players" name="position3" id="position3Id">
 							<c:forEach items="${players}" var="player" varStatus="status">
 								<c:choose>
 									<c:when test="${player.key eq position3}">
@@ -74,7 +74,7 @@
 				<div class="singlePosition">
 					<spring:bind path="players">
 						<label><spring:message code="team.position"/> 4</label>
-						<form:select path="players" name="position4">
+						<form:select path="players" name="position4" id="position4Id">
 							<c:forEach items="${players}" var="player" varStatus="status">
 								<c:choose>
 									<c:when test="${player.key eq position4}">
@@ -92,7 +92,7 @@
 				<div class="singlePosition">
 					<spring:bind path="players">
 						<label><spring:message code="team.position"/> 5</label>
-						<form:select path="players" name="position5">
+						<form:select path="players" name="position5" id="position5Id">
 							<c:forEach items="${players}" var="player" varStatus="status">
 								<c:choose>
 									<c:when test="${player.key eq position5}">
