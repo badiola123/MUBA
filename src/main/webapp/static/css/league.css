@@ -1,0 +1,213 @@
+*{
+	box-sizing: border-box;
+}
+button{
+	background-color: #008B96;
+	color: white;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+button:hover {
+	background-color: #00d2d2;
+}
+#leagueDisplay{
+	min-width: 710px;
+	display: grid;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	grid-template-areas:
+	"head head"
+	"results graph";
+    grid-template-columns: 1fr 3fr;	
+	justify-content: center;
+	grid-column-gap: 0;
+}
+#leagueHeader{
+	display: flex;
+	padding: 1vw;
+	grid-area: head;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+}
+#leagueHeader > h2{
+	flex: 1;
+	text-align: center;
+}
+#toLeagueListButton{
+	margin-left:  6vw;
+}
+
+#schedule{
+	padding:0;
+	margin:0;
+	min-width: 360px;
+	grid-area: graph;
+	position: relative;
+	text-align: center;
+}
+
+#schedule>img{
+	min-width: 360px;
+	width: 50vw;
+	object-fit: fill;
+}
+
+#gameResults{
+	min-width: 215px;
+	position: relative;
+	padding: 1vw;
+	margin: 0;
+	grid-area: results;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	border: 1px solid cyan;
+	border-radius: 4px;
+	align-items: center;
+	width: 30vw;
+	margin-left:  3vw;
+
+}
+
+#gameResults .gameResultCell{
+	position: relative;
+	margin: 1%;
+	padding: 1%;
+	border: 1px solid black;
+	border-radius: 4px;
+	font-size: 1.5vw;
+	min-width: 25vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.points{
+
+	font-weight: bold;
+}
+.teamCell2stages{
+	position: absolute;
+	width: 20%;
+}
+
+.teamCell3stages{
+	position: absolute;
+	width: 15%;
+}
+#teamCell1.teamCell2stages{
+	top: 5%;
+	left: 13%;
+	
+}
+#teamCell2.teamCell2stages{
+	top: 31%;
+	left: 13%;
+	
+}
+#teamCell3.teamCell2stages{
+	top: 60%;
+	left: 13%;
+
+}
+#teamCell4.teamCell2stages{
+	top: 87%;
+	left: 13%;
+
+}
+#teamCell5.teamCell2stages{
+	top: 18%;
+	left: 39.5%;
+}
+#teamCell6.teamCell2stages{
+	top: 73.5%;
+	left: 39.5%;
+}
+#teamWinner.teamCell2stages{
+	top: 45.5%;
+	left: 66.5%;
+}
+
+#teamCell1.teamCell3stages{
+	top: 4%;
+	left: 13%;
+}
+
+#teamCell2.teamCell3stages{
+	top: 16%;
+	left: 13%;
+
+}
+#teamCell3.teamCell3stages{
+	top: 28%;
+	left: 13%;
+	
+}
+#teamCell4.teamCell3stages{
+	top: 40.5%;
+	left: 13%;
+	
+}
+#teamCell5.teamCell3stages{
+	top: 52.5%;
+	left: 13%;
+
+}
+#teamCell6.teamCell3stages{
+	top: 65%;
+	left: 13%;
+
+}
+#teamCell7.teamCell3stages{
+	top: 77%;
+	left: 13%;
+	
+}
+#teamCell8.teamCell3stages{
+	top: 89.5%;
+	left: 13%;
+
+}
+#teamCell9.teamCell3stages{
+	top: 9%;
+	left: 32.5%;
+}
+#teamCell10.teamCell3stages{
+	top: 34%;
+	left: 32.5%;
+}
+#teamCell11.teamCell3stages{
+	top: 58.5%;
+	left: 32.5%;
+}
+#teamCell12.teamCell3stages{
+	top: 83%;
+	left: 32.5%;
+}
+#teamCell13.teamCell3stages{
+	top: 20.5%;
+	left: 51.5%;
+}
+#teamCell14.teamCell3stages{
+	top: 70%;
+	left: 51.5%;
+}
+#teamWinner.teamCell3stages{
+	top: 42%;
+	left: 71.5%;
+}
+.teamCell2stages p{
+	word-wrap: break-word;
+    width: 100%;
+	font-size: 1.8vw;
+}
+.teamCell3stages p{
+	word-wrap: break-word;
+    width: 100%;
+	font-size: 1.4vw;
+}
+
+
+

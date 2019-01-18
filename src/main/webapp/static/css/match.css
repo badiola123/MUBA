@@ -1,0 +1,138 @@
+
+#match * {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	box-sizing: border-box;
+}
+
+#match>header {
+	border: none;
+	display: flex;
+	justify-content: space-around;
+	color: black;
+	font-size: 3vw;
+	margin-top: 3vw;
+	margin-bottom: 2vw;
+}
+
+#match>.main {
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: 3fr 2fr;
+}
+
+#match>.main>.dataLog {
+	white-space: pre-line;
+	border: thin solid black;
+	margin: 3vw;
+	overflow-y: scroll;
+	height: 40vw;
+}
+
+#match>.main>.pitch {
+	margin: 3vw;
+	margin-right: 0px;
+	position: relative;
+}
+
+.pitch img {
+	width: 100%;
+}
+
+#match>.main>.pitch>img {
+	height: 40vw;
+}
+
+#player0 {
+	position: absolute;
+	top: 18%;
+	left: 8%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player1 {
+	position: absolute;
+	top: 9%;
+	left: 28%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player2 {
+	position: absolute;
+	bottom: 18%;
+	left: 8%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player3 {
+	position: absolute;
+	bottom: 9%;
+	left: 28%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player4 {
+	position: absolute;
+	top: 39%;
+	left: 35%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player5 {
+	position: absolute;
+	top: 18%;
+	right: 8%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player6 {
+	position: absolute;
+	top: 9%;
+	right: 28%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player7 {
+	position: absolute;
+	bottom: 18%;
+	right: 8%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player8 {
+	position: absolute;
+	bottom: 9%;
+	right: 28%;
+	width: 13%;
+	border: thin solid black;
+}
+
+#player9 {
+	position: absolute;
+	top: 39%;
+	right: 35%;
+	width: 13%;
+	border: thin solid black;
+}
+
+.pitch p {
+	width: 100%;
+	background-color: white;
+	border: thin solid black;
+	font-size: 0.8vw;
+	text-align: center;
+}
+
+#nextMatch {
+	text-align: center;
+	display: block;
+}

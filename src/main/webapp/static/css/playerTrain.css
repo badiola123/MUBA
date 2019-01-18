@@ -1,0 +1,62 @@
+#train {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#train > p {
+	margin-top: 0px;
+	margin-bottom: 2vw;
+}
+
+#train > h2 {
+	margin-top: 2vw;
+}
+
+#skills {
+	display: grid;
+	grid-template-columns: 1fr 3fr 2fr;
+	grid-gap: 1vw;
+	width: 100vw;
+}
+
+#skills>* {
+	margin: 1vw;
+}
+
+#skills>form {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	margin: 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#skills>form>button {
+	background-color: #E2E1E1;
+	border: none;
+	border-radius: 5px;
+	width: 80%;
+	height: 60%;
+	margin: 0px;
+}
+
+#skills > p {
+	position: relative;
+	top: 15%;
+}
+
+.barContainer {
+	background-color: #E2E1E1;
+	border-radius: 5px;
+}
+
+.barContent {
+	background-color: #008B96;
+	border-radius: 5px;
+	color: white;
+	padding: 0.5vw;
+	box-sizing: border-box;
+}

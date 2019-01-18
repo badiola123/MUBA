@@ -1,0 +1,63 @@
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+#categoryBar{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	margin: 0;
+	padding: 0.5vw;
+	width: 100%;
+	background-color: #7b8a8c;
+}
+#categoryBar button {
+	display: inline-block;
+	margin: 0.25vw 0.5vw 0.25vw 0.5vw;
+	padding: 0.5vw;
+	border: 2px solid white;
+	flex-grow: 1;
+	border-radius: 4px;
+	text-align: center;
+	color: white;
+	background-color: #7b8a8c;
+	text-decoration: none;
+}
+#categoryBar button:hover {
+	background-color: #616161;
+}
+#newLeagueButton{
+	background-color: #008B96;
+	color: white;
+	margin: 1vw 0 0 1vw;
+	padding: 0.5vw;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+#newLeagueButton:hover{
+	background-color: #00d2d2;
+
+}
+
+#leagueListDisplay{
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	justify-content: center;
+}
+
+#leagueList .leagueItem{
+	padding: 1rem;
+	margin: 1rem;
+	border: 1px solid cyan;
+}
+
+.leagueNotSelected {
+	text-decoration: none;
+}
+
+.leagueSelected {
+	font-weight: bold;
+}
