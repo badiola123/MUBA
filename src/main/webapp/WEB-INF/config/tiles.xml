@@ -21,6 +21,34 @@
           <add-attribute value="/static/js/header.js" />
         </put-list-attribute>
     </definition>
+
+    <definition name="login" template="/WEB-INF/views/login.jsp">
+        <put-attribute name="title" value="Login"></put-attribute>
+        <put-attribute name="alerts" value="/WEB-INF/views/alerts.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value="/static/css/login.css" />
+            <add-attribute value="/static/css/bootstrap.min.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value ="https://code.jquery.com/jquery-1.11.1.js"/>
+            <add-attribute value="/static/js/bootstrap.min.js" />
+            <add-attribute value="/static/js/login.js" />
+        </put-list-attribute>
+    </definition>
+
+    <definition name="register" template="/WEB-INF/views/register.jsp">
+        <put-attribute name="title" value="Register"></put-attribute>
+        <put-attribute name="alerts" value="/WEB-INF/views/alerts.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value="/static/css/register.css" />
+            <add-attribute value="/static/css/bootstrap.min.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value ="https://code.jquery.com/jquery-1.11.1.js"/>
+            <add-attribute value="/static/js/bootstrap.min.js" />
+            <add-attribute value="/static/js/register.js" />
+        </put-list-attribute>
+    </definition>
  
     <definition name="home" extends="base.definition">
         <put-attribute name="refId" value="homeRef"></put-attribute>

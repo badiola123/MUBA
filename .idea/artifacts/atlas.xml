@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="AtlasRobakow:war exploded">
+  <artifact type="exploded-war" name="atlas">
     <output-path>$PROJECT_DIR$/target/atlas-V1</output-path>
     <properties id="maven-jee-properties">
       <options>

@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:if test="${not empty success}">
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <div class="alert alert-success alert-dismissible fade show" role="alert" style="position:fixed; width:100%;">
     <spring:message code="${success}"/>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -12,7 +12,7 @@
 </c:if>
 
 <c:if test="${not empty info}">
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
+  <div class="alert alert-info alert-dismissible fade show" role="alert" style="position:fixed; width:100%;">
     <spring:message code="${info}"/>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -22,7 +22,7 @@
 
 
 <c:if test="${not empty warning}">
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div class="alert alert-warning alert-dismissible fade show" role="alert" style="position:fixed; width:100%;">
     <spring:message code="${warning}"/>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -31,8 +31,8 @@
 </c:if>
 
 <c:if test="${not empty error}">
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <spring:message code="${error}"/>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position:fixed; width:100%;">
+    huj
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>

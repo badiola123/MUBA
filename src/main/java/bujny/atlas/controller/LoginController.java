@@ -29,12 +29,11 @@ public class LoginController {
 	AnnotationConfigApplicationContext context = 
 			new AnnotationConfigApplicationContext(AppConfig.class);
 	UserService userService = context.getBean(UserService.class);
-	private static final String SESS_USER_ATTR = "sessUser";
 	private static final String WARNING_ALERT = "warning";
 
 	@GetMapping(value = "/home")
 	public String homePage() {
-		return "home"; 
+		return "login";
 	}
 
 	@PostMapping(value = "/login")
@@ -43,11 +42,12 @@ public class LoginController {
 		modelAndView.setViewName("home");
 		User user = userService.checkUser(username, password);
 		if(user != null) {
-			modelAndView.addObject(SESS_USER_ATTR, user);
+			modelAndView.addObject("sessUser", user);
 			modelAndView.addObject("success", "login.success");
 		}
 		else {
 			modelAndView.addObject("error", "login.error");
+			modelAndView.setViewName("login");
 		}
 		
 		return modelAndView;
@@ -73,7 +73,7 @@ public class LoginController {
 	public ModelAndView register(HttpServletRequest request, RedirectAttributes redir) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute(SESS_USER_ATTR);
+		User user = (User) request.getSession().getAttribute("sessUser");
 		
 		if(user==null) modelAndView.setViewName("register");
 		else redir.addFlashAttribute(WARNING_ALERT, "logout.warning");
@@ -87,7 +87,7 @@ public class LoginController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute(SESS_USER_ATTR);
+		User user = (User) request.getSession().getAttribute("sessUser");
 		
 		if(user==null) {
 			validData(modelAndView, redir, regUserInfo);

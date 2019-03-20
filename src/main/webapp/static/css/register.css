@@ -1,0 +1,57 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+body {
+    overflow: hidden;
+}
+
+#theme {
+    height: 100vh;
+    width: 100vw;
+}
+
+.flag {
+    width: 100px;
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    border: 3px solid greenyellow;
+    border-radius: 15px;
+}
+
+#main {
+    padding: 1.5rem;
+    position: absolute;
+    background-color: white;
+    border: 3px solid greenyellow;
+    border-radius: 15px;
+    top: 10%;
+    left: 10%;
+    width: 40%;
+}
+
+#main > h1 {
+    text-align: center;
+}
+
+#main > p {
+    text-align: center;
+}
+
+#main > form > input {
+    margin-top: 0.5rem;
+}
+
+#buttons {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    vertical-align: center;
+}
+
+#buttons > a {
+    text-align: center;
+}
