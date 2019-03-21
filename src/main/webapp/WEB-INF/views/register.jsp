@@ -29,13 +29,14 @@
 
 <div id="main">
     <h1 class="display-3">Atlas Robaków</h1>
-    <p>Dziel się swoimi robakami ze społecznością online.</p>
-    <form id="loginFields" action="/atlasr/login/login.html" method="post">
+    <p>Zarejestruj nowe konto.</p>
+    <form id="loginFields" action="/atlasr/login/register.html" method="post">
         <input type="text" class="form-control" id="login" name = "username" placeholder="Login">
         <input type="password" class="form-control" id="password" name = "password" placeholder="Hasło">
+        <input type="password" class="form-control" id="password2" name = "password2" placeholder="Powtórz hasło">
         <div id="buttons">
-            <button type="submit" class="btn btn-success">Zaloguj</button>
-            <a href="#" class="alert-link">Nie masz konta? Kliknij tutaj.</a>
+            <button type="submit" class="btn btn-success">Zarejestruj</button>
+            <a href="/atlasr/login/home.html" class="alert-link">Masz już konto? Kliknij tutaj.</a>
         </div>
     </form>
 </div>

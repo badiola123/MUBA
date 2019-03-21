@@ -69,31 +69,26 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@PostMapping(value = "/register")
-	public ModelAndView register(HttpServletRequest request, RedirectAttributes redir) {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute("sessUser");
-		
-		if(user==null) modelAndView.setViewName("register");
-		else redir.addFlashAttribute(WARNING_ALERT, "logout.warning");
-		
-		return modelAndView;
-	}
+	@GetMapping(value = "registerForm")
+    public ModelAndView registerForm () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("register");
+        return modelAndView;
+    }
 
-	@PostMapping(value = "/validateRegister")
-	public ModelAndView validateRegister(@RequestParam(value="regUserInfo[]")String[] regUserInfo,
-										 HttpServletRequest request, RedirectAttributes redir) {
-		
+	@PostMapping(value = "/register")
+	public ModelAndView register(@RequestParam("username")String username, @RequestParam("password")String password) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/login/home.html");
-		User user = (User) request.getSession().getAttribute("sessUser");
-		
-		if(user==null) {
-			validData(modelAndView, redir, regUserInfo);
-		}
-		else redir.addFlashAttribute(WARNING_ALERT, "logout.warning");
-		
+		if(userService.checkUsername(username)!=-1) {
+		    modelAndView.setViewName("register");
+		    modelAndView.addObject("error","Nazwa użytkownika zajęta.");
+        }
+		else {
+		    modelAndView.setViewName("login");
+		    modelAndView.addObject("success","Zarejestrowano nowego użytkownika.");
+		    User user = new User(username,password);
+		    userService.add(user);
+        }
 		return modelAndView;
 	}
 

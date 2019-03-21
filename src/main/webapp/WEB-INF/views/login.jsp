@@ -34,8 +34,9 @@
         <input type="text" class="form-control" id="login" name = "username" placeholder="Login">
         <input type="password" class="form-control" id="password" name = "password" placeholder="Hasło">
         <div id="buttons">
-            <button type="submit" class="btn btn-success">Zaloguj</button>
-            <a href="#" class="alert-link">Nie masz konta? Kliknij tutaj.</a>
+            <button class="btn btn-success" id="logButton">Zaloguj</button>
+            <button type="submit" id="invisibleButton"></button>
+            <a href="/atlasr/login/registerForm.html" class="alert-link">Nie masz konta? Kliknij tutaj.</a>
         </div>
     </form>
 </div>

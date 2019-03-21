@@ -4,7 +4,7 @@
 
 <c:if test="${not empty success}">
   <div class="alert alert-success alert-dismissible fade show" role="alert" style="position:fixed; width:100%;">
-    <spring:message code="${success}"/>
+    Udalo sie!
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -32,7 +32,7 @@
 
 <c:if test="${not empty error}">
   <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position:fixed; width:100%;">
-    huj
+    Nie udalo sie!
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>

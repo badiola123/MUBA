@@ -55,3 +55,7 @@ body {
 #buttons > a {
     text-align: center;
 }
+
+#invisibleButton {
+    display:none;
+}
