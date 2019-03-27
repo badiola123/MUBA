@@ -1,12 +1,13 @@
 var login;
 var password;
-var invisibleButton;
+var password2;
 
 $(document).ready(function(){
     login = $("#login");
     password = $("#password");
-    invisibleButton = $("#invisibleButton");
-    $("#logButton").click(function () {
+    password2 = $("#password2");
+
+    $("#registerButton").click(function () {
         submit();
     });
 });
@@ -18,11 +19,21 @@ $(document).keypress(function (event) {
     }
 });
 
+function passwordCheck() {
+    if(password.val() != password2.val()){
+        alert("Hasła nie są takie same.")
+    }
+    else {
+        $("form").submit();
+    }
+}
+
 function submit(){
-    if(login.val()=="" || password.val()==""){
+    if(login.val()=="" || password.val()=="" || password2.val()==""){
         alert("Proszę wypełnić wszystkie pola.")
     }
     else {
-        invisibleButton.click();
+        passwordCheck();
     }
 }
+

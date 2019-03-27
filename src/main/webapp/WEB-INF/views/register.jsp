@@ -34,11 +34,11 @@
         <input type="text" class="form-control" id="login" name = "username" placeholder="Login">
         <input type="password" class="form-control" id="password" name = "password" placeholder="Hasło">
         <input type="password" class="form-control" id="password2" name = "password2" placeholder="Powtórz hasło">
-        <div id="buttons">
-            <button type="submit" class="btn btn-success">Zarejestruj</button>
-            <a href="/atlasr/login/home.html" class="alert-link">Masz już konto? Kliknij tutaj.</a>
-        </div>
     </form>
+    <div id="buttons">
+        <button id="registerButton" class="btn btn-success">Zarejestruj</button>
+        <a href="/atlasr/login/home.html" class="alert-link">Masz już konto? Kliknij tutaj.</a>
+    </div>
 </div>
 </body>
 

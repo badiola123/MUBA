@@ -33,12 +33,12 @@
     <form id="loginFields" action="/atlasr/login/login.html" method="post">
         <input type="text" class="form-control" id="login" name = "username" placeholder="Login">
         <input type="password" class="form-control" id="password" name = "password" placeholder="Hasło">
-        <div id="buttons">
-            <button class="btn btn-success" id="logButton">Zaloguj</button>
-            <button type="submit" id="invisibleButton"></button>
-            <a href="/atlasr/login/registerForm.html" class="alert-link">Nie masz konta? Kliknij tutaj.</a>
-        </div>
+        <button id="invisibleButton"></button>
     </form>
+    <div id="buttons">
+        <button class="btn btn-success" id="logButton">Zaloguj</button>
+        <a href="/atlasr/login/registerForm.html" class="alert-link">Nie masz konta? Kliknij tutaj.</a>
+    </div>
 </div>
 </body>
 
