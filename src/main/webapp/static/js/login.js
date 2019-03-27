@@ -1,11 +1,9 @@
 var login;
 var password;
-var invisibleButton;
 
 $(document).ready(function(){
     login = $("#login");
     password = $("#password");
-    invisibleButton = $("#invisibleButton");
     $("#logButton").click(function () {
         submit();
     });
@@ -23,6 +21,6 @@ function submit(){
         alert("Proszę wypełnić wszystkie pola.")
     }
     else {
-        invisibleButton.click();
+        $("form").submit();
     }
 }

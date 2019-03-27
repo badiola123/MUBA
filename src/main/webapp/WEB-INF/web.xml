@@ -24,7 +24,7 @@
 	</servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>login/home.html</welcome-file>
+		<welcome-file>login/start.html</welcome-file>
 	</welcome-file-list>
 
 </web-app>

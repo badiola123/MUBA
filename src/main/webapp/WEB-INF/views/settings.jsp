@@ -2,4 +2,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<input id="current" type="hidden" value="1">
+<input id="current" type="hidden" value="3">

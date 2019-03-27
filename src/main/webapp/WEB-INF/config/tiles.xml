@@ -18,7 +18,7 @@
         <put-list-attribute name="javascripts">
           <add-attribute value ="https://code.jquery.com/jquery-1.11.1.js"/>
           <add-attribute value="/static/js/bootstrap.min.js" />
-          <add-attribute value="/static/js/header.js" />
+            <add-attribute value="/static/js/header.js" />
         </put-list-attribute>
     </definition>
 
@@ -67,15 +67,69 @@
         </put-list-attribute>
     </definition>
  
-    <definition name="home" extends="base.definition">
+    <definition name="myRobaks" extends="userTemplate">
         <put-attribute name="refId" value="homeRef"></put-attribute>
         <put-attribute name="title" value="Home"></put-attribute>
-        <put-attribute name="body" value="/WEB-INF/views/home.jsp"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/myRobaks.jsp"></put-attribute>
         <put-list-attribute name="stylesheets" inherit="true">
-          <add-attribute value="/static/css/home.css" />
+          <add-attribute value="/static/css/myRobaks.css" />
         </put-list-attribute>
         <put-list-attribute name="javascripts" inherit="true">
-        	<add-attribute value="/static/js/homePage_charts.js" />
+        </put-list-attribute>
+    </definition>
+
+    <definition name="allUsers" extends="adminTemplate">
+        <put-attribute name="refId" value="homeRef"></put-attribute>
+        <put-attribute name="title" value="Home"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/allUsers.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+            <add-attribute value="/static/css/allUsers.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts" inherit="true">
+        </put-list-attribute>
+    </definition>
+
+    <definition name="robaksAdmin" extends="adminTemplate">
+        <put-attribute name="refId" value="homeRef"></put-attribute>
+        <put-attribute name="title" value="Home"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/robaksAdmin.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+            <add-attribute value="/static/css/robaksAdmin.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts" inherit="true">
+        </put-list-attribute>
+    </definition>
+
+    <definition name="robaksUser" extends="userTemplate">
+        <put-attribute name="refId" value="homeRef"></put-attribute>
+        <put-attribute name="title" value="Home"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/robaksUser.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+            <add-attribute value="/static/css/robaksUser.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts" inherit="true">
+        </put-list-attribute>
+    </definition>
+
+    <definition name="settingsUser" extends="userTemplate">
+        <put-attribute name="refId" value="homeRef"></put-attribute>
+        <put-attribute name="title" value="Home"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/settings.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+            <add-attribute value="/static/css/settings.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts" inherit="true">
+        </put-list-attribute>
+    </definition>
+
+    <definition name="settingsAdmin" extends="adminTemplate">
+        <put-attribute name="refId" value="homeRef"></put-attribute>
+        <put-attribute name="title" value="Home"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/settings.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+            <add-attribute value="/static/css/settings.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts" inherit="true">
         </put-list-attribute>
     </definition>
 
