@@ -23,6 +23,11 @@ public class UserDaoImpl implements UserDao {
    }
 
 	@Override
+	public void remove(User user) {
+		sessionFactory.getCurrentSession().delete(user);
+	}
+
+	@Override
 	public User get(int userId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User WHERE userid= :userid");

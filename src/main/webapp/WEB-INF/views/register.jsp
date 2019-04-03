@@ -37,7 +37,7 @@
     </form>
     <div id="buttons">
         <button id="registerButton" class="btn btn-success">Zarejestruj</button>
-        <a href="/atlasr/login/home.html" class="alert-link">Masz już konto? Kliknij tutaj.</a>
+        <a href="/atlasr/login/start.html" class="alert-link">Masz już konto? Kliknij tutaj.</a>
     </div>
 </div>
 </body>

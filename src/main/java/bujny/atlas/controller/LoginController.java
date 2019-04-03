@@ -2,6 +2,7 @@ package bujny.atlas.controller;
 import bujny.atlas.config.AppConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +27,14 @@ public class LoginController {
 	}
 
 	@PostMapping(value = "/login")
-	public ModelAndView checkUser(@RequestParam("username")String username, @RequestParam("password")String password) {
+	public ModelAndView checkUser(@RequestParam("username")String username, @RequestParam("password")String password, ModelMap model) {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = userService.checkUser(username, password);
 		if(user != null) {
 			modelAndView.addObject("sessUser", user);
+			model.addAttribute("sessUser", user);
 			if(user.isAdmin()) {
-				modelAndView.setViewName("allUsers");
+				modelAndView = new ModelAndView("redirect:/allUsers/page.html",model);
 			}
 			else {
 				modelAndView.setViewName("myRobaks");
