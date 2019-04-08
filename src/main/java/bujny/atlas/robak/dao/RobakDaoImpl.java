@@ -21,6 +21,21 @@ public class RobakDaoImpl implements RobakDao {
    }
 
 	@Override
+	public void remove(Robak robak) {
+		sessionFactory.getCurrentSession().delete(robak);
+	}
+
+	@Override
+	public void removeAllOwnersRobaks(int userId) {
+		TypedQuery<Robak> query=sessionFactory.getCurrentSession().createQuery("from Robak WHERE owner= :userId");
+		query.setParameter("userId",userId);
+		List<Robak> ownersRobaks = query.getResultList();
+		for (Robak each : ownersRobaks) {
+			sessionFactory.getCurrentSession().delete(each);
+		}
+	}
+
+	@Override
 	public Robak get(int robakId) {
 		@SuppressWarnings("unchecked")
 		TypedQuery<Robak> query=sessionFactory.getCurrentSession().createQuery("from Robak WHERE robakid= :robakid");

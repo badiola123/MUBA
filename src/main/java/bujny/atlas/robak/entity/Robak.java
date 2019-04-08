@@ -37,6 +37,11 @@ public class Robak {
         this.pic = pic;
     }
 
+    public Robak(String name, int owner) {
+        this.name = name;
+        this.owner = owner;
+    }
+
     public int getRobakId() {
         return robakId;
     }

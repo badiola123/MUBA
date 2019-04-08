@@ -63,6 +63,7 @@ public class UserDaoImpl implements UserDao {
 	   TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("update User set password = :newPass where userId = :userId");
 	   query.setParameter("newPass", newPass);
 	   query.setParameter("userId", userId);
+	   System.out.println(newPass);
 	   return query.executeUpdate();
    }
    

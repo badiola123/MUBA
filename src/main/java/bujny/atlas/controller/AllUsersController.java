@@ -1,6 +1,7 @@
 package bujny.atlas.controller;
 
 import bujny.atlas.config.AppConfig;
+import bujny.atlas.robak.service.RobakService;
 import bujny.atlas.user.entity.User;
 import bujny.atlas.user.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -20,10 +21,12 @@ import java.util.List;
 @RequestMapping("allUsers")
 public class AllUsersController {
     static final int LIMIT = 10;
+    private List<User> usersToDisplayList;
 
     AnnotationConfigApplicationContext context =
             new AnnotationConfigApplicationContext(AppConfig.class);
     UserService userService = context.getBean(UserService.class);
+    RobakService robakService = context.getBean(RobakService.class);
 
     @GetMapping(value = "/page")
     public ModelAndView page(HttpServletRequest request) {
@@ -31,7 +34,8 @@ public class AllUsersController {
         User user = (User) request.getSession().getAttribute("sessUser");
         if (user == null || !user.isAdmin()) modelAndView.setViewName("login");
         else {
-            return pages(0, LIMIT);
+            usersToDisplayList = userService.listUsers();
+            modelAndView = pages(0, LIMIT);
         }
         return modelAndView;
     }
@@ -40,16 +44,15 @@ public class AllUsersController {
     public ModelAndView pages(@RequestParam("page") int page, @RequestParam("limit") int limit) {
         ModelAndView modelAndView = new ModelAndView();
         List<User> pageList = new ArrayList<>();
-        List<User> allUsers = userService.listUsers();
         for (int i = page * limit; i < limit + page * limit; i++) {
-            if (i < allUsers.size()) {
-                if (!allUsers.get(i).isAdmin()) pageList.add(allUsers.get(i));
+            if (i < usersToDisplayList.size()) {
+                if (!usersToDisplayList.get(i).isAdmin()) pageList.add(usersToDisplayList.get(i));
             }
         }
         boolean previous = true;
         boolean next = true;
         if (page == 0) previous = false;
-        if ((page + 1) * limit - allUsers.size() >= 0) next = false;
+        if ((page + 1) * limit - usersToDisplayList.size() >= 0) next = false;
         modelAndView.addObject("next", next);
         modelAndView.addObject("previous", previous);
         modelAndView.addObject("pageList", pageList);
@@ -62,9 +65,23 @@ public class AllUsersController {
     public ModelAndView delete(@RequestParam("userId") int userId, @RequestParam("page") int page, @RequestParam("elements") int elements, HttpServletRequest request) {
         User user = userService.get(userId);
         userService.remove(user);
+        robakService.removeAllOwnersRobaks(userId);
         if(page == 0){}
         else if(elements==1) page = page -1;
+        usersToDisplayList = userService.listUsers(); // TODO add search delete option
         return pages(page, LIMIT);
+    }
+
+    @PostMapping(value = "/search")
+    public ModelAndView search(@RequestParam("key") String key) {
+        List <User> searchedList = new ArrayList<>();
+        List<User> allUsers = userService.listUsers();
+        for(User each : allUsers) {
+            if(each.getUsername().contains(key)) searchedList.add(each);
+        }
+        usersToDisplayList = searchedList;
+        ModelAndView modelAndView = pages(0,LIMIT);
+        return modelAndView;
     }
 }
 

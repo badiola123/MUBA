@@ -119,6 +119,7 @@
             <add-attribute value="/static/css/settings.css" />
         </put-list-attribute>
         <put-list-attribute name="javascripts" inherit="true">
+            <add-attribute value="/static/js/settings.js" />
         </put-list-attribute>
     </definition>
 
@@ -130,6 +131,7 @@
             <add-attribute value="/static/css/settings.css" />
         </put-list-attribute>
         <put-list-attribute name="javascripts" inherit="true">
+            <add-attribute value="/static/js/settings.js" />
         </put-list-attribute>
     </definition>
 

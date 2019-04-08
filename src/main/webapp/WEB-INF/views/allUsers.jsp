@@ -4,6 +4,10 @@
 
 <input id="current" type="hidden" value="1">
 
+<form id="search" action="/atlasr/allUsers/search.html" method="post">
+    <input type="text" name="key" placeholder="Wpisz nazwę użytkownika">
+    <button class="btn btn-success">Szukaj</button>
+</form>
 <table class="table">
 <thead>
 <tr>

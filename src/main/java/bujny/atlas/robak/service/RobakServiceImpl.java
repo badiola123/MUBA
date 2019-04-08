@@ -23,6 +23,18 @@ public class RobakServiceImpl implements RobakService {
 
    @Transactional
    @Override
+   public void remove(Robak robak) {
+      robakDao.remove(robak);
+   }
+
+   @Transactional
+   @Override
+   public void removeAllOwnersRobaks(int userId) {
+      robakDao.removeAllOwnersRobaks(userId);
+   }
+
+   @Transactional
+   @Override
    public Robak get(int robakId) {
       return robakDao.get(robakId);
    }
