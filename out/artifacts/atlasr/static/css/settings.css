@@ -1,0 +1,26 @@
+#main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#main * {
+    margin: 0.5rem;
+}
+
+#passFields {
+    width: 20%;
+    margin: 0px;
+}
+
+#passFields > input {
+    width: 100%;
+}
+
+#oldPassword {
+    margin-bottom: 1.5rem;
+}
+
+#changePassword {
+    width: 25%;
+}

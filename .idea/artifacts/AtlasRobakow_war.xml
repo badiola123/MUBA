@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="AtlasRobakow:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>AtlasRobakow</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="atlas-V1.war">
+      <element id="artifact" artifact-name="AtlasRobakow:war exploded" />
+    </root>
+  </artifact>
+</component>

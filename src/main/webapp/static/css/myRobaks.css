@@ -1,0 +1,102 @@
+#addSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#grid {
+    display: grid;
+    grid-column-gap: 5%;
+    margin: 5%;
+    grid-template-columns: 21.25% 21.25% 21.25% 21.25%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card {
+    margin-bottom: 1.5rem;
+}
+
+.deleteForm {
+    margin-top: 0.5rem;
+}
+
+
+.card-img-top {
+    height: 18vw;
+}
+
+#navigation {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+#next {
+    width: 2rem;
+    height: 2rem;
+    background-color: #28a745;
+    border-radius: 30% 90% 90% 30%;
+    border: none;
+}
+
+#nextDisabled {
+    width: 2rem;
+    height: 2rem;
+    background-color: #1e7e34;
+    border-radius: 30% 90% 90% 30%;
+    border: none;
+}
+
+#page {
+    background-color: #28a745;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 30% 30% 30% 30%;
+    border: none;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    color: white;
+    text-align: center;
+    vertical-align: text-bottom;
+}
+
+#previous {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background-color: #28a745;
+    border-radius: 90% 30% 30% 90%;
+}
+
+#previousDisabled {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background-color: #1e7e34;
+    border-radius: 90% 30% 30% 90%;
+}
+
+@media only screen and (max-width: 850px) {
+    #grid {
+        grid-template-columns: 47.5% 47.5%;
+    }
+
+    .card-img-top {
+        height: 35vw;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    #grid {
+        grid-template-columns: 100%;
+    }
+
+    .card-img-top {
+        height: 90vw;
+    }
+}

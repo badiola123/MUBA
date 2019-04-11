@@ -37,7 +37,7 @@ public class LoginController {
 				modelAndView = new ModelAndView("redirect:/allUsers/page.html",model);
 			}
 			else {
-				modelAndView.setViewName("myRobaks");
+				modelAndView = new ModelAndView("redirect:/myRobaks/page.html",model);
 			}
 		}
 		else {

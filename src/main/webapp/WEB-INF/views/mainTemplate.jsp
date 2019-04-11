@@ -27,6 +27,4 @@
     <tiles:insertAttribute name="body" />
   </body>
   
-  <script>setButton("<tiles:insertAttribute name="refId" />");</script>
-  
 </html>

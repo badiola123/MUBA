@@ -1,0 +1,19 @@
+#form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#form > * {
+    width: 50%;
+    margin: 0.5rem;
+}
+
+#description {
+    resize: none;
+}
+
+#pageName {
+    text-align: center;
+    margin: 1rem;
+}

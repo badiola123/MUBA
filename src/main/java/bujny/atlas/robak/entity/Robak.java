@@ -19,27 +19,22 @@ public class Robak {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "RATE")
-    private int rate;
-
     @Lob
-    @Column(name = "PIC", columnDefinition = "BLOB")
+    @Column(name = "PIC")
     private byte[] pic;
+
+    public byte[] getPic() {
+        return pic;
+    }
 
     public Robak() {
     }
 
-    public Robak(String name, int owner, String description, int rate, byte[] pic) {
+    public Robak(String name, int owner, String description, byte[] pic) {
         this.name = name;
         this.owner = owner;
         this.description = description;
-        this.rate = rate;
         this.pic = pic;
-    }
-
-    public Robak(String name, int owner) {
-        this.name = name;
-        this.owner = owner;
     }
 
     public int getRobakId() {
@@ -58,11 +53,4 @@ public class Robak {
         return description;
     }
 
-    public int getRate() {
-        return rate;
-    }
-
-    public byte[] getPic() {
-        return pic;
-    }
 }

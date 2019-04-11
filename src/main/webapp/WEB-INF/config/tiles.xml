@@ -123,6 +123,17 @@
         </put-list-attribute>
     </definition>
 
+    <definition name="addRobak" extends="userTemplate">
+        <put-attribute name="refId" value="homeRef"></put-attribute>
+        <put-attribute name="title" value="Home"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/addRobak.jsp"></put-attribute>
+        <put-list-attribute name="stylesheets" inherit="true">
+            <add-attribute value="/static/css/addRobak.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts" inherit="true">
+        </put-list-attribute>
+    </definition>
+
     <definition name="settingsAdmin" extends="adminTemplate">
         <put-attribute name="refId" value="homeRef"></put-attribute>
         <put-attribute name="title" value="Home"></put-attribute>
