@@ -3,3 +3,47 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <input id="current" type="hidden" value="2">
+
+<form id="search" action="/atlasr/robaksUser/search.html" method="post">
+    <input type="text" name="key" placeholder="Wpisz nazwę robaka lub właściciela">
+    <button class="btn btn-success">Szukaj</button>
+</form>
+
+<div id="grid">
+    <c:forEach items="${pageList}" var="robak">
+        <div class="card">
+            <img class="card-img-top" src="data:image/jpg;base64,${pictures[robak.robakId]}" alt="Card image cap">
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title">${robak.name}</h5>
+                    <p class="card-text">${robak.description}</p>
+                </div>
+                <p>Właściciel: <strong>${owners[robak.owner]}</strong></p>
+            </div>
+        </div>
+    </c:forEach>
+</div>
+
+<div id = "navigation">
+    <form action="/atlasr/robaksUser/pages.html" method="get">
+        <input name="page" type="hidden" value=${page-1}>
+        <input name="limit" type="hidden" value="8">
+        <c:if test="${previous}">
+            <button id="previous"></button>
+        </c:if>
+        <c:if test="${!previous}">
+            <button id="previousDisabled" disabled></button>
+        </c:if>
+    </form>
+    <p id="page"><c:out value="${page+1}"/></p>
+    <form action="/atlasr/robaksUser/pages.html" method="get">
+        <input name="page" type="hidden" value=${page+1}>
+        <input name="limit" type="hidden" value="8">
+        <c:if test="${next}">
+            <button id="next"></button>
+        </c:if>
+        <c:if test="${!next}">
+            <button id="nextDisabled" disabled></button>
+        </c:if>
+    </form>
+</div>

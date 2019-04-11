@@ -1,8 +1,15 @@
-#addSection {
+#search {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
     margin-top: 2rem;
+}
+
+#search > button {
+    margin-left: 0.5rem;
+}
+
+#search > input {
+    width: 25%;
 }
 
 #grid {

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("allUsers")
@@ -77,7 +78,7 @@ public class AllUsersController {
         List <User> searchedList = new ArrayList<>();
         List<User> allUsers = userService.listUsers();
         for(User each : allUsers) {
-            if(each.getUsername().contains(key)) searchedList.add(each);
+            if(Pattern.compile(Pattern.quote(key), Pattern.CASE_INSENSITIVE).matcher(each.getUsername()).find()) searchedList.add(each);
         }
         usersToDisplayList = searchedList;
         ModelAndView modelAndView = pages(0,LIMIT);

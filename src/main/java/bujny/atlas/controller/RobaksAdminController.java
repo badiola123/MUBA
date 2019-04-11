@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("robaksAdmin")
@@ -100,8 +101,8 @@ public class RobaksAdminController {
         List <RobakWithOwner> searchedList = new ArrayList<>();
         List <RobakWithOwner> allRobaksWithOwners = allRobaksWithOwners();
         for(RobakWithOwner each : allRobaksWithOwners) {
-            if(each.owner.getUsername().contains(key)) searchedList.add(each);
-            else if (each.robak.getName().contains(key)) searchedList.add(each);
+            if(Pattern.compile(Pattern.quote(key), Pattern.CASE_INSENSITIVE).matcher(each.owner.getUsername()).find()) searchedList.add(each);
+            else if (Pattern.compile(Pattern.quote(key), Pattern.CASE_INSENSITIVE).matcher(each.robak.getName()).find()) searchedList.add(each);
         }
         robaksToDisplayList = searchedList;
         ModelAndView modelAndView = pages(0,LIMIT);

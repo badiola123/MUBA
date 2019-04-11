@@ -24,13 +24,10 @@ import java.util.*;
 public class MyRobaksController {
     AnnotationConfigApplicationContext context =
             new AnnotationConfigApplicationContext(AppConfig.class);
-    UserService userService = context.getBean(UserService.class);
     RobakService robakService = context.getBean(RobakService.class);
     static final int LIMIT = 8;
     private List<Robak> robaksToDisplayList;
     private Map<Integer, String> pictureCode;
-
-    static final String PATH = "C:\\Users\\Mateusz Bujnowicz\\Documents\\Programming\\robakImages\\robak";
 
     private void generateMap(int userId) {
         List<Robak> myRobaks = robakService.listMyRobaks(userId);
@@ -41,7 +38,7 @@ public class MyRobaksController {
     }
 
     @GetMapping(value = "/page")
-    public ModelAndView page(HttpServletRequest request) throws UnsupportedEncodingException {
+    public ModelAndView page(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         User user = (User) request.getSession().getAttribute("sessUser");
         if (user == null || user.isAdmin()) modelAndView.setViewName("login");
@@ -62,7 +59,6 @@ public class MyRobaksController {
                 pageRobakList.add(robaksToDisplayList.get(i));
             }
         }
-
         boolean next = true;
         boolean previous = true;
         if (page == 0) previous = false;
@@ -71,8 +67,8 @@ public class MyRobaksController {
         modelAndView.addObject("previous", previous);
         modelAndView.addObject("pageList", pageRobakList);
         modelAndView.addObject("page", page);
-        modelAndView.addObject("path", PATH);
         modelAndView.addObject("pictures",pictureCode);
+
         modelAndView.setViewName("myRobaks");
         return modelAndView;
     }
@@ -94,12 +90,6 @@ public class MyRobaksController {
         robakService.add(robak);
         modelAndView = page(request);
         return modelAndView;
-    }
-
-    public void fileUpload(byte[] bFile, int id, String name) throws IOException {
-        FileOutputStream fos = new FileOutputStream(PATH + id + name + ".jpg");
-        fos.write(bFile);
-        fos.close();
     }
 
     @PostMapping(value = "/delete")

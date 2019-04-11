@@ -32,7 +32,7 @@
 </div>
 
 <div id = "navigation">
-    <form action="/atlasr/allUsers/pages.html" method="get">
+    <form action="/atlasr/myRobaks/pages.html" method="get">
         <input name="page" type="hidden" value=${page-1}>
         <input name="limit" type="hidden" value="8">
         <c:if test="${previous}">
@@ -43,7 +43,7 @@
         </c:if>
     </form>
     <p id="page"><c:out value="${page+1}"/></p>
-    <form action="/atlasr/allUsers/pages.html" method="get">
+    <form action="/atlasr/myRobaks/pages.html" method="get">
         <input name="page" type="hidden" value=${page+1}>
         <input name="limit" type="hidden" value="8">
         <c:if test="${next}">
